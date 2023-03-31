@@ -1,0 +1,17 @@
+@import 'normalize.css';
+// $primary-color: #1a4ab9;
+// $secondary-color: white;
+// $black: black;
+:root {
+    --primary-color: #1a4ab9;
+    --secondary-color: white;
+    --black: black;
+}
+
+//font style custome 1
+.fsc_1 {
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    line-height: 19.36px;
+    color: var(--secondary-color) !important;
+}

@@ -1,5 +1,11 @@
+import Header from '~/Layouts/components/Header/index';
+
 function Home() {
-    return <></>;
+    return (
+        <>
+            <Header />
+        </>
+    );
 }
 
 export default Home;
