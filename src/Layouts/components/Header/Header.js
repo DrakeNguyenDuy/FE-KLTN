@@ -1,16 +1,17 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Container, Nav, Navbar } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import className from 'classnames/bind';
+
 import styles from './Header.module.scss';
-import { faUserAlt, faGear, faSignOut } from '@fortawesome/free-solid-svg-icons';
 const cx = className.bind(styles);
 
 function Header() {
     return (
         <>
             <Navbar className={cx('header', 'p-0')} expand="lg">
-                <Container className="d-flex justify-content-between m-0">
+                <Container className={cx('myGr', 'd-flex justify-content-between m-0')}>
                     <Navbar.Brand href="#home" className={cx('p-text')}>
                         <img
                             alt=""

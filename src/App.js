@@ -8,7 +8,7 @@ import DefaultLayout from '~/Layouts/DefaultLayout';
 function App() {
     return (
         <Router>
-            <div className="App">
+            <div className="Container">
                 <Routes>
                     {employerRoutes.map((route, index) => {
                         let Layout = DefaultLayout;
