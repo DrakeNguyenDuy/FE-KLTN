@@ -1,7 +1,13 @@
-import Header from '~/Layouts/components/Header/index';
-
+import CarouselCustomize from '../../Layouts/components/Carousel/CarouselCustomize';
 function Home() {
-    return <></>;
+    return (
+        <>
+            <div className="area-carousel mt-3">
+                <CarouselCustomize />
+            </div>
+            <div className="title fsc_2">Việc làm mới</div>
+        </>
+    );
 }
 
 export default Home;

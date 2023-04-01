@@ -1,3 +1,9 @@
+.logo {
+    max-width: 360px;
+}
+a {
+    text-decoration: none;
+}
 // @import './GlobalStyles';
 .header {
     background-color: var(--primary-color);
@@ -71,4 +77,34 @@
 .re-badge {
     background-color: var(--secondary-color) !important;
     color: var(--primary-color);
+}
+.link_side_bar {
+    display: none;
+}
+
+.wrap-offcanvas-body {
+    display: flex;
+    align-items: center;
+}
+.wrapper-link-soft {
+    display: none;
+    flex-direction: column-reverse;
+}
+
+@media only screen and (max-width: 992px) {
+    .dropdown-cusomize {
+        display: none !important;
+    }
+    .link_side_bar {
+        display: contents;
+    }
+    .wrap-offcanvas-body {
+        display: block;
+    }
+    .wrapper-link-soft {
+        display: flex;
+    }
+    .round-a-side {
+        display: none;
+    }
 }
