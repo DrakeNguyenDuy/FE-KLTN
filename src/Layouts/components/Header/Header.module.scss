@@ -13,19 +13,20 @@
     .navbar-collapse .me-auto .active {
         color: red;
     }
-    .container .navbar-collapse .dropdown-cusomize {
+    .dropdown-cusomize {
         width: 195px;
         height: 60px;
         background-color: var(--secondary-color);
         border-radius: 100px;
-        &::after {
-            content: '';
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: var(--black);
-            display: block;
-        }
+        display: inline-block;
+        // span {
+        //     content: '';
+        //     width: 60px;
+        //     height: 60px;
+        //     border-radius: 50%;
+        //     background-color: var(--black);
+        //     display: block;
+        // }
     }
     .round-a-side {
         width: 250px;
@@ -41,4 +42,33 @@
             color: var(--primary-color);
         }
     }
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.d-dropdown-auth {
+    display: flex !important;
+    align-items: center !important;
+}
+.action-auth {
+    width: auto;
+    display: flex !important;
+    align-items: center !important;
+    // justify-content: center !important;
+}
+
+.re-container {
+    max-width: 100%;
+}
+
+.re-badge {
+    background-color: var(--secondary-color) !important;
+    color: var(--primary-color);
 }
