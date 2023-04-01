@@ -6,6 +6,17 @@
     --primary-color: #1a4ab9;
     --secondary-color: white;
     --black: black;
+    --form-primary-color: #a7a3ff;
+    --form-secondary-color: #b0b0b0;
+    --form-background-color: #f0efff;
+
+    --boder-radius: 10px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 //font style custome 1
@@ -20,4 +31,20 @@
     font-size: 16px !important;
     line-height: 19.36px;
     color: var(--primary-color) !important;
+}
+// form login
+form .form-control {
+    padding: 0.7rem;
+    background-color: var(--form-background-color);
+    color: var(--form-primary-color);
+    border-radius: var(--boder-radius);
+    border: none;
+    &::placeholder {
+        color: var(--form-primary-color);
+    }
+}
+
+form .form-label {
+    color: var(--form-primary-color);
+    font-weight: bold;
 }
