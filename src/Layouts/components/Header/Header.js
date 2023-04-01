@@ -1,8 +1,8 @@
 import React from 'react';
-import { Container, Nav, Navbar } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import { Container, Nav, Navbar, Badge, OverlayTrigger, Popover, Button, ListGroup } from 'react-bootstrap';
 import className from 'classnames/bind';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPersonDress, faUser, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './Header.module.scss';
 const cx = className.bind(styles);
@@ -11,7 +11,7 @@ function Header() {
     return (
         <>
             <Navbar className={cx('header', 'p-0')} expand="lg">
-                <Container className={cx('myGr', 'd-flex justify-content-between m-0')}>
+                <Container className={cx('re-container', 'pe-0')}>
                     <Navbar.Brand href="#home" className={cx('p-text')}>
                         <img
                             alt=""
@@ -33,27 +33,82 @@ function Header() {
                             <Nav.Link href="#3" className="fsc_1">
                                 Ứng tuyển
                             </Nav.Link>
-                            <Nav.Link href="#4" className="fsc_1">
-                                Thông báo
-                            </Nav.Link>
+                            {/* <Nav.Link href="#4" className="fsc_1">
+                                Thông báo<Badge bg="secondary">9</Badge>
+                            </Nav.Link> */}
+                            <OverlayTrigger
+                                trigger="click"
+                                key="bottom"
+                                placement="bottom"
+                                overlay={
+                                    <Popover id={`popover-positioned-bottom`}>
+                                        <Popover.Body>
+                                            <ListGroup>
+                                                <ListGroup.Item action href="#link1">
+                                                    Link 1
+                                                </ListGroup.Item>
+                                                <ListGroup.Item action href="#link2" disabled>
+                                                    Link 2
+                                                </ListGroup.Item>
+                                                <ListGroup.Item action onClick={() => {}}>
+                                                    This one is a button
+                                                </ListGroup.Item>
+                                            </ListGroup>
+                                        </Popover.Body>
+                                    </Popover>
+                                }
+                            >
+                                <Button style={{ background: 'none', border: 'none' }} className={cx('fsc_1')}>
+                                    Thông báo <Badge className={cx('re-badge')}>9</Badge>
+                                </Button>
+                            </OverlayTrigger>
                         </Nav>
                     </Navbar.Collapse>
                     <Navbar.Collapse className="justify-content-end">
-                        {/* <Nav>
-                        <NavDropdown title="Dropdown" id="basic-navbar-nav">
-                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                        </NavDropdown>
-                    </Nav> */}
-                        <div className="dropdown-cusomize me-3">{/* <i className="fa-light fa-user"></i> */}</div>
-                        <div className="round-a-side">
-                            <Nav.Link href="#9" className="fsc_1">
+                        <div className={cx('dropdown-cusomize', 'me-3', 'd-dropdown-auth')}>
+                            {/* <span className="m-0" />
+                            <button>Đăng nhập</button> */}
+                            <div className={cx('avatar')}>
+                                <FontAwesomeIcon size="xl" color="var(--secondary-color)" icon={faUser} />
+                            </div>
+                            <div className={cx('action-auth')}>
+                                <Nav.Link href="#long" className="fsc_2">
+                                    Đăng nhập
+                                </Nav.Link>
+                                <OverlayTrigger
+                                    trigger="click"
+                                    key="bottom"
+                                    placement="bottom"
+                                    overlay={
+                                        <Popover id={`popover-positioned-bottom`}>
+                                            <Popover.Body>
+                                                <ListGroup>
+                                                    <ListGroup.Item action href="#link1">
+                                                        Đăng ký
+                                                    </ListGroup.Item>
+                                                    <ListGroup.Item action href="#link2">
+                                                        Đăng xuất
+                                                    </ListGroup.Item>
+                                                </ListGroup>
+                                            </Popover.Body>
+                                        </Popover>
+                                    }
+                                >
+                                    <Button style={{ background: 'none', border: 'none' }}>
+                                        <FontAwesomeIcon
+                                            size="xl"
+                                            color="var(--primary-color)"
+                                            icon={faCircleChevronDown}
+                                        />
+                                    </Button>
+                                </OverlayTrigger>
+                            </div>
+                        </div>
+                        <div className={cx('round-a-side')}>
+                            <Nav.Link href="#9" className="fsc_2">
                                 Dành cho nhà tuyển dụng
                             </Nav.Link>
-                            <FontAwesomeIcon icon={faUserAlt} />
+                            <FontAwesomeIcon color="var(--primary-color)" icon={faPersonDress} />
                         </div>
                     </Navbar.Collapse>
                 </Container>
