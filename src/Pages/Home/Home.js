@@ -2,8 +2,8 @@ import React from 'react';
 import CarouselCustomize from '../../Layouts/components/Carousel/CarouselCustomize';
 import styles from './Header.module.scss';
 import className from 'classnames/bind';
-import { Button, Card, Col, Container, Row } from 'react-bootstrap';
-import Job from '~/Layouts/components/Job/Job';
+import { Col, Container, Row } from 'react-bootstrap';
+import Job from '~/Layouts/components/Job';
 const cx = className.bind(styles);
 function Home() {
     return (

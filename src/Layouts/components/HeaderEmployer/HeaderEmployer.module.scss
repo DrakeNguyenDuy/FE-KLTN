@@ -1,0 +1,110 @@
+.logo {
+    max-width: 360px;
+}
+a {
+    text-decoration: none;
+}
+// @import './GlobalStyles';
+.header {
+    background-color: var(--primary-color);
+
+    box-shadow: 0px 1px 1px #dddcdc;
+
+    .container a {
+        display: flex;
+        align-items: center;
+        color: var(var(--secondary-color));
+    }
+
+    .navbar-collapse .me-auto .active {
+        color: red;
+    }
+    .dropdown-cusomize {
+        height: 60px;
+        background-color: var(--secondary-color);
+        border-radius: 100px;
+        display: inline-block;
+        // span {
+        //     content: '';
+        //     width: 60px;
+        //     height: 60px;
+        //     border-radius: 50%;
+        //     background-color: var(--black);
+        //     display: block;
+        // }
+    }
+    .round-a-side {
+        width: auto;
+        height: 80px;
+        border-bottom-left-radius: 40px;
+        background-color: var(--secondary-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px;
+        border-color: var(--primary-color);
+        a {
+            color: var(--primary-color);
+            &:hover {
+                text-decoration: underline !important;
+            }
+        }
+    }
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.d-dropdown-auth {
+    display: flex !important;
+    align-items: center !important;
+}
+.action-auth {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.re-container {
+    max-width: 100%;
+}
+
+.re-badge {
+    background-color: var(--secondary-color) !important;
+    color: var(--primary-color);
+}
+.link_side_bar {
+    display: none;
+}
+
+.wrap-offcanvas-body {
+    display: flex;
+    align-items: center;
+}
+.wrapper-link-soft {
+    display: none;
+    flex-direction: column-reverse;
+}
+
+@media only screen and (max-width: 992px) {
+    .dropdown-cusomize {
+        display: none !important;
+    }
+    .link_side_bar {
+        display: contents;
+    }
+    .wrap-offcanvas-body {
+        display: block;
+    }
+    .wrapper-link-soft {
+        display: flex;
+    }
+    .round-a-side {
+        display: none;
+    }
+}

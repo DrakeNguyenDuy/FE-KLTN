@@ -51,13 +51,15 @@
             opacity: 0.8;
         }
     }
-    .login-with {
-        text-align: center;
-        margin-top: 16px;
-        color: var(--form-secondary-color);
-    }
     .login-social {
-        text-align: center;
+        margin-top: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        p {
+            margin-bottom: 0;
+            color: var(--form-secondary-color);
+        }
         button {
             background-color: transparent;
             border: none;
