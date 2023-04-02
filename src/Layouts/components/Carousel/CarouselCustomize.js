@@ -35,26 +35,26 @@ export default function CarouselCustomize() {
             <Carousel className={cx('wrap-carousel')}>
                 <Carousel.Item>
                     <img className={cx('img-carousel')} src="static/imgs/carousel_1.jpg" alt="First slide" />
-                    {/* <Carousel.Caption>
-                    <h3>First slide label</h3>
-                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                </Carousel.Caption> */}
+                    <Carousel.Caption>
+                        <h3>First slide label</h3>
+                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                    </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
                     <img className={cx('img-carousel')} src="static/imgs/carousel_2.jpg" alt="Second slide" />
 
-                    {/* <Carousel.Caption>
-                    <h3>Second slide label</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </Carousel.Caption> */}
+                    <Carousel.Caption>
+                        <h3>Second slide label</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
                     <img className={cx('img-carousel')} src="static/imgs/carousel_3.jpg" alt="Third slide" />
 
-                    {/* <Carousel.Caption>
-                    <h3>Third slide label</h3>
-                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                </Carousel.Caption> */}
+                    <Carousel.Caption>
+                        <h3>Third slide label</h3>
+                        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                    </Carousel.Caption>
                 </Carousel.Item>
             </Carousel>
             <div className={cx('search-area')}>

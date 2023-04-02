@@ -11,8 +11,8 @@
     height: 300px;
 }
 .search-area {
-    width: 40%;
-    left: 30%;
+    width: 50%;
+    left: 25%;
     padding: 10px;
     position: absolute;
     display: flex;
@@ -104,8 +104,8 @@
     }
     //top = (height img / 5 ) + 80 (this is height of header)
     .search-area {
-        width: 40%;
-        left: 30%;
+        width: 50%;
+        left: 25%;
         top: 220px;
         height: 60px;
         flex-direction: row;
@@ -131,8 +131,8 @@
     .search-area {
         // top: 240px;
         // height: 70px;
-        width: 40%;
-        left: 30%;
+        width: 50%;
+        left: 25%;
         top: 270px;
         height: 80px;
         flex-direction: row;
