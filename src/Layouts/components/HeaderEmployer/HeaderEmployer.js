@@ -15,11 +15,11 @@ import className from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
 
-import styles from './Header.module.scss';
+import styles from './HeaderEmployer.module.scss';
 import { Link } from 'react-router-dom';
 const cx = className.bind(styles);
 
-function Header() {
+function HeaderEmployer() {
     return (
         <Navbar className={cx('header', 'p-0')} expand="lg">
             <Container className={cx('re-container', 'pe-0')}>
@@ -55,7 +55,7 @@ function Header() {
                                 Hồ sơ
                             </Nav.Link>
                             <Nav.Link href="#3" className="fsc_1">
-                                Ứng tuyển
+                                Đăng việc
                             </Nav.Link>
                             <NavDropdown className="fsc_1" title="Thông báo" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#action/3.1">Option 1</NavDropdown.Item>
@@ -118,14 +118,14 @@ function Header() {
                                 </Link>
                             </div>
                             <div className={cx('round-a-side')}>
-                                <Nav.Link href="/employer" className="fsc_2 ">
-                                    Dành cho nhà tuyển dụng
+                                <Nav.Link href="/" className="fsc_2 ">
+                                    Dành cho ứng viên
                                 </Nav.Link>
                                 <Image src="/assets/imgs/icons8-employee-48.png" />
                             </div>
                             <Button className="button-no-bg">
-                                <Nav.Link href="/employer" className="fsc_2 ">
-                                    Dành cho nhà tuyển dụng
+                                <Nav.Link href="/" className="fsc_2 ">
+                                    Dành cho ứng viên
                                 </Nav.Link>
                             </Button>
                         </Nav>
@@ -136,4 +136,4 @@ function Header() {
     );
 }
 
-export default Header;
+export default HeaderEmployer;
