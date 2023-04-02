@@ -14,7 +14,6 @@
         color: red;
     }
     .dropdown-cusomize {
-        width: 195px;
         height: 60px;
         background-color: var(--secondary-color);
         border-radius: 100px;
@@ -38,8 +37,11 @@
         align-items: center;
         border: 1px;
         border-color: var(--primary-color);
-        .nav-link {
+        a {
             color: var(--primary-color);
+            &:hover {
+                text-decoration: underline !important;
+            }
         }
     }
 }
@@ -58,10 +60,8 @@
     align-items: center !important;
 }
 .action-auth {
-    width: auto;
     display: flex !important;
     align-items: center !important;
-    // justify-content: center !important;
 }
 
 .re-container {
