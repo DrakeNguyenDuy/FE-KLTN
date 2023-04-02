@@ -1,3 +1,4 @@
+import React from 'react';
 import CarouselCustomize from '../../Layouts/components/Carousel/CarouselCustomize';
 function Home() {
     return (

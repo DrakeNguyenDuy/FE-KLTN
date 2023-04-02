@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Header from '~/Layouts/components/Header';
 import Footer from '~/Layouts/components/Footer';
 
