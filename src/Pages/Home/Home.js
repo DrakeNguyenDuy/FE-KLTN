@@ -3,7 +3,7 @@ import CarouselCustomize from '../../Layouts/components/Carousel/CarouselCustomi
 import styles from './Home.module.scss';
 import className from 'classnames/bind';
 import { Col, Container, Row } from 'react-bootstrap';
-import Job from '~/Layouts/components/Job';
+import Job from '~/components/Job1';
 const cx = className.bind(styles);
 function Home() {
     return (
@@ -12,7 +12,7 @@ function Home() {
                 <CarouselCustomize />
             </div>
             <div className={cx('main-content')}>
-                <div className={cx('title', 'fsc_2')}>Việc làm mới nhất</div>
+                <div className={cx('title', 'fsc_2', 'ms-0')}>Việc làm mới nhất</div>
                 <Container className={cx('jobs p-0 m-0 mw-100 d-flex')}>
                     <Row className="w-100 m-0">
                         <Col className="p-0" md>
