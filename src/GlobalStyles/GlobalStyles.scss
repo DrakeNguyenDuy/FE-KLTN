@@ -9,8 +9,10 @@
     --form-primary-color: #a7a3ff;
     --form-secondary-color: #b0b0b0;
     --form-background-color: #f0efff;
-
+    --gray-ligth-color: rgb(234, 234, 234, 0.5);
     --boder-radius: 10px;
+    --success-color: #008563;
+    --gray-color: #faf9f9;
 }
 
 * {
@@ -46,12 +48,7 @@
     background-color: var(--secondary-color);
     color: var(--primary-color);
     justify-content: center;
-    // :hover {
-    //     background-color: var(--primary-color);
-    //     color: var(--secondary-color);
-    // }
 }
-//
 
 @media only screen and (max-width: 992px) {
     .nav-link {

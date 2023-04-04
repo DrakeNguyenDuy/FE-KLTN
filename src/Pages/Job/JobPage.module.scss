@@ -1,0 +1,44 @@
+.page-job {
+    background-color: var(--gray-color);
+}
+.filter-area {
+    width: 100%;
+    height: 80px;
+    background-color: var(--secondary-color);
+    box-shadow: 0 5px 10px var(--primary-colorr);
+    border: 1px;
+    border-color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    select,
+    input,
+    button {
+        margin: auto;
+    }
+    select,
+    input {
+        max-width: 360px;
+        height: 40px;
+    }
+    button {
+        width: auto;
+        height: 40px;
+        background-color: var(--primary-color);
+    }
+}
+.job-pannel {
+    width: 100%;
+    height: 500px;
+    .row_c {
+        // width: 100%;
+        height: 100%;
+        // display: flex;
+        .list-job {
+            // background-color: red;
+        }
+        .ext-job {
+            background-color: blanchedalmond;
+        }
+    }
+}

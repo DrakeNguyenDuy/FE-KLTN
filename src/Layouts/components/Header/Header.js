@@ -46,7 +46,15 @@ function Header() {
                     <Offcanvas.Body>
                         <Nav className={cx('wrap-offcanvas-body', 'w-100', 'justify-content-between')}>
                             <NavDropdown className="fsc_1" title="Việc làm" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">Option 1</NavDropdown.Item>
+                                {/* <NavDropdown.Item>
+                                    {' '}
+                                    <Link to={'/jobs'} className="fsc_2 ms-0 w-100 h-100">
+                                        Tìm kiếm việc làm
+                                    </Link>
+                                </NavDropdown.Item> */}
+                                <Link to={'/jobs'} className="fsc_2 p-1 w-100 h-100">
+                                    Tìm kiếm việc làm
+                                </Link>
                                 <NavDropdown.Item href="#action/3.2">Option 2</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.3">OPtion 3</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.4">Option 4</NavDropdown.Item>
