@@ -27,6 +27,8 @@
     }
     button {
         width: 100%;
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
     }
 }
 .wrap-input-search {
@@ -58,7 +60,7 @@
         flex-direction: column;
         top: 220px;
         height: 150px;
-        background-color: aqua;
+        background-color: rgba($color: #eaeaea, $alpha: 0.5);
         div,
         select,
         button {
