@@ -1,7 +1,8 @@
 import styles from './EmployerCarousel.module.scss';
 import className from 'classnames/bind';
 import { Button, Image } from 'react-bootstrap';
-import CustomCarouse from '../CustomCarousel/CustomCarousel';
+
+import CustomCarouse from '~/components/CustomCarousel';
 
 const cx = className.bind(styles);
 
