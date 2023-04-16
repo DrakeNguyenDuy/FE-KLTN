@@ -12,7 +12,7 @@ const cx = className.bind(styles);
 
 function Register() {
     return (
-        <Row>
+        <Row className={cx('wrapper')}>
             <Col lg={7}>
                 <div className={cx('page-content')}>
                     <h1>Đăng ký ngay</h1>

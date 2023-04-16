@@ -8,7 +8,7 @@ import DefaultLayout from '~/Layouts/DefaultLayout';
 function App() {
     return (
         <Router>
-            <div className="Container">
+            <div className="container">
                 <Routes>
                     {alumusRoutes.map((route, index) => {
                         let Layout = DefaultLayout;

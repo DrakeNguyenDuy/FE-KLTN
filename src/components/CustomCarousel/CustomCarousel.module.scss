@@ -1,0 +1,54 @@
+.wrapper {
+    position: relative;
+}
+.my-carousel-control {
+    position: absolute;
+    bottom: 4px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+        margin: 0 4px;
+        font-size: 24px;
+        cursor: pointer;
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+    .my-carousel-indicators {
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        margin: 0;
+        padding: 8px 16px;
+        border-radius: 100px;
+        li {
+            cursor: pointer;
+            display: block;
+            width: 10px;
+            height: 10px;
+            margin: 0 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            border-radius: 50%;
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+        li.active {
+            &::before {
+                content: '';
+                display: block;
+                width: 8px;
+                height: 8px;
+                background-color: var(--primary-color);
+                border-radius: 50%;
+            }
+        }
+    }
+    // @media only screen and (max-width: 768px) {
+    //     display: none;
+    // }
+}
