@@ -5,7 +5,6 @@ import className from 'classnames/bind';
 import { Link } from 'react-router-dom';
 const cx = className.bind(styles);
 export default function Job(props) {
-    console.log(props.big);
     return (
         <div className={cx('job', 'mw-100', 'mb-2')}>
             <Row className={cx('content_job')}>

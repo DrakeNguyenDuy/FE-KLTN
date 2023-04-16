@@ -19,6 +19,12 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    max-width: 100%;
+}
+.container {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
 }
 
 //font style custome 1
@@ -80,4 +86,21 @@ form .form-control {
 form .form-label {
     color: var(--form-primary-color);
     font-weight: bold;
+}
+
+// common
+section {
+    .session-title {
+        height: 60px;
+        padding-left: 10px;
+        line-height: 60px;
+        background-color: rgba(97, 0, 255, 0.08);
+        font-weight: bold;
+        font-size: 16px;
+        color: var(--primary-color);
+    }
+}
+// header
+.navbar-toggler {
+    margin-right: 16px;
 }

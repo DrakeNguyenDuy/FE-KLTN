@@ -52,21 +52,29 @@
     }
 }
 //for mobile
-@media only screen and (min-width: 320px) {
+@media only screen and (max-width: 767px) {
     .job {
+        width: 100%;
         .content_job {
             margin: 5px 0 5px 0 !important;
+        }
+        .sub_row {
+            span {
+                margin: 2px;
+            }
         }
     }
 }
 //for tablet
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .job {
+        width: 50%;
     }
 }
 //for desktop
 @media only screen and (min-width: 1024px) and (max-width: 1440px) {
     .job {
+        width: 33.333%;
     }
 }
 //for large desktop

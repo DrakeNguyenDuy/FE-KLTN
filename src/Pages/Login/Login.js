@@ -1,12 +1,13 @@
-import className from 'classnames/bind';
+import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { FcGoogle } from 'react-icons/fc';
-import React from 'react';
-import styles from './Login.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
+import { FcGoogle } from 'react-icons/fc';
+import className from 'classnames/bind';
+import styles from './Login.module.scss';
+
 import CustomPassword from '~/components/CustomPassword';
 
 const cx = className.bind(styles);
@@ -18,7 +19,7 @@ function Login() {
     //     setShowPassword(!showPassword);
     // };
     return (
-        <Row>
+        <Row className={cx('wrapper')}>
             <Col lg={7}>
                 <div className={cx('page-content')}>
                     <h1>Đăng nhập ngay</h1>

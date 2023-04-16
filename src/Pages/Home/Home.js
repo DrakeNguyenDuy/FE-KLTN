@@ -1,33 +1,96 @@
 import React from 'react';
-import CarouselCustomize from '../../Layouts/components/Carousel/CarouselCustomize';
 import styles from './Home.module.scss';
 import className from 'classnames/bind';
-import { Col, Container, Row } from 'react-bootstrap';
+
 import Job from '~/components/Job1';
+import EmployerCarousel from './components/EmployerCarousel';
+import WelcomeCarousel from './components/WelcomeCarousel';
+import CustomCarousel from '~/components/CustomCarousel';
+
 const cx = className.bind(styles);
+const items = [
+    'job1',
+    'job2',
+    'job3',
+    'job4',
+    'job5',
+    'job6',
+    'job7',
+    'job8',
+    'job9',
+    'job10',
+    'job11',
+    'job12',
+    'job13',
+    'job14',
+    'job15',
+];
+
+const mapItem = (items, numItem) => {
+    let result = [];
+    let num = Math.floor(items.length / numItem);
+    let rest = items.length % numItem;
+    let index = 0;
+    for (let i = 0; i < num; i++) {
+        const itemGet = [];
+        for (let j = 0; j < numItem; j++) {
+            itemGet.push(items[index]);
+            index++;
+        }
+        result.push(itemGet);
+    }
+    if (rest !== 0) {
+        const itemGet = [];
+        for (let i = index; i < items.length; i++) {
+            itemGet.push(items[i]);
+        }
+        result.push(itemGet);
+    }
+
+    return result;
+};
+
+const mapItemDesktop = mapItem(items, 6);
+const mapItemMobile = mapItem(items, 2);
+
 function Home() {
     return (
-        <>
-            <div className="area-carousel mt-3">
-                <CarouselCustomize />
-            </div>
-            <div className={cx('main-content')}>
-                <div className={cx('title', 'fsc_2', 'ms-0')}>Việc làm mới nhất</div>
-                <Container className={cx('jobs p-0 m-0 mw-100 d-flex')}>
-                    <Row className="w-100 m-0">
-                        <Col className="p-0" md>
-                            <Job />
-                        </Col>
-                        <Col className="p-0" md>
-                            <Job />
-                        </Col>
-                        <Col className="p-0" md>
-                            <Job />
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
-        </>
+        <div id="home">
+            <section>
+                <WelcomeCarousel />
+            </section>
+            <section>
+                <div className="session-title">Việc làm mới nhất</div>
+                {/* desktop */}
+                <CustomCarousel
+                    items={mapItemDesktop}
+                    wrapperClass={cx('desktop-carousel')}
+                    render={(itemOnSlie) => (
+                        <div className={cx('job-wrapper')}>
+                            {itemOnSlie.map((item, index) => (
+                                <Job key={index} />
+                            ))}
+                        </div>
+                    )}
+                />
+                {/* mobile */}
+                <CustomCarousel
+                    items={mapItemMobile}
+                    wrapperClass={cx('mobile-carousel')}
+                    render={(itemOnSlie) => (
+                        <div className={cx('job-wrapper')}>
+                            {itemOnSlie.map((item, index) => (
+                                <Job key={index} />
+                            ))}
+                        </div>
+                    )}
+                />
+            </section>
+            <section>
+                <div className="session-title">Nhà tuyển dụng nổi bậc</div>
+                <EmployerCarousel />
+            </section>
+        </div>
     );
 }
 
