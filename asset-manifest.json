@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/FE-KLTN/static/css/main.e04e9f33.css",
+    "main.js": "/FE-KLTN/static/js/main.29342723.js",
+    "static/js/787.57e80753.chunk.js": "/FE-KLTN/static/js/787.57e80753.chunk.js",
+    "index.html": "/FE-KLTN/index.html",
+    "main.e04e9f33.css.map": "/FE-KLTN/static/css/main.e04e9f33.css.map",
+    "main.29342723.js.map": "/FE-KLTN/static/js/main.29342723.js.map",
+    "787.57e80753.chunk.js.map": "/FE-KLTN/static/js/787.57e80753.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e04e9f33.css",
+    "static/js/main.29342723.js"
+  ]
+}
