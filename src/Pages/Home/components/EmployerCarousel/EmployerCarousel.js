@@ -2,7 +2,7 @@ import styles from './EmployerCarousel.module.scss';
 import className from 'classnames/bind';
 import { Button, Image } from 'react-bootstrap';
 
-import CustomCarouse from '~/components/CustomCarousel';
+import CustomCarousel from '~/components/CustomCarousel';
 
 const cx = className.bind(styles);
 
@@ -19,7 +19,7 @@ const items = [
     {
         logoUrl: 'static/imgs/carousel_1.jpg',
         bannerUrl: 'static/imgs/logo-banner.png',
-        name: 'Công ty 2GUYS 2',
+        name: 'Công ty 2GUYS Công ty 2GUYS Công ty 2GUYS',
         companyUrl: '/',
         slogan: 'Thất bại hôm nay là kinh nghiệm hướng đến thành công cho ngày mai',
         description:
@@ -47,7 +47,7 @@ const items = [
 
 function EmployerCarousel() {
     return (
-        <CustomCarouse
+        <CustomCarousel
             items={items}
             render={(item, index) => (
                 <div className={cx('banner-bg')}>

@@ -68,7 +68,7 @@ function Home() {
                     render={(itemOnSlie) => (
                         <div className={cx('job-wrapper')}>
                             {itemOnSlie.map((item, index) => (
-                                <Job key={index} />
+                                <Job key={index} className={cx('job-reponsive')} />
                             ))}
                         </div>
                     )}
@@ -80,7 +80,7 @@ function Home() {
                     render={(itemOnSlie) => (
                         <div className={cx('job-wrapper')}>
                             {itemOnSlie.map((item, index) => (
-                                <Job key={index} />
+                                <Job key={index} className={cx('job-reponsive')} />
                             ))}
                         </div>
                     )}
