@@ -27,6 +27,9 @@
     .desktop-carousel {
         display: none;
     }
+    .job-reponsive {
+        width: 100%;
+    }
 }
 // for tablet
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
@@ -34,10 +37,16 @@
         height: 600px;
         margin-bottom: 35px;
     }
+    .job-reponsive {
+        width: 50%;
+    }
 }
-// // for desktop
+// for desktop
 @media only screen and (min-width: 1024px) and (max-width: 1439px) {
     .job-wrapper {
         margin-bottom: 35px;
+    }
+    .job-reponsive {
+        width: 33.333%;
     }
 }

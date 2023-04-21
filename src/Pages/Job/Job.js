@@ -1,47 +1,87 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Col, Row } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
+import Pagination from 'react-bootstrap/Pagination';
 import styles from './JobPage.module.scss';
 import className from 'classnames/bind';
-import { Button, Col, Collapse, Form, Row } from 'react-bootstrap';
+
 import Job1 from '../../components/Job1';
+import FindJob from '~/components/FindJob';
+import CustomBreadCrumb from '~/components/CustomBreadCrumb';
+import CardProfile from '~/components/CardProfile';
+
 const cx = className.bind(styles);
 
+const breadcrumbItems = [
+    { name: 'Trang chủ', href: '/' },
+    { name: 'Việc làm', href: '/jobs' },
+];
 export default function Job() {
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
     return (
         <div className={cx('page-job')}>
-            <div className={cx('filter-area')}>
-                <Form.Control type="text" placeholder="Tìm kiếm việc làm" />
-                <Form.Select aria-label="Chọn lĩnh vực nghề nghiệp">
-                    <option>Chọn lĩnh vực nghề nghiệp</option>
-                </Form.Select>
-                <Form.Select aria-label="Nhập nơi làm việc">
-                    <option>Chọn khu vực làm việc</option>
-                </Form.Select>
-                <Button>Tìm kiếm</Button>
-                {/* <Button onClick={() => setOpen(!open)} aria-controls="example-collapse-text" aria-expanded={open}>
-                    Show
-                </Button> */}
-            </div>
-            {/* <div>
-                <Collapse in={open}>
-                    <div id="example-collapse-text">
-                        <Form.Select aria-label="Chọn lĩnh vực nghề nghiệp">
-                            <option>Chọn lĩnh vực nghề nghiệp</option>
-                        </Form.Select>
-                        <Form.Select aria-label="Nhập nơi làm việc">
-                            <option>Chọn khu vực làm việc</option>
-                        </Form.Select>
-                    </div>
-                </Collapse>
-            </div> */}
-            <div className={cx('job-pannel', 'p-5')}>
+            <FindJob />
+            <CustomBreadCrumb items={breadcrumbItems} className={cx('breadcrumb')} />
+            <div className={cx('job-pannel')}>
                 <Row className={cx('me-0', 'row_c')}>
                     <Col lg={8} className={cx('list-job')}>
+                        <div className={cx('filter-wrapper')}>
+                            <Form.Select aria-label="Hình thức làm việc">
+                                <option>Hình thức làm việc</option>
+                            </Form.Select>
+                            <Form.Select aria-label="Kinh nghiệm">
+                                <option>Kinh nghiệm</option>
+                            </Form.Select>
+                            <Form.Select aria-label="Mức lương">
+                                <option>Mức Lương</option>
+                            </Form.Select>
+                            <Form.Select aria-label="Ưu tiên hiển thị">
+                                <option>Ưu tiên hiển thị</option>
+                            </Form.Select>
+                        </div>
+                        <Job1 big={true} />
+                        <Job1 big={true} />
                         <Job1 big={true} />
                         <Job1 big={true} />
                         <Job1 big={true} />
                     </Col>
-                    <Col lg={4} className={cx('ext-job')}></Col>
+                    <Col lg={4} className={cx('ext-job')}>
+                        <div className={cx('profile')}>
+                            <CardProfile />
+                        </div>
+                        <div className={cx('count-jobs')}>
+                            <span>10</span>
+                            <p>công việc được tìm thấy</p>
+                        </div>
+                        <div className={cx('my-jobs')}>
+                            <h3 className={cx('my-job-title')}>Công việc dành cho bạn</h3>
+                            <div className={cx('my-job-content')}>
+                                <Job1 />
+                                <Job1 />
+                                <Job1 />
+                            </div>
+                            <div className={cx('view-all')}>Xem tất cả</div>
+                        </div>
+                    </Col>
+                </Row>
+                <Row>
+                    <Pagination className={cx('pagination', 'justify-content-center mt-3')}>
+                        <Pagination.First />
+                        <Pagination.Prev />
+                        <Pagination.Item>{1}</Pagination.Item>
+                        <Pagination.Ellipsis />
+
+                        <Pagination.Item>{10}</Pagination.Item>
+                        <Pagination.Item>{11}</Pagination.Item>
+                        <Pagination.Item active>{12}</Pagination.Item>
+                        <Pagination.Item>{13}</Pagination.Item>
+                        <Pagination.Item>{14}</Pagination.Item>
+
+                        <Pagination.Ellipsis />
+                        <Pagination.Item>{20}</Pagination.Item>
+                        <Pagination.Next />
+                        <Pagination.Last />
+                    </Pagination>
                 </Row>
             </div>
         </div>

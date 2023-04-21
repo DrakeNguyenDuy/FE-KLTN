@@ -100,6 +100,10 @@ section {
         color: var(--primary-color);
     }
 }
+// breadcrumb
+.breadcrumb-item + .breadcrumb-item::before {
+    content: var(--bs-breadcrumb-divider, '>');
+}
 // header
 .navbar-toggler {
     margin-right: 16px;

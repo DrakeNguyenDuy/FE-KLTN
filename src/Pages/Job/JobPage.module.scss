@@ -1,44 +1,67 @@
 .page-job {
     background-color: var(--gray-color);
 }
-.filter-area {
-    width: 100%;
-    height: 80px;
-    background-color: var(--secondary-color);
-    box-shadow: 0 5px 10px var(--primary-colorr);
-    border: 1px;
-    border-color: var(--primary-color);
+.breadcrumb {
+    padding: 0 32px;
+}
+.filter-wrapper {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    select,
-    input,
-    button {
-        margin: auto;
-    }
-    select,
-    input {
-        max-width: 360px;
-        height: 40px;
-    }
-    button {
-        width: auto;
-        height: 40px;
-        background-color: var(--primary-color);
+    justify-content: space-between;
+    padding-bottom: 16px;
+    select {
+        max-width: 180px;
     }
 }
 .job-pannel {
     width: 100%;
-    height: 500px;
+    padding: 0 32px;
     .row_c {
-        // width: 100%;
         height: 100%;
-        // display: flex;
-        .list-job {
-            // background-color: red;
-        }
         .ext-job {
-            background-color: blanchedalmond;
+            // background-color: blanchedalmond;
+        }
+    }
+}
+.pagination {
+    a,
+    span {
+        border-radius: 50% !important;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 5px;
+    }
+}
+.count-jobs {
+    display: flex;
+    margin-top: 32px;
+    span {
+        color: blue;
+    }
+    p {
+        margin-left: 4px;
+    }
+}
+.my-jobs {
+    .my-job-title {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 16px;
+        font-size: 18px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+    .my-job-content {
+        background-color: white;
+    }
+    .view-all {
+        text-align: center;
+        text-decoration: underline;
+        cursor: pointer;
+        &:hover {
+            opacity: 0.8;
         }
     }
 }

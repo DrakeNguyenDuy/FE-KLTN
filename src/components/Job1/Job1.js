@@ -1,12 +1,16 @@
 import React from 'react';
-import { Badge, Button, Card, Col, Row } from 'react-bootstrap';
-import styles from './Job.module.scss';
-import className from 'classnames/bind';
 import { Link } from 'react-router-dom';
+import { Badge, Button, Col, Row } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendar } from '@fortawesome/free-regular-svg-icons';
+import className from 'classnames/bind';
+
+import styles from './Job.module.scss';
+
 const cx = className.bind(styles);
 export default function Job(props) {
     return (
-        <div className={cx('job', 'mw-100', 'mb-2')}>
+        <div className={cx('job', 'mw-100', 'mb-2', props.className)}>
             <Row className={cx('content_job')}>
                 <Col className={cx('col1')}>
                     <img className={cx('img_job')} src="static/imgs/brand.jpg" alt="" />
@@ -29,7 +33,12 @@ export default function Job(props) {
                 </Col>
                 {props.big ? (
                     <Col className={cx('ps-0', 'col3')}>
-                        <Row className={cx('sub_row', 'infor_job')}>1/1/2012</Row>
+                        <Row className={cx('sub_row', 'infor_job')}>
+                            <div className={cx('date-infor')}>
+                                <FontAwesomeIcon icon={faCalendar} />
+                                <p>01/01/2012</p>
+                            </div>
+                        </Row>
                         <Button>Theo dõi</Button>
                     </Col>
                 ) : null}
