@@ -10,6 +10,10 @@
     // box-shadow: 0px 5px 5px var(--gray-color);
     box-shadow: 0px 1px 1px #dddcdc;
     padding: 10px;
+    &:hover {
+        background-color: #dddcdc;
+        transition: linear 0.5s;
+    }
 }
 .content_job {
     display: flex;

@@ -4,11 +4,13 @@ import { Form } from 'react-bootstrap';
 import Pagination from 'react-bootstrap/Pagination';
 import styles from './JobPage.module.scss';
 import className from 'classnames/bind';
+import axios from 'axios';
 
 import Job1 from '../../components/Job1';
 import FindJob from '~/components/FindJob';
 import CustomBreadCrumb from '~/components/CustomBreadCrumb';
 import CardProfile from '~/components/CardProfile';
+import { useEffect } from 'react';
 
 const cx = className.bind(styles);
 
@@ -16,8 +18,27 @@ const breadcrumbItems = [
     { name: 'Trang chủ', href: '/' },
     { name: 'Việc làm', href: '/jobs' },
 ];
+
 export default function Job() {
     // const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        const getProduct = async () => {
+            const products = await axios.get('http://localhost:8091/api/v2/products');
+
+            const jobs = products.data.products.map((product) => ({
+                locationsDecription: product.locationsDecription,
+                skillsDecription: product.skillsDecription,
+                price: product.price,
+                dateAvailable: product.dateAvailable,
+                rating: product.rating,
+                ratingCount: product.ratingCount,
+            }));
+            console.log(jobs);
+        };
+        getProduct();
+    }, []);
+
     return (
         <div className={cx('page-job')}>
             <FindJob />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -9,15 +9,46 @@ import className from 'classnames/bind';
 import styles from './Login.module.scss';
 
 import CustomPassword from '~/components/CustomPassword';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '~/store/reducers/authSlice';
+import { useNavigate } from 'react-router-dom';
+import CustomButton from '~/components/CustomButton/CustomButton';
 
 const cx = className.bind(styles);
 
 function Login() {
-    // const [showPassword, setShowPassword] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
 
-    // const toggleShowPassword = () => {
-    //     setShowPassword(!showPassword);
-    // };
+    const token = useSelector((state) => state.auth.token);
+    const loading = useSelector((state) => state.auth.loading);
+    const error = useSelector((state) => state.auth.error);
+
+    const dispath = useDispatch();
+
+    const formRef = useRef();
+
+    useEffect(() => {
+        if (token) {
+            navigate('/');
+        }
+        if (error) {
+            setErrorMessage('Sai tài khoản hoặc mật khẩu.');
+        } else {
+            setErrorMessage('');
+        }
+    }, [error, token]);
+
+    const submit = () => {
+        const data = {
+            username: formRef.current[0].value,
+            password: formRef.current[1].value,
+        };
+        dispath(login(data));
+    };
+
     return (
         <Row className={cx('wrapper')}>
             <Col lg={7}>
@@ -36,22 +67,35 @@ function Login() {
             <Col lg={5}>
                 <div className={cx('page-form')}>
                     <h2>Đăng nhập</h2>
-                    <Form>
+                    <Form ref={formRef}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Email </Form.Label>
-                            <Form.Control type="email" placeholder="Nhập email" />
+                            <Form.Control
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Nhập email"
+                            />
                         </Form.Group>
                         <CustomPassword
                             controlId={'formBasicPassword'}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             labelName={'Mật khẩu'}
                             placeholder={'Nhập mật khẩu'}
                         />
+                        <Form.Group className={cx('form-error')}>
+                            <p>{errorMessage}</p>
+                        </Form.Group>
                         <Form.Group className={cx('fogotpass')}>
                             <a href="forgotpass">Quên mật khẩu?</a>
                         </Form.Group>
-                        <Button className={cx('confirm-button')} type="submit">
+                        {/* <Button className={cx('confirm-button')} onClick={submit}>
                             Đăng nhập
-                        </Button>
+                        </Button> */}
+                        <CustomButton isLoading={loading} className={cx('confirm-button')} onClick={submit}>
+                            Đăng nhập
+                        </CustomButton>
                         <Form.Group className={cx('login-with')}>
                             <p>Hoặc đăng nhập với</p>
                         </Form.Group>

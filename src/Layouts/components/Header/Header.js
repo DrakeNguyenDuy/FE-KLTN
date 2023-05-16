@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Container,
     Nav,
@@ -17,9 +17,25 @@ import { faUser, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { auth } from '~/store/reducers/authSlice';
+import { logout } from '~/apiServices/authService';
 const cx = className.bind(styles);
 
 function Header() {
+    const token = useSelector((state) => state.auth.token);
+    const user = useSelector((state) => state.auth.user);
+    const dispath = useDispatch();
+
+    useEffect(() => {
+        if (token) dispath(auth(token));
+        console.log(user);
+    }, [token]);
+
+    const handleLogout = () => {
+        dispath({ type: 'auth/logout' });
+    };
+
     return (
         <Navbar className={cx('header', 'p-0')} expand="lg">
             <Container className={cx('re-container', 'pe-0')}>
@@ -77,7 +93,7 @@ function Header() {
                                 </div>
                                 <div className={cx('action-auth')}>
                                     <Link to={'/login'} className="fsc_2">
-                                        Đăng nhập
+                                        {user ? user.userName : 'Đăng nhập'}
                                     </Link>
                                     <OverlayTrigger
                                         rootClose
@@ -88,17 +104,19 @@ function Header() {
                                             <Popover show={false} id={`popover-positioned-bottom`}>
                                                 <Popover.Body>
                                                     <ListGroup>
-                                                        <ListGroup.Item>
-                                                            {' '}
-                                                            <Link className="fsc_2" to="/register">
-                                                                Đăng ký
-                                                            </Link>
-                                                        </ListGroup.Item>
-                                                        <ListGroup.Item>
-                                                            <Link className="fsc_2" to="/logout">
-                                                                Đăng xuất
-                                                            </Link>
-                                                        </ListGroup.Item>
+                                                        {user ? null : (
+                                                            <ListGroup.Item>
+                                                                {' '}
+                                                                <Link className="fsc_2" to="/register">
+                                                                    Đăng ký
+                                                                </Link>
+                                                            </ListGroup.Item>
+                                                        )}
+                                                        {user ? (
+                                                            <ListGroup.Item onClick={handleLogout}>
+                                                                <Link className="fsc_2">Đăng xuất</Link>
+                                                            </ListGroup.Item>
+                                                        ) : null}
                                                     </ListGroup>
                                                 </Popover.Body>
                                             </Popover>
