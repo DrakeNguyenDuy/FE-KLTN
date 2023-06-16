@@ -1,22 +1,64 @@
 // authSlice.js
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { login as authLogin, logout as authLogout, getUser } from '~/apiServices/authService';
+import request, { authHeader } from '~/axios/request';
 
-// Define your async thunk for logging in
+const API_EMPLOYER_LOGIN = 'v1/private/login';
+
+const API_ALUMUS_LOGIN = 'v1/customer/login';
+
+const API_AUTH_EMPLOYER = 'v1/private/user/profile';
+
+const API_AUTH_ALUMUS = 'v1/auth/customer/profile';
+
+const API_AUTH_ALUMUS_PROFILE = 'v1/auth/profile';
+
+const getToken = (type) => {
+    const token = JSON.parse(localStorage.getItem(type === 'employer' ? 'employerToken' : 'alumusToken'));
+    return token;
+};
+
+const getUser = async (data) => {
+    let user = null;
+    const response = await request.get(data.type === 'employer' ? API_AUTH_EMPLOYER : API_AUTH_ALUMUS, {
+        headers: authHeader(data.token),
+    });
+    user = response.data;
+    if (data.type === 'alumus') {
+        const res = await request.get(API_AUTH_ALUMUS_PROFILE, {
+            headers: authHeader(data.token),
+        });
+        user = { ...user, ...res.data };
+    }
+    console.log(user);
+
+    return user;
+};
+
 export const login = createAsyncThunk('auth/login', async (data) => {
-    const res = await authLogin(data);
-    console.log(res);
-    return res;
+    const response = await request.post(data.type === 'employer' ? API_EMPLOYER_LOGIN : API_ALUMUS_LOGIN, {
+        username: data.username,
+        password: data.password,
+    });
+    localStorage.setItem(
+        data.type === 'employer' ? 'employerToken' : 'alumusToken',
+        JSON.stringify(response.data.token),
+    );
+    return response.data;
 });
 
-export const auth = createAsyncThunk('auth/authUser', async (data) => {
-    const res = await getUser(data);
-    console.log(res);
-    return res;
+export const auth = createAsyncThunk('auth/authUser', async (type) => {
+    const token = getToken(type);
+    if (token) {
+        const res = await getUser({ token: token, type: type });
+        return { user: res, token: token };
+    } else return null;
 });
 
-// Define the initial state
+export const logout = createAsyncThunk('auth/logout', async (type) => {
+    localStorage.removeItem(type === 'employer' ? 'employerToken' : 'alumusToken');
+});
+
 const initialState = {
     token: null,
     loading: false,
@@ -24,19 +66,10 @@ const initialState = {
     user: null,
 };
 
-// Create the auth slice
 const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {
-        logout: (state) => {
-            authLogout();
-            state.token = null;
-            state.loading = false;
-            state.error = null;
-            state.user = null;
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(login.pending, (state) => {
@@ -52,10 +85,18 @@ const authSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(auth.fulfilled, (state, action) => {
-                state.user = action.payload;
+                if (action.payload) {
+                    state.user = action.payload.user;
+                    state.token = action.payload.token;
+                }
+            })
+            .addCase(logout.fulfilled, (state, action) => {
+                state.token = null;
+                state.loading = false;
+                state.error = null;
+                state.user = null;
             });
     },
 });
 
-export const { logout } = authSlice.actions;
 export default authSlice.reducer;

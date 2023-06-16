@@ -1,0 +1,10 @@
+.wrapper {
+    background-color: var(--gray-color);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    ol {
+        padding: 0;
+        margin: 0;
+    }
+}

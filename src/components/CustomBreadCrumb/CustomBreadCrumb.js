@@ -5,7 +5,6 @@ import className from 'classnames/bind';
 const cx = className.bind(styles);
 
 function CustomBreadCrumb({ items, ...props }) {
-    console.log(items);
     return (
         <div className={cx('wrapper', props.className)}>
             <Breadcrumb>

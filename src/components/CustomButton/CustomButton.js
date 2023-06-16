@@ -5,9 +5,9 @@ import styles from './CustomButton.module.scss';
 
 const cx = className.bind(styles);
 
-function CustomButton({ isLoading = false, children, ...props }) {
+function CustomButton({ isLoading = false, children, wrapperStyle, ...props }) {
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper', wrapperStyle)}>
             <Button {...props}>{children}</Button>
             {isLoading ? (
                 <div className={cx('loading-overlay')}>

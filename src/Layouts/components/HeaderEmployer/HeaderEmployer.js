@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Container,
     Nav,
@@ -14,12 +14,26 @@ import {
 import className from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { auth, logout } from '~/store/reducers/authSlice';
 
 import styles from './HeaderEmployer.module.scss';
 import { Link } from 'react-router-dom';
 const cx = className.bind(styles);
 
 function HeaderEmployer() {
+    const token = useSelector((state) => state.auth.token);
+    const user = useSelector((state) => state.auth.user);
+    const dispath = useDispatch();
+
+    useEffect(() => {
+        dispath(auth('employer'));
+    }, [token]);
+
+    const handleLogout = () => {
+        dispath(logout('employer'));
+    };
+
     return (
         <Navbar className={cx('header', 'p-0')} expand="lg">
             <Container className={cx('re-container', 'pe-0')}>
@@ -41,21 +55,18 @@ function HeaderEmployer() {
                 />
                 <Navbar.Offcanvas id="basic-navbar-nav" aria-labelledby="basic-navbar-nav">
                     <Offcanvas.Header closeButton>
-                        <Offcanvas.Title>Tìm việc làm</Offcanvas.Title>
+                        <Offcanvas.Title>Tuyển dụng</Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
                         <Nav className={cx('wrap-offcanvas-body', 'w-100', 'justify-content-between')}>
-                            <NavDropdown className="fsc_1" title="Việc làm" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">Option 1</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">Option 2</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">OPtion 3</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.4">Option 4</NavDropdown.Item>
-                            </NavDropdown>
+                            <Nav.Link href="#2" className="fsc_1">
+                                Quản lý tin tuyển dụng
+                            </Nav.Link>
                             <Nav.Link href="#2" className="fsc_1">
                                 Hồ sơ
                             </Nav.Link>
-                            <Nav.Link href="#3" className="fsc_1">
-                                Đăng việc
+                            <Nav.Link href="/employer/post-job" className="fsc_1">
+                                Đăng tin tuyển dụng
                             </Nav.Link>
                             <NavDropdown className="fsc_1" title="Thông báo" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#action/3.1">Option 1</NavDropdown.Item>
@@ -68,8 +79,8 @@ function HeaderEmployer() {
                                     <FontAwesomeIcon size="xl" color="var(--secondary-color)" icon={faUser} />
                                 </div>
                                 <div className={cx('action-auth')}>
-                                    <Link to={'/login'} className="fsc_2">
-                                        Đăng nhập
+                                    <Link to={'/employer/login'} className="fsc_2">
+                                        {user ? user.userName : 'Đăng nhập'}
                                     </Link>
                                     <OverlayTrigger
                                         rootClose
@@ -80,17 +91,19 @@ function HeaderEmployer() {
                                             <Popover show={false} id={`popover-positioned-bottom`}>
                                                 <Popover.Body>
                                                     <ListGroup>
-                                                        <ListGroup.Item>
-                                                            {' '}
-                                                            <Link className="fsc_2" to="/register">
-                                                                Đăng ký
-                                                            </Link>
-                                                        </ListGroup.Item>
-                                                        <ListGroup.Item>
-                                                            <Link className="fsc_2" to="/logout">
-                                                                Đăng xuất
-                                                            </Link>
-                                                        </ListGroup.Item>
+                                                        {user ? null : (
+                                                            <ListGroup.Item>
+                                                                {' '}
+                                                                <Link className="fsc_2" to="/register">
+                                                                    Đăng ký
+                                                                </Link>
+                                                            </ListGroup.Item>
+                                                        )}
+                                                        {user ? (
+                                                            <ListGroup.Item onClick={handleLogout}>
+                                                                <Link className="fsc_2">Đăng xuất</Link>
+                                                            </ListGroup.Item>
+                                                        ) : null}
                                                     </ListGroup>
                                                 </Popover.Body>
                                             </Popover>
