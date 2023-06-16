@@ -13,6 +13,7 @@
     --boder-radius: 10px;
     --success-color: #008563;
     --gray-color: #faf9f9;
+    --box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 * {
@@ -73,6 +74,17 @@
 }
 // form login
 form .form-control {
+    padding: 0.7rem;
+    background-color: var(--form-background-color);
+    color: var(--form-primary-color);
+    border-radius: var(--boder-radius);
+    border: none;
+    &::placeholder {
+        color: var(--form-primary-color);
+    }
+}
+
+.form-select {
     padding: 0.7rem;
     background-color: var(--form-background-color);
     color: var(--form-primary-color);

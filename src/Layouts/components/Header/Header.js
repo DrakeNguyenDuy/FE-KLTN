@@ -18,8 +18,7 @@ import { faUser, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
 import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { auth } from '~/store/reducers/authSlice';
-import { logout } from '~/apiServices/authService';
+import { auth, logout } from '~/store/reducers/authSlice';
 const cx = className.bind(styles);
 
 function Header() {
@@ -28,12 +27,11 @@ function Header() {
     const dispath = useDispatch();
 
     useEffect(() => {
-        if (token) dispath(auth(token));
-        console.log(user);
+        dispath(auth('alumus'));
     }, [token]);
 
     const handleLogout = () => {
-        dispath({ type: 'auth/logout' });
+        dispath(logout('alumus'));
     };
 
     return (

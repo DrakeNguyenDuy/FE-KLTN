@@ -10,7 +10,7 @@ import styles from './Login.module.scss';
 
 import CustomPassword from '~/components/CustomPassword';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '~/store/reducers/authSlice';
+import { login, logout } from '~/store/reducers/authSlice';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '~/components/CustomButton/CustomButton';
 
@@ -31,6 +31,11 @@ function Login() {
     const formRef = useRef();
 
     useEffect(() => {
+        dispath(logout('alumus'));
+        // eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
         if (token) {
             navigate('/');
         }
@@ -39,10 +44,12 @@ function Login() {
         } else {
             setErrorMessage('');
         }
+        // eslint-disable-next-line
     }, [error, token]);
 
     const submit = () => {
         const data = {
+            type: 'alumus',
             username: formRef.current[0].value,
             password: formRef.current[1].value,
         };

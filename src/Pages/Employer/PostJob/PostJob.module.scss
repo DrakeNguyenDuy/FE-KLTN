@@ -1,0 +1,47 @@
+.wrapper {
+    margin-bottom: 50px;
+}
+.page-title {
+    text-align: center;
+}
+form {
+    width: 80%;
+    margin: auto;
+}
+.salary {
+    display: flex;
+    flex-direction: row;
+    .min-salary,
+    .max-salary {
+        flex-grow: 1;
+    }
+    .min-salary {
+        margin-right: 8px;
+    }
+    .max-salary {
+        margin-left: 8px;
+    }
+}
+.confirm-button {
+    margin-top: 16px;
+    background-color: var(--primary-color);
+    border-radius: var(--boder-radius);
+    &:hover {
+        opacity: 0.8;
+    }
+}
+.wrapper-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.location {
+    display: flex;
+    :first-child {
+        margin-right: 10px;
+    }
+    :last-child {
+        margin-left: 10px;
+    }
+    margin-bottom: 10px;
+}

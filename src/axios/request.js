@@ -14,4 +14,8 @@ export const post = async (path, data, options = {}) => {
     return response.data;
 };
 
+export const authHeader = (token) => ({
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+});
 export default request;
