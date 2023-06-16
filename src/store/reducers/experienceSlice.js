@@ -14,7 +14,7 @@ const initialState = {
     experiences: [],
 };
 
-const careerSlice = createSlice({
+const slice = createSlice({
     name: 'experience',
     initialState,
     reducers: {},
@@ -25,4 +25,4 @@ const careerSlice = createSlice({
     },
 });
 
-export default careerSlice.reducer;
+export default slice.reducer;

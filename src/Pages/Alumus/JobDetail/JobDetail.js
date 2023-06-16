@@ -54,11 +54,24 @@ function JobDetail() {
                         />
                     </div>
                     <div className={cx('overview-description')}>
-                        <h2 className={cx('job-title')}>Thực tập sinh IT</h2>
-                        <h3 className={cx('company-name')}>Công ty TNHH Công nghệ Snetel</h3>
-                        <p className={cx('exprire-date')}>Hạn nộp hồ sơ: 30/06/2023</p>
-                        <p className={cx('address')}>
+                        {/* <h2 className={cx('job-title')}>Thực tập sinh IT</h2> */}
+                        <h2 className={cx('job-title')}>{jobDetails?.sku}</h2>
+                        {/* <h3 className={cx('company-name')}>Công ty TNHH Công nghệ Snetel</h3> */}
+                        <h3 className={cx('company-name')}>{jobDetails?.merchantStore.storeName}</h3>
+                        {/* <p className={cx('exprire-date')}>Hạn nộp hồ sơ: 30/06/2023</p> */}
+                        <p className={cx('exprire-date')}>Hạn nộp hồ sơ: {jobDetails?.dateExperience}</p>
+                        {/* <p className={cx('address')}>
                             Địa chỉ: Hồ Chí Minh: 156A Trần Quang Khải, Quận 1, TP. HCM, Quận 1
+                        </p> */}
+                        <p className={cx('address')}>
+                            Địa chỉ:{' '}
+                            {jobDetails?.locations[0].detailAddress +
+                                ', ' +
+                                jobDetails?.locations[0].ward +
+                                ', ' +
+                                jobDetails?.locations[0].district +
+                                ', ' +
+                                jobDetails?.locations[0].province}
                         </p>
                     </div>
                     <div className={cx('button-group')}>
@@ -87,7 +100,7 @@ function JobDetail() {
                 <div className="job-details">
                     <ReactQuill theme="snow" value={jobDetails?.description} readOnly={true} />
                 </div>
-                <CustomButton wrapperStyle={cx('btn-apply')}>Ứng tuyển ngay</CustomButton>
+                {/* <CustomButton wrapperStyle={cx('btn-apply')}>Ứng tuyển ngay</CustomButton> */}
             </section>
         </div>
     );

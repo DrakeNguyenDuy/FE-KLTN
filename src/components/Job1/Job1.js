@@ -10,7 +10,7 @@ import styles from './Job.module.scss';
 const cx = className.bind(styles);
 export default function Job({ big = true, data, ...props }) {
     return (
-        <div className={cx('job', 'mw-100', 'mb-2', props.className)}>
+        <div className={cx('job', 'mw-100', 'mb-2', props.className)} {...props}>
             <Row className={cx('content_job')}>
                 <Col className={cx('col1')}>
                     <img className={cx('img_job')} src="static/imgs/brand.jpg" alt="" />

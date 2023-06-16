@@ -66,7 +66,7 @@ const initialState = {
     user: null,
 };
 
-const authSlice = createSlice({
+const slice = createSlice({
     name: 'auth',
     initialState,
     reducers: {},
@@ -99,4 +99,4 @@ const authSlice = createSlice({
     },
 });
 
-export default authSlice.reducer;
+export default slice.reducer;

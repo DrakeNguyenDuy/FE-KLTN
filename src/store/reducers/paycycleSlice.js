@@ -1,26 +1,28 @@
+// authSlice.js
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import request, { authHeader } from '~/axios/request';
 
-const API_GET_POSITION = 'v2/private/positions';
+const API_GET_PAYCYCLE = 'v2/private/paycycles';
 
-export const getPosition = createAsyncThunk('position/get', async (token) => {
-    const response = await request.get(API_GET_POSITION, {
+export const getPaycycle = createAsyncThunk('paycycle/get', async (token) => {
+    const response = await request.get(API_GET_PAYCYCLE, {
         headers: authHeader(token),
     });
     return response.data.data;
 });
 
 const initialState = {
-    positions: [],
+    paycycles: [],
 };
 
 const slice = createSlice({
-    name: 'position',
+    name: 'paycycle',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getPosition.fulfilled, (state, action) => {
-            state.positions = action.payload;
+        builder.addCase(getPaycycle.fulfilled, (state, action) => {
+            state.paycycles = action.payload;
         });
     },
 });
