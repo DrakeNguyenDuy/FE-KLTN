@@ -7,6 +7,7 @@ import typeWorkSlice from './reducers/typeWorkSlice';
 import experienceSlice from './reducers/experienceSlice';
 import positionSlice from './reducers/positionSlice';
 import locationSlice from './reducers/locationSlice';
+import paycycleSlice from './reducers/paycycleSlice';
 
 const store = configureStore({
     reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
         experience: experienceSlice,
         position: positionSlice,
         location: locationSlice,
+        paycycle: paycycleSlice,
     },
 });
 

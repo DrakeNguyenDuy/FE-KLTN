@@ -17,6 +17,7 @@ import { getExperience } from '~/store/reducers/experienceSlice';
 import { getPosition } from '~/store/reducers/positionSlice';
 import { getDistrict, getProvince, getWard, resetDistrict, resetWard } from '~/store/reducers/locationSlice';
 import { createJob } from '~/store/reducers/jobSlice';
+import { getPaycycle } from '~/store/reducers/paycycleSlice';
 
 const cx = className.bind(styles);
 const modules = {
@@ -59,9 +60,7 @@ const breadcrumbItems = [
 
 function PostJob() {
     const [jobDescription, setJobDescription] = useState('');
-    // const [jobRequirement, setJobRequirement] = useState('');
     const [showModal, setShowModal] = useState(false);
-    // const [districts, setDistricts] = useState([]);
     const [addressDetail, setAddressDetail] = useState('');
     // const [load, setLoad] = useState(true);
     const [skillSelected, setSkillSelected] = useState('');
@@ -79,6 +78,7 @@ function PostJob() {
     const provinces = useSelector((state) => state.location.provinces);
     const districts = useSelector((state) => state.location.districts);
     const wards = useSelector((state) => state.location.wards);
+    const paycycles = useSelector((state) => state.paycycle.paycycles);
 
     const formRef = useRef();
 
@@ -90,6 +90,7 @@ function PostJob() {
             dispath(getExperience(token));
             dispath(getPosition(token));
             dispath(getProvince(token));
+            dispath(getPaycycle(token));
             // setLoad(false);
         }
         // eslint-disable-next-line
@@ -110,7 +111,8 @@ function PostJob() {
                 district: +formRef.current['district'].value,
                 province: +formRef.current['province'].value,
             },
-            salary: formRef.current['jobMaxSalary'].value,
+            salary: formRef.current['salary'].value,
+            paycycle: formRef.current['paycycle'].value,
             jobType: formRef.current['JobWorkType'].value,
             exprireDate: formRef.current['JobExpriedDate'].value,
             gender: formRef.current['JobGender'].value,
@@ -179,17 +181,6 @@ function PostJob() {
                     <Form.Label>Tên công việc </Form.Label>
                     <Form.Control type="text" placeholder="Nhập tên công việc" />
                 </Form.Group>
-                {/* <Form.Group className="mb-3">
-                    <Form.Label>Yêu cầu công việc </Form.Label>
-                    <ReactQuill
-                        theme="snow"
-                        value={jobRequirement}
-                        onChange={setJobRequirement}
-                        modules={modules}
-                        formats={formats}
-                        placeholder="Nhập yêu cầu công việc"
-                    />
-                </Form.Group> */}
                 <Form.Group className="mb-3" controlId="jobCareer">
                     <Form.Label>Chọn ngành nghề</Form.Label>
                     <Form.Select aria-label="Chọn ngành nghề">
@@ -266,20 +257,20 @@ function PostJob() {
                         disabled={enterDetailAddress}
                     />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="jobMaxSalary">
+                <Form.Group className="mb-3">
                     <Form.Label>Nhập mức lương</Form.Label>
-                    <Form.Control type="text" placeholder="Nhập mức lương" />
+                    <div className={cx('salary')}>
+                        <Form.Control type="text" placeholder="Nhập mức lương" id="salary" />
+                        <Form.Select aria-label="Hình thức trả lương" id="paycycle">
+                            <option value={0}>Chọn hình thức trả lương</option>
+                            {paycycles.map((paycycle) => (
+                                <option key={paycycle.code} value={paycycle.code}>
+                                    {paycycle.name}
+                                </option>
+                            ))}
+                        </Form.Select>
+                    </div>
                 </Form.Group>
-                {/* <div className={cx('salary')}>
-                    <Form.Group className={cx('min-salary', 'mb-3')} controlId="jobMinSalary">
-                        <Form.Label>Nhập mức lương tối thiểu</Form.Label>
-                        <Form.Control type="text" placeholder="Nhập mức lương tối thiểu" />
-                    </Form.Group>
-                    <Form.Group className={cx('max-salary', 'mb-3')} controlId="jobMaxSalary">
-                        <Form.Label>Nhập mức lương tối đa</Form.Label>
-                        <Form.Control type="text" placeholder="Nhập mức lương tối đa" />
-                    </Form.Group>
-                </div> */}
                 <Form.Group className="mb-3" controlId="JobWorkType">
                     <Form.Label>Chọn hình thức làm việc</Form.Label>
                     <Form.Select aria-label="Chọn hình thức làm việc">
@@ -326,17 +317,11 @@ function PostJob() {
                         ))}
                     </Form.Select>
                 </Form.Group>
-                {/* <Form.Group className="mb-3" controlId="JobDegree">
-                    <Form.Label>Chọn bằng cấp</Form.Label>
-                    <Form.Select aria-label="Chọn bằng cấp">
-                        <option>Chọn bằng cấp</option>
-                    </Form.Select>
-                </Form.Group> */}
                 <Form.Group className="mb-3" controlId="JobNum">
                     <Form.Label>Nhập số lượng tuyển dụng</Form.Label>
                     <Form.Control type="text" placeholder="Nhập số lượng tuyển dụng" />
                 </Form.Group>
-                <Form.Group className="mb-3">
+                <Form.Group className="mb-3 post-job-quill">
                     <Form.Label>Mô tả công việc </Form.Label>
                     <ReactQuill
                         theme="snow"

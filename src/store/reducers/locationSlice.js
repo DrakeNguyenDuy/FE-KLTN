@@ -40,7 +40,7 @@ const initialState = {
     wards: [],
 };
 
-const careerSlice = createSlice({
+const slice = createSlice({
     name: 'location',
     initialState,
     reducers: {
@@ -67,6 +67,6 @@ const careerSlice = createSlice({
     },
 });
 
-export const { resetDistrict, resetWard } = careerSlice.actions;
+export const { resetDistrict, resetWard } = slice.actions;
 
-export default careerSlice.reducer;
+export default slice.reducer;

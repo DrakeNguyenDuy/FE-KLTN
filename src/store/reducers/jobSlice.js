@@ -51,15 +51,16 @@ export const createJob = createAsyncThunk('job/post', async (data) => {
         positionCode: [data.job.position],
         skillsDecription: data.job.skills.map((skill) => skill.value),
         locationsDecription: [data.job.location],
-        idPayCycl: 'month',
+        idPayCycl: data.job.paycycle,
         dateExperience: data.job.exprireDate,
         identifier: getSkuJobName(data.job.name),
         sku: getSkuJobName(data.job.name),
     };
-    const response = await request.post(API_POST_JOB, mapData, {
-        headers: authHeader(data.token),
-    });
-    return response.data;
+    console.log(mapData);
+    // const response = await request.post(API_POST_JOB, mapData, {
+    //     headers: authHeader(data.token),
+    // });
+    // return response.data;
 });
 
 const getSkuJobName = (jobName) => {
@@ -78,7 +79,7 @@ const initialState = {
     jobDetails: null,
 };
 
-const jobSlice = createSlice({
+const slice = createSlice({
     name: 'job',
     initialState,
     reducers: {},
@@ -92,4 +93,4 @@ const jobSlice = createSlice({
     },
 });
 
-export default jobSlice.reducer;
+export default slice.reducer;

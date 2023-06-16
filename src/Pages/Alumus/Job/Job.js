@@ -12,7 +12,7 @@ import CardProfile from '~/components/CardProfile';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getJobs } from '~/store/reducers/jobSlice';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const cx = className.bind(styles);
 
@@ -28,6 +28,7 @@ export default function Job() {
     const user = useSelector((state) => state.auth.user);
 
     const [searchParams, setSearchParams] = useSearchParams();
+    const navigate = useNavigate();
     const page = +searchParams.get('page');
     useEffect(() => {
         dispath(getJobs(page));
@@ -72,7 +73,7 @@ export default function Job() {
                         <Job1 big={true} />
                         <Job1 big={true} /> */}
                         {jobs?.products.map((job) => (
-                            <Job1 key={job.id} big={true} data={job} />
+                            <Job1 key={job.id} big={true} data={job} onClick={() => navigate(`/job/${job.sku}`)} />
                         ))}
                     </Col>
                     <Col lg={4} className={cx('ext-job')}>

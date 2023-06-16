@@ -45,3 +45,15 @@ form {
     }
     margin-bottom: 10px;
 }
+.salary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    :first-child {
+        flex-grow: 1;
+        margin-right: 10px;
+    }
+    :last-child {
+        width: 30%;
+    }
+}
