@@ -6,11 +6,11 @@ import request, { authHeader } from '~/axios/request';
 
 const API_GET_JOBS = 'v2/products';
 const API_GET_JOB_DETAILS = 'v2/product/';
-const API_POST_JOB = 'v2/private/product?store=nhahangmoi';
+const API_POST_JOB = 'v2/private/product';
 
 export const getJobs = createAsyncThunk('job/get', async (page) => {
     const response = await request.get(API_GET_JOBS, {
-        data: { page },
+        params: { page: page, count: 5 },
     });
     console.log(response.data);
     return response.data;
@@ -51,16 +51,17 @@ export const createJob = createAsyncThunk('job/post', async (data) => {
         positionCode: [data.job.position],
         skillsDecription: data.job.skills.map((skill) => skill.value),
         locationsDecription: [data.job.location],
-        idPayCycl: data.job.paycycle,
+        idPayCycle: data.job.paycycle,
         dateExperience: data.job.exprireDate,
         identifier: getSkuJobName(data.job.name),
         sku: getSkuJobName(data.job.name),
     };
     console.log(mapData);
-    // const response = await request.post(API_POST_JOB, mapData, {
-    //     headers: authHeader(data.token),
-    // });
-    // return response.data;
+    const response = await request.post(API_POST_JOB, mapData, {
+        headers: authHeader(data.token),
+        params: { store: data.employer },
+    });
+    return response.data;
 });
 
 const getSkuJobName = (jobName) => {

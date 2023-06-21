@@ -19,6 +19,7 @@ import { auth, logout } from '~/store/reducers/authSlice';
 
 import styles from './HeaderEmployer.module.scss';
 import { Link } from 'react-router-dom';
+import Avatar from '~/components/Avatar/Avatar';
 const cx = className.bind(styles);
 
 function HeaderEmployer() {
@@ -59,12 +60,12 @@ function HeaderEmployer() {
                     </Offcanvas.Header>
                     <Offcanvas.Body>
                         <Nav className={cx('wrap-offcanvas-body', 'w-100', 'justify-content-between')}>
-                            <Nav.Link href="#2" className="fsc_1">
-                                Quản lý tin tuyển dụng
-                            </Nav.Link>
-                            <Nav.Link href="#2" className="fsc_1">
+                            <Link to={'/employer/manage-job'} className="fsc_1">
+                                Quản lý tuyển dụng
+                            </Link>
+                            <Link to={'/profile'} className="fsc_1">
                                 Hồ sơ
-                            </Nav.Link>
+                            </Link>
                             <Nav.Link href="/employer/post-job" className="fsc_1">
                                 Đăng tin tuyển dụng
                             </Nav.Link>
@@ -76,7 +77,11 @@ function HeaderEmployer() {
                             </NavDropdown>
                             <div className={cx('dropdown-cusomize', 'd-dropdown-auth')}>
                                 <div className={cx('avatar')}>
-                                    <FontAwesomeIcon size="xl" color="var(--secondary-color)" icon={faUser} />
+                                    {user ? (
+                                        <Avatar src={user.avatar} base64 name={user.userName} />
+                                    ) : (
+                                        <FontAwesomeIcon size="xl" color="var(--secondary-color)" icon={faUser} />
+                                    )}
                                 </div>
                                 <div className={cx('action-auth')}>
                                     <Link to={'/employer/login'} className="fsc_2">

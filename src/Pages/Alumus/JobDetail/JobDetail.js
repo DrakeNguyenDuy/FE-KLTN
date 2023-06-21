@@ -32,7 +32,7 @@ function JobDetail() {
     const breadcrumbItems = [
         { name: 'Trang chủ', href: '/' },
         { name: 'Việc làm', href: '/jobs' },
-        { name: id, href: '/job/' + id },
+        { name: jobDetails?.name, href: '/job/' + jobDetails?.sku },
     ];
 
     useEffect(() => {
@@ -50,12 +50,12 @@ function JobDetail() {
                             fluid
                             className="d-block w-100"
                             src={'/static/imgs/logo-banner.png'}
-                            alt={'static/imgs/carousel_1.jpg'}
+                            alt={'/static/imgs/carousel_1.jpg'}
                         />
                     </div>
                     <div className={cx('overview-description')}>
                         {/* <h2 className={cx('job-title')}>Thực tập sinh IT</h2> */}
-                        <h2 className={cx('job-title')}>{jobDetails?.sku}</h2>
+                        <h2 className={cx('job-title')}>{jobDetails?.name}</h2>
                         {/* <h3 className={cx('company-name')}>Công ty TNHH Công nghệ Snetel</h3> */}
                         <h3 className={cx('company-name')}>{jobDetails?.merchantStore.storeName}</h3>
                         {/* <p className={cx('exprire-date')}>Hạn nộp hồ sơ: 30/06/2023</p> */}
@@ -84,14 +84,26 @@ function JobDetail() {
                 <div className="session-title">Thông tin chung</div>
                 <div className={cx('job-infor')}>
                     <div className={cx('items-row')}>
-                        <InforItem icon={faMoneyBill1Wave} title="Mức lương" content="3.000.000 VNĐ" />
-                        <InforItem icon={faBriefcase} title="Hình thức làm việc" content="remote" />
-                        <InforItem icon={faMedal} title="Vị trí" content="Nhân viên chính thức" />
+                        <InforItem
+                            icon={faMoneyBill1Wave}
+                            title="Mức lương"
+                            content={`${jobDetails?.price} VNĐ/${jobDetails?.paycycles}`}
+                        />
+                        <InforItem
+                            icon={faBriefcase}
+                            title="Hình thức làm việc"
+                            content={jobDetails?.categories[0].code}
+                        />
+                        <InforItem icon={faMedal} title="Vị trí" content={jobDetails?.positions[0].name} />
                     </div>
                     <div className={cx('items-row')}>
-                        <InforItem icon={faPersonHalfDress} title="Giới tính" content="Không yêu cầu" />
-                        <InforItem icon={faFlask} title="Kinh nghiệm" content="Không yêu cầu" />
-                        <InforItem icon={faPeopleGroup} title="Số lượng tuyển dụng" content="10 người" />
+                        <InforItem icon={faPersonHalfDress} title="Giới tính" content={jobDetails?.gender} />
+                        <InforItem icon={faFlask} title="Kinh nghiệm" content={jobDetails?.experience.name} />
+                        <InforItem
+                            icon={faPeopleGroup}
+                            title="Số lượng tuyển dụng"
+                            content={`${jobDetails?.quantity} người`}
+                        />
                     </div>
                 </div>
             </section>

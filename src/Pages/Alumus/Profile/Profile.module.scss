@@ -1,0 +1,100 @@
+.wrapper {
+    background-color: var(--form-background-color);
+    padding: 32px;
+}
+.overview {
+    border-radius: var(--boder-radius);
+    background-color: #fff;
+    padding: 32px;
+    box-shadow: var(--box-shadow);
+    .action {
+        margin-bottom: 10px;
+        display: flex;
+        gap: 10px;
+        padding: 4px;
+        position: absolute;
+        bottom: 4px;
+        left: 180px;
+        .btn-update-avatar {
+            button {
+                background-color: transparent;
+                border: 1px solid #fff;
+                box-shadow: var(--box-shadow);
+                &:hover {
+                    color: #000;
+                    border: 1px solid #000;
+                }
+            }
+        }
+    }
+    .overview-background {
+        height: 200px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        position: relative;
+        box-shadow: var(--box-shadow);
+        border-radius: var(--boder-radius);
+        background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+    }
+    .overview-content {
+        margin-top: 50px;
+        p {
+            margin: 0;
+            padding: 0;
+        }
+        .full-name {
+            font-weight: 500;
+            margin: 0;
+            padding: 0;
+            span {
+                font-size: 18px;
+            }
+        }
+        .introduce {
+            margin-top: 16px;
+        }
+    }
+    .avatar {
+        position: absolute;
+        bottom: -50px;
+        left: 20px;
+        width: 150px;
+        height: 150px;
+        img {
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: var(--box-shadow);
+        }
+    }
+}
+.content-block {
+    border-radius: var(--boder-radius);
+    background-color: #fff;
+    padding: 32px;
+    box-shadow: var(--box-shadow);
+    margin-top: 16px;
+}
+
+.description {
+    border-radius: var(--boder-radius);
+    background-color: #fff;
+    padding: 32px;
+    box-shadow: var(--box-shadow);
+    .description-img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .description-content {
+        margin-top: 16px;
+        text-align: center;
+        p {
+            margin: 0;
+            padding: 0;
+            text-align: left;
+        }
+        ul {
+            text-align: left;
+        }
+    }
+}

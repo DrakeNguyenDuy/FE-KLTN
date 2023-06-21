@@ -70,6 +70,7 @@ function PostJob() {
 
     const dispath = useDispatch();
     const token = useSelector((state) => state.auth.token);
+    const user = useSelector((state) => state.auth.user);
     const careers = useSelector((state) => state.career.careers);
     const skills = useSelector((state) => state.skill.skills);
     const typeWorks = useSelector((state) => state.typeWork.typeWorks);
@@ -83,6 +84,7 @@ function PostJob() {
     const formRef = useRef();
 
     useEffect(() => {
+        console.log(user);
         if (token) {
             dispath(getCareer(token));
             dispath(getSkill(token));
@@ -121,7 +123,7 @@ function PostJob() {
             numberOfRecruitments: formRef.current['JobNum'].value,
             description: jobDescription,
         };
-        dispath(createJob({ job: jobData, token }));
+        dispath(createJob({ job: jobData, token, employer: user.merchant }));
     };
 
     const handlePostJobLater = () => {
@@ -275,6 +277,7 @@ function PostJob() {
                     <Form.Label>Chọn hình thức làm việc</Form.Label>
                     <Form.Select aria-label="Chọn hình thức làm việc">
                         <option>Chọn hình thức làm việc</option>
+                        {console.log(typeWorks)}
                         {typeWorks.map((typeWork) => (
                             <option key={typeWork.code} value={typeWork.code}>
                                 {typeWork.code}
