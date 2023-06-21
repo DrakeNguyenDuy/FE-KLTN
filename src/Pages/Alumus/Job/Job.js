@@ -12,7 +12,7 @@ import CardProfile from '~/components/CardProfile';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getJobs } from '~/store/reducers/jobSlice';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 const cx = className.bind(styles);
 
@@ -31,14 +31,18 @@ export default function Job() {
     const navigate = useNavigate();
     const page = +searchParams.get('page');
     useEffect(() => {
-        dispath(getJobs(page));
+        dispath(getJobs(page === 0 ? page : page - 1));
     }, []);
 
     const renderPaging = (numOfPages, activeItem) => {
         const result = [];
         for (let index = 0; index < numOfPages; index++) {
             result.push(
-                <Pagination.Item key={index} active={activeItem === index ? true : false}>
+                <Pagination.Item
+                    href={`/jobs?page=${index + 1}`}
+                    key={index}
+                    active={activeItem === index ? true : false}
+                >
                     {index + 1}
                 </Pagination.Item>,
             );
@@ -99,7 +103,9 @@ export default function Job() {
                     <Pagination className={cx('pagination', 'justify-content-center mt-3')}>
                         {/* <Pagination.First /> */}
                         <Pagination.Prev />
-                        {jobs ? renderPaging(jobs.totalPages, page).map((paging) => paging) : null}
+                        {jobs
+                            ? renderPaging(jobs.totalPages, page === 0 ? page : page - 1).map((paging) => paging)
+                            : null}
                         {/* <Pagination.Item>{1}</Pagination.Item> */}
                         {/* <Pagination.Ellipsis /> */}
 

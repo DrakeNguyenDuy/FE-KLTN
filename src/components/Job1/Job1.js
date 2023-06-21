@@ -18,8 +18,8 @@ export default function Job({ big = true, data, ...props }) {
                 <Col className={cx('col2')}>
                     <Row className={cx('sub_row')}>
                         <Link className={cx('fsc_2', 'ms-0', 'ps-0', 'name_job')} to="#">
-                            {/* sku */}
-                            {data?.sku}
+                            {/* name */}
+                            {data?.name}
                         </Link>
                     </Row>
                     <Row className={cx('sub_row', 'infor_job')}>

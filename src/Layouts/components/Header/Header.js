@@ -19,6 +19,7 @@ import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { auth, logout } from '~/store/reducers/authSlice';
+import Avatar from '~/components/Avatar/Avatar';
 const cx = className.bind(styles);
 
 function Header() {
@@ -73,12 +74,12 @@ function Header() {
                                 <NavDropdown.Item href="#action/3.3">OPtion 3</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.4">Option 4</NavDropdown.Item>
                             </NavDropdown>
-                            <Nav.Link href="#2" className="fsc_1">
+                            <Link to={'/profile'} className="fsc_1">
                                 Hồ sơ
-                            </Nav.Link>
-                            <Nav.Link href="#3" className="fsc_1">
+                            </Link>
+                            <Link to={'/recruitment'} className="fsc_1">
                                 Ứng tuyển
-                            </Nav.Link>
+                            </Link>
                             <NavDropdown className="fsc_1" title="Thông báo" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#action/3.1">Option 1</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">Option 2</NavDropdown.Item>
@@ -87,7 +88,11 @@ function Header() {
                             </NavDropdown>
                             <div className={cx('dropdown-cusomize', 'd-dropdown-auth')}>
                                 <div className={cx('avatar')}>
-                                    <FontAwesomeIcon size="xl" color="var(--secondary-color)" icon={faUser} />
+                                    {user ? (
+                                        <Avatar src={user.avatar} base64 name={user.userName} />
+                                    ) : (
+                                        <FontAwesomeIcon size="xl" color="var(--secondary-color)" icon={faUser} />
+                                    )}
                                 </div>
                                 <div className={cx('action-auth')}>
                                     <Link to={'/login'} className="fsc_2">
