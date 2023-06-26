@@ -3,12 +3,26 @@ import styles from './Profile.module.scss';
 import className from 'classnames/bind';
 import CustomButton from '~/components/CustomButton/CustomButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCamera, faMars, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faMars, faPen, faVenus } from '@fortawesome/free-solid-svg-icons';
 import { Image } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProfile } from '~/store/reducers/profileSlice';
+import { useEffect } from 'react';
 
 const cx = className.bind(styles);
 
 function Profile() {
+    const dispath = useDispatch();
+
+    const token = useSelector((state) => state.auth.token);
+    const profile = useSelector((state) => state.profile.profile);
+
+    useEffect(() => {
+        if (token) {
+            dispath(getProfile(token));
+        }
+        // eslint-disable-next-line
+    }, [token]);
     return (
         <div className="container">
             <div className={cx('wrapper')}>
@@ -28,19 +42,34 @@ function Profile() {
                                     </CustomButton>
                                 </div>
                                 <Avatar className={cx('avatar')} src={'/static/imgs/logo-banner.png'} base64={false} />
+                                {/* <Avatar
+                                    className={cx('avatar')}
+                                    src={profile?.avatar}
+                                    base64={true}
+                                    name={profile?.fullName}
+                                /> */}
                             </div>
                             <div className={cx('overview-content')}>
                                 <h2 className={cx('full-name')}>
-                                    Lương Hữu Luân{' '}
+                                    {/* Lương Hữu Luân{' '} */}
+                                    {profile?.fullName}
                                     <span>
-                                        <FontAwesomeIcon icon={faMars} color={'blue'} />
+                                        {profile?.gender === 'M' ? (
+                                            <FontAwesomeIcon icon={faMars} color={'blue'} />
+                                        ) : (
+                                            <FontAwesomeIcon icon={faVenus} color={'red'} />
+                                        )}
+                                        {/* <FontAwesomeIcon icon={faMars} color={'blue'} /> */}
                                         {/* <FontAwesomeIcon icon={faVenus} color={'red'} /> */}
                                         {/* <FontAwesomeIcon icon={faVenusMars} color={'#8975ea'} /> */}
                                     </span>
                                 </h2>
-                                <p className={cx('career')}>Thực tập sinh IT</p>
-                                <p className={cx('introduce')}>- Giới thiệu: Tôi muốn kiếm 30 triệu mỗi ngày</p>
-                                <p className={cx('goal')}>- Mục tiêu: Tôi sẽ đi ăn cướp</p>
+                                {/* <p className={cx('career')}>Thực tập sinh IT</p> */}
+                                <p className={cx('career')}>{profile?.carreer.name}</p>
+                                {/* <p className={cx('introduce')}>- Giới thiệu: Tôi muốn kiếm 30 triệu mỗi ngày</p> */}
+                                <p className={cx('introduce')}>{profile?.introduce}</p>
+                                {/* <p className={cx('goal')}>- Mục tiêu: Tôi sẽ đi ăn cướp</p> */}
+                                <p className={cx('goal')}>{profile?.goal}</p>
                             </div>
                         </div>
                         <div className={cx('content-block')}>

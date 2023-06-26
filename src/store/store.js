@@ -8,6 +8,8 @@ import experienceSlice from './reducers/experienceSlice';
 import positionSlice from './reducers/positionSlice';
 import locationSlice from './reducers/locationSlice';
 import paycycleSlice from './reducers/paycycleSlice';
+import cvSlice from './reducers/cvSlice';
+import profileSlice from './reducers/profileSlice';
 
 const store = configureStore({
     reducer: {
@@ -20,6 +22,8 @@ const store = configureStore({
         position: positionSlice,
         location: locationSlice,
         paycycle: paycycleSlice,
+        cv: cvSlice,
+        profile: profileSlice,
     },
 });
 
