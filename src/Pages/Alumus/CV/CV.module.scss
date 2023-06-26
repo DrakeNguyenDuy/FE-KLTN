@@ -1,0 +1,30 @@
+.cv-header {
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    p {
+        margin: 0;
+    }
+    .header-btn-group {
+        display: flex;
+        gap: 10px;
+    }
+}
+.background-cv {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(to right, rgb(62, 81, 81), rgb(222, 203, 164));
+}
+.cv-wrapper {
+    margin: 64px;
+    margin-top: 100px;
+}

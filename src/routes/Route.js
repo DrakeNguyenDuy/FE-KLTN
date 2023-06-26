@@ -1,5 +1,6 @@
 import DefaultLayout from '~/Layouts/DefaultLayout';
 import EmployerLayout from '~/Layouts/EmployerLayout';
+import CV from '~/Pages/Alumus/CV/CV';
 import Home from '~/Pages/Alumus/Home';
 import Job from '~/Pages/Alumus/Job';
 import JobDetail from '~/Pages/Alumus/JobDetail';
@@ -18,6 +19,8 @@ const alumusRoutes = [
     { path: '/jobs', component: Job, layout: DefaultLayout },
     { path: '/profile', component: Profile, layout: DefaultLayout },
     { path: '/recruitment', component: Recruitment, layout: DefaultLayout },
+    { path: '/cv', component: CV, layout: DefaultLayout },
+    { path: '/full-cv', component: CV, layout: null },
     { path: '/login', component: Login, layout: DefaultLayout },
     { path: '/register', component: Register, layout: DefaultLayout },
     { path: '/job/:id', component: JobDetail, layout: DefaultLayout },

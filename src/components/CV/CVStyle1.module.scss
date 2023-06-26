@@ -1,0 +1,154 @@
+.cv-body {
+    min-width: 945px;
+    width: 945px;
+    padding: 4px;
+    box-shadow: var(--box-shadow);
+    background-color: #fff;
+    .top-group-header {
+        height: 84px;
+        background-color: #2395e0;
+        display: block;
+        padding: 16px;
+    }
+    .group-header {
+        margin-top: -40px;
+        display: flex;
+        .avatar-wrapper {
+            width: 140px;
+            height: 140px;
+            border: 4px solid #fff;
+            border-radius: 50%;
+            margin-left: 50px;
+        }
+        .short-profile-info {
+            margin-top: 30px;
+            padding: 16px;
+            flex-grow: 1;
+            h2,
+            p {
+                margin: 0;
+                padding: 0;
+            }
+            .name {
+                padding-right: 16px;
+                span {
+                    margin-left: 8px;
+                    font-size: 16px;
+                    color: #2395e0;
+                    img {
+                        width: 15px;
+                    }
+                }
+            }
+        }
+    }
+    .details-profile-info {
+        font-size: 15px;
+        letter-spacing: 0.8px;
+        margin-top: 16px;
+        .details-info {
+            display: flex;
+            .left-info,
+            .right-info {
+                flex-grow: 1;
+                padding: 16px;
+            }
+            .item {
+                flex-direction: row;
+            }
+            p {
+                max-width: 350px;
+            }
+        }
+        .details-target {
+            padding: 0 16px;
+            .target {
+                p {
+                    font-weight: normal;
+                }
+            }
+        }
+    }
+    .item {
+        display: flex;
+        flex-direction: column;
+        margin-top: 16px;
+        .item-title {
+            min-width: 80px;
+            span {
+                margin-right: 4px;
+                img {
+                    width: 15px;
+                    margin-top: -4px;
+                }
+            }
+        }
+        .item-body {
+            margin-top: 4px;
+        }
+        p {
+            margin: 0;
+            padding: 0;
+            margin-left: 8px;
+            flex-grow: 1;
+            font-weight: bold;
+        }
+
+        p.description,
+        p.time,
+        span.major {
+            font-weight: normal;
+        }
+        a.link {
+            p {
+                font-weight: normal;
+                color: blue;
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        }
+    }
+    .school-item {
+        .item-title {
+            font-weight: bold;
+        }
+    }
+    .website {
+        display: block;
+        p {
+            margin-left: 20px;
+            word-break: break-all;
+        }
+    }
+    .main-cv {
+        display: flex;
+        padding: 16px;
+        .main-cv-left,
+        .main-cv-right {
+            flex-grow: 1;
+        }
+        .main-block + .main-block {
+            margin-top: 32px;
+        }
+        .main-block {
+            margin: 16px;
+            .main-block-title {
+                font-size: 24px;
+                font-weight: bold;
+                color: #2395e0;
+                div {
+                    width: 100%;
+                    height: 4px;
+                    background-color: #eee;
+                    &::before {
+                        display: block;
+                        content: '';
+                        width: 30%;
+                        height: 4px;
+                        background-color: #2395e0;
+                    }
+                }
+            }
+        }
+    }
+}
