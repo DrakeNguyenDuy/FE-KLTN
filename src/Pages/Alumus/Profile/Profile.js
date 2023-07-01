@@ -7,15 +7,42 @@ import { faCamera, faMars, faPen, faVenus } from '@fortawesome/free-solid-svg-ic
 import { Image } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfile } from '~/store/reducers/profileSlice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import UploadAvatarModal from '~/components/UploadAvatarModal/UploadAvatarModal';
+import { postAvatar } from '~/store/reducers/cvSlice';
+import UpdateProfileModal from '~/components/UpdateProfileModal/UpdateProfileModal';
 
 const cx = className.bind(styles);
 
 function Profile() {
+    const [showAvatarModal, setShowAvatarModal] = useState(false);
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
     const dispath = useDispatch();
 
     const token = useSelector((state) => state.auth.token);
     const profile = useSelector((state) => state.profile.profile);
+
+    const handleOpenAvatarModal = () => {
+        setShowAvatarModal(true);
+    };
+
+    const handleCloseAvatarModal = () => {
+        setShowAvatarModal(false);
+    };
+
+    const handleSubmitAvatar = (data) => {
+        dispath(postAvatar({ token, data }));
+    };
+
+    const handleOpenUpdateModal = () => {
+        setShowUpdateModal(true);
+    };
+
+    const handleCloseUpdateModal = () => {
+        setShowUpdateModal(false);
+    };
+
+    const handleSubmitUpdate = (data) => {};
 
     useEffect(() => {
         if (token) {
@@ -26,6 +53,16 @@ function Profile() {
     return (
         <div className="container">
             <div className={cx('wrapper')}>
+                <UploadAvatarModal
+                    show={showAvatarModal}
+                    handleClose={handleCloseAvatarModal}
+                    handleSubmit={handleSubmitAvatar}
+                />
+                <UpdateProfileModal
+                    show={showUpdateModal}
+                    handleClose={handleCloseUpdateModal}
+                    handleSubmit={handleSubmitUpdate}
+                />
                 <div className="row">
                     <div className="col-md-7">
                         <div className={cx('overview')}>
@@ -34,10 +71,16 @@ function Profile() {
                                 // style={{ backgroundImage: 'url(/static/imgs/carousel_1.jpg)' }}
                             >
                                 <div className={cx('action')}>
-                                    <CustomButton wrapperStyle={cx('btn-update-avatar')}>
+                                    <CustomButton
+                                        wrapperStyle={cx('btn-update-avatar')}
+                                        onClick={handleOpenAvatarModal}
+                                    >
                                         <FontAwesomeIcon icon={faCamera} />
                                     </CustomButton>
-                                    <CustomButton wrapperStyle={cx('btn-update-avatar')}>
+                                    <CustomButton
+                                        wrapperStyle={cx('btn-update-avatar')}
+                                        onClick={handleOpenUpdateModal}
+                                    >
                                         <FontAwesomeIcon icon={faPen} />
                                     </CustomButton>
                                 </div>

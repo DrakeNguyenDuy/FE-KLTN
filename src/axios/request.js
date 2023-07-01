@@ -18,4 +18,9 @@ export const authHeader = (token) => ({
     Authorization: `Bearer ${token}`,
     'Content-Type': 'application/json',
 });
+
+export const authHeaderMultipart = (token) => ({
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'multipart/form-data',
+});
 export default request;

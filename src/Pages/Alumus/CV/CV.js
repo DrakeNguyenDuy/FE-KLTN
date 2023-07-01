@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './CV.module.scss';
 import className from 'classnames/bind';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -10,19 +10,50 @@ import { robotoNormal } from './fonts/robotoNormal';
 import { robotoItalic } from './fonts/robotoItalic';
 import { robotoBold } from './fonts/robotoBold';
 import { robotoBoldItalic } from './fonts/robotoBoldItalic';
-import { getCVWithToken } from '~/store/reducers/cvSlice';
-import CVStyle1 from '~/components/CV/CVStyle1';
+import { getCVWithToken, postAvatar } from '~/store/reducers/cvSlice';
+import CVStyle1 from '~/components/CVStyle/CVStyle1';
+import UploadAvatarModal from '~/components/UploadAvatarModal/UploadAvatarModal';
+import UpdateCVModal from '~/components/UpdateCVModal/UpdateCVModal';
 
 const cx = className.bind(styles);
 
 function CV() {
-    const dispath = useDispatch();
-
-    const cvRef = useRef(null);
     const location = useLocation();
+    const navigate = useNavigate();
+    const cvRef = useRef(null);
 
+    const [showAvatarModal, setShowAvatarModal] = useState(false);
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
     const token = useSelector((state) => state.auth.token);
     const cv = useSelector((state) => state.cv.cv);
+
+    const dispath = useDispatch();
+
+    const handleSeeFull = () => {
+        navigate('/full-cv');
+    };
+
+    const handleOpenAvatarModal = () => {
+        setShowAvatarModal(true);
+    };
+
+    const handleCloseAvatarModal = () => {
+        setShowAvatarModal(false);
+    };
+
+    const handleSubmitAvatar = (data) => {
+        dispath(postAvatar({ token, data }));
+    };
+
+    const handleOpenUpdateModal = () => {
+        setShowUpdateModal(true);
+    };
+
+    const handleCloseUpdateModal = () => {
+        setShowUpdateModal(false);
+    };
+
+    const handleSubmitUpdate = (data) => {};
 
     useEffect(() => {
         if (token) {
@@ -64,6 +95,16 @@ function CV() {
 
     return (
         <div className={cx('wrapper')}>
+            <UploadAvatarModal
+                show={showAvatarModal}
+                handleClose={handleCloseAvatarModal}
+                handleSubmit={handleSubmitAvatar}
+            />
+            <UpdateCVModal
+                show={showUpdateModal}
+                handleClose={handleCloseUpdateModal}
+                handleSubmit={handleSubmitUpdate}
+            />
             <div className="container">
                 <div className={cx('background-cv')}>
                     {checkPath() ? (
@@ -79,9 +120,9 @@ function CV() {
                             <p>Xem CV của Nhi</p>
 
                             <div className={cx('header-btn-group')}>
-                                <CustomButton>Cập nhật avatar</CustomButton>
-                                <CustomButton>Chỉnh sửa CV</CustomButton>
-                                <CustomButton>Xem full</CustomButton>
+                                <CustomButton onClick={handleOpenAvatarModal}>Cập nhật avatar</CustomButton>
+                                <CustomButton onClick={handleOpenUpdateModal}>Chỉnh sửa CV</CustomButton>
+                                <CustomButton onClick={handleSeeFull}>Xem full</CustomButton>
                                 <CustomButton onClick={() => handleDownloadCV()}>Tải CV</CustomButton>
                             </div>
                         </div>
