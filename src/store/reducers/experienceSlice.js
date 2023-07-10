@@ -1,12 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import request, { authHeader } from '~/axios/request';
+import request from '~/axios/request';
 
-const API_GET_EXPERIENCE = 'v2/private/experiences';
+const API_GET_EXPERIENCE = 'v2/experiences';
 
-export const getExperience = createAsyncThunk('experience/get', async (token) => {
-    const response = await request.get(API_GET_EXPERIENCE, {
-        headers: authHeader(token),
-    });
+export const getExperience = createAsyncThunk('experience/get', async () => {
+    const response = await request.get(API_GET_EXPERIENCE);
     return response.data.data;
 });
 
@@ -21,6 +19,7 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getExperience.fulfilled, (state, action) => {
             state.experiences = action.payload;
+            console.log('experiences', state.experiences);
         });
     },
 });

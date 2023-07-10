@@ -14,6 +14,7 @@ import { getCVWithToken, postAvatar } from '~/store/reducers/cvSlice';
 import CVStyle1 from '~/components/CVStyle/CVStyle1';
 import UploadAvatarModal from '~/components/UploadAvatarModal/UploadAvatarModal';
 import UpdateCVModal from '~/components/UpdateCVModal/UpdateCVModal';
+import { getCareer } from '~/store/reducers/careerSlice';
 
 const cx = className.bind(styles);
 
@@ -28,6 +29,13 @@ function CV() {
     const cv = useSelector((state) => state.cv.cv);
 
     const dispath = useDispatch();
+
+    useEffect(() => {
+        if (token) {
+            dispath(getCVWithToken(token));
+        }
+        // eslint-disable-next-line
+    }, [token]);
 
     const handleSeeFull = () => {
         navigate('/full-cv');
@@ -53,14 +61,9 @@ function CV() {
         setShowUpdateModal(false);
     };
 
-    const handleSubmitUpdate = (data) => {};
-
-    useEffect(() => {
-        if (token) {
-            dispath(getCVWithToken(token));
-        }
-        // eslint-disable-next-line
-    }, [token]);
+    const handleSubmitUpdate = (data) => {
+        console.log('data', data);
+    };
 
     const checkPath = () => location.pathname === '/full-cv';
     const handleDownloadCV = () => {
@@ -101,9 +104,10 @@ function CV() {
                 handleSubmit={handleSubmitAvatar}
             />
             <UpdateCVModal
+                data={cv}
                 show={showUpdateModal}
                 handleClose={handleCloseUpdateModal}
-                handleSubmit={handleSubmitUpdate}
+                handleSubmit={() => handleSubmitUpdate(cv)}
             />
             <div className="container">
                 <div className={cx('background-cv')}>

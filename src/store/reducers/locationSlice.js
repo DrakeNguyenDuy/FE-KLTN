@@ -1,34 +1,29 @@
 // authSlice.js
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import request, { authHeader } from '~/axios/request';
+import request from '~/axios/request';
 
-const API_GET_PROVINCE = 'v2/private/provinces';
-const API_GET_DISTRICT = 'v2/private/districts';
-const API_GET_WARD = 'v2/private/wards';
+const API_GET_PROVINCE = 'v2/provinces';
+const API_GET_DISTRICT = 'v2/districts';
+const API_GET_WARD = 'v2/wards';
 
-export const getProvince = createAsyncThunk('province/get', async (token) => {
-    const response = await request.get(API_GET_PROVINCE, {
-        headers: authHeader(token),
-    });
+export const getProvince = createAsyncThunk('province/get', async () => {
+    const response = await request.get(API_GET_PROVINCE);
     return response.data.data;
 });
-
-export const getDistrict = createAsyncThunk('district/get', async (data) => {
+export const getDistrict = createAsyncThunk('district/get', async (idProvince) => {
     const response = await request.get(API_GET_DISTRICT, {
-        headers: authHeader(data.token),
         params: {
-            id_province: data.idProvince,
+            id_province: idProvince,
         },
     });
     return response.data.data;
 });
 
-export const getWard = createAsyncThunk('ward/get', async (data) => {
+export const getWard = createAsyncThunk('ward/get', async (idDistrict) => {
     const response = await request.get(API_GET_WARD, {
-        headers: authHeader(data.token),
         params: {
-            id_district: data.idDistrict,
+            id_district: idDistrict,
         },
     });
     return response.data.data;
@@ -54,15 +49,15 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getProvince.fulfilled, (state, action) => {
             state.provinces = action.payload;
-            console.log(action.payload);
+            console.log('provinces', state.provinces);
         });
         builder.addCase(getDistrict.fulfilled, (state, action) => {
             state.districts = action.payload;
-            console.log(action.payload);
+            console.log('districts', state.districts);
         });
         builder.addCase(getWard.fulfilled, (state, action) => {
             state.wards = action.payload;
-            console.log(action.payload);
+            console.log('wards', state.wards);
         });
     },
 });

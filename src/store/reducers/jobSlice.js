@@ -12,13 +12,11 @@ export const getJobs = createAsyncThunk('job/get', async (page) => {
     const response = await request.get(API_GET_JOBS, {
         params: { page: page, count: 5 },
     });
-    console.log(response.data);
     return response.data;
 });
 
 export const getJobDetail = createAsyncThunk('jobDetail/get', async (id) => {
     const response = await request.get(API_GET_JOB_DETAILS + id);
-    console.log(response.data);
     return response.data;
 });
 
@@ -56,7 +54,6 @@ export const createJob = createAsyncThunk('job/post', async (data) => {
         identifier: getSkuJobName(data.job.name),
         sku: getSkuJobName(data.job.name),
     };
-    console.log(mapData);
     const response = await request.post(API_POST_JOB, mapData, {
         headers: authHeader(data.token),
         params: { store: data.employer },

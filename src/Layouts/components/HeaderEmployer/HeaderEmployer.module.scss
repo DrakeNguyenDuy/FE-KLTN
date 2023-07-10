@@ -22,7 +22,7 @@ a {
     .dropdown-cusomize {
         height: 60px;
         background-color: var(--secondary-color);
-        border-radius: 100px;
+        border-radius: 0 100px 100px 0;
         display: inline-block;
         // span {
         //     content: '';
@@ -53,6 +53,7 @@ a {
 }
 
 .avatar {
+    margin-left: -30px;
     width: 60px;
     height: 60px;
     border-radius: 50%;

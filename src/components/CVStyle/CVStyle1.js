@@ -13,7 +13,7 @@ function CVStyle1({ data, ...props }) {
             <div className={cx('top-group-header')}></div>
             <div className={cx('group-header')}>
                 <div className={cx('avatar-wrapper')}>
-                    <Avatar src={'/static/imgs/anh-avatar.jpg'} base64={false} alt="avatart" />
+                    <Avatar src={data?.avatar} base64={true} alt="avatart" />
                 </div>
                 <div className={cx('short-profile-info')}>
                     <h2 className={cx('name')}>
@@ -94,8 +94,8 @@ function CVStyle1({ data, ...props }) {
                                 Website:
                             </div>
                             {/* <p>Facebook: https://www.facebook.com/*********************************</p> */}
-                            {data?.contacts.map((contact) => (
-                                <p>{contact?.name + ': ' + contact?.link}</p>
+                            {data?.contacts.map((contact, index) => (
+                                <p key={index}>{contact?.name + ': ' + contact?.link}</p>
                             ))}
                         </div>
                     </div>
@@ -134,8 +134,8 @@ function CVStyle1({ data, ...props }) {
                             Học vấn
                             <div></div>
                         </div>
-                        {data?.educations.map((education) => (
-                            <div className={cx('item', 'school-item')}>
+                        {data?.educations.map((education, index) => (
+                            <div className={cx('item', 'school-item')} key={index}>
                                 <div className={cx('item-title')}>
                                     <span>
                                         <Image src="/static/imgs/fontawesome/faGraduationCap.png" />
@@ -173,8 +173,8 @@ function CVStyle1({ data, ...props }) {
                             Kỹ năng
                             <div></div>
                         </div>
-                        {data?.skills.map((skill) => (
-                            <div className={cx('item', 'school-item')}>
+                        {data?.skills.map((skill, index) => (
+                            <div className={cx('item', 'school-item')} key={index}>
                                 <div className={cx('item-title')}>
                                     <p>- {skill.nameSkill}: </p>
                                 </div>
@@ -216,8 +216,8 @@ function CVStyle1({ data, ...props }) {
                             Kinh nghiệm
                             <div></div>
                         </div>
-                        {data?.workExperiences.map((workExperience) => (
-                            <div className={cx('item', 'school-item')}>
+                        {data?.workExperiences.map((workExperience, index) => (
+                            <div className={cx('item', 'school-item')} key={index}>
                                 <div className={cx('item-title')}>
                                     <span>
                                         <Image src="/static/imgs/fontawesome/faBriefcase.png" />
@@ -279,8 +279,8 @@ function CVStyle1({ data, ...props }) {
                             Bằng cấp
                             <div></div>
                         </div>
-                        {data?.certificates.map((certificate) => (
-                            <div className={cx('item', 'school-item')}>
+                        {data?.certificates.map((certificate, index) => (
+                            <div className={cx('item', 'school-item')} key={index}>
                                 <div className={cx('item-title')}>
                                     <span>
                                         <Image src="/static/imgs/fontawesome/faBriefcase.png" />

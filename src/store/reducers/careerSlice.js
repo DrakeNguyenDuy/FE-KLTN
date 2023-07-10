@@ -1,14 +1,12 @@
 // authSlice.js
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import request, { authHeader } from '~/axios/request';
+import request from '~/axios/request';
 
-const API_GET_CAREER = 'v1/private/product/types';
+const API_GET_CAREER = 'v1/product/types';
 
-export const getCareer = createAsyncThunk('career/get', async (token) => {
-    const response = await request.get(API_GET_CAREER, {
-        headers: authHeader(token),
-    });
+export const getCareer = createAsyncThunk('career/get', async () => {
+    const response = await request.get(API_GET_CAREER);
     return response.data;
 });
 
@@ -23,6 +21,7 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getCareer.fulfilled, (state, action) => {
             state.careers = action.payload.list;
+            console.log('careers', state.careers);
         });
     },
 });

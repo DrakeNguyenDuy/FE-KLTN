@@ -85,18 +85,16 @@ function PostJob() {
 
     useEffect(() => {
         console.log(user);
-        if (token) {
-            dispath(getCareer(token));
-            dispath(getSkill(token));
-            dispath(getTypeWork(token));
-            dispath(getExperience(token));
-            dispath(getPosition(token));
-            dispath(getProvince(token));
-            dispath(getPaycycle(token));
-            // setLoad(false);
-        }
+        dispath(getCareer());
+        dispath(getSkill());
+        dispath(getTypeWork());
+        dispath(getExperience());
+        dispath(getPosition());
+        dispath(getProvince());
+        dispath(getPaycycle());
+        // setLoad(false);
         // eslint-disable-next-line
-    }, [token]);
+    }, []);
 
     const handleSaveJob = () => {
         setShowModal(true);
@@ -136,7 +134,7 @@ function PostJob() {
             dispath(resetDistrict());
             setSelectDistrict(true);
         } else {
-            dispath(getDistrict({ token, idProvince: value }));
+            dispath(getDistrict(value));
             handleChangeDistrict('0');
             setSelectDistrict(false);
         }
@@ -148,7 +146,7 @@ function PostJob() {
             handleChangeWard('0');
             setSelectWard(true);
         } else {
-            dispath(getWard({ token, idDistrict: value }));
+            dispath(getWard(value));
             handleChangeWard('0');
             setSelectWard(false);
         }
@@ -280,7 +278,7 @@ function PostJob() {
                         {console.log(typeWorks)}
                         {typeWorks.map((typeWork) => (
                             <option key={typeWork.code} value={typeWork.code}>
-                                {typeWork.code}
+                                {typeWork.name}
                             </option>
                         ))}
                     </Form.Select>
