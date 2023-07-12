@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './CV.module.scss';
 import className from 'classnames/bind';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -10,7 +10,7 @@ import { robotoNormal } from './fonts/robotoNormal';
 import { robotoItalic } from './fonts/robotoItalic';
 import { robotoBold } from './fonts/robotoBold';
 import { robotoBoldItalic } from './fonts/robotoBoldItalic';
-import { getCVWithToken, postAvatar } from '~/store/reducers/cvSlice';
+import { getCVWithId, getCVWithToken, postAvatar, putUpdateCV } from '~/store/reducers/cvSlice';
 import CVStyle1 from '~/components/CVStyle/CVStyle1';
 import UploadAvatarModal from '~/components/UploadAvatarModal/UploadAvatarModal';
 import UpdateCVModal from '~/components/UpdateCVModal/UpdateCVModal';
@@ -18,8 +18,8 @@ import UpdateCVModal from '~/components/UpdateCVModal/UpdateCVModal';
 const cx = className.bind(styles);
 
 function CV() {
-    const location = useLocation();
     const navigate = useNavigate();
+    const { id } = useParams();
     const cvRef = useRef(null);
 
     const [showAvatarModal, setShowAvatarModal] = useState(false);
@@ -29,8 +29,19 @@ function CV() {
 
     const dispath = useDispatch();
 
+    useEffect(() => {
+        if (token) {
+            dispath(getCVWithToken(token));
+        }
+        if (id) {
+            console.log('cvid', id);
+            dispath(getCVWithId(id));
+        }
+        // eslint-disable-next-line
+    }, [token]);
+
     const handleSeeFull = () => {
-        navigate('/full-cv');
+        navigate('/full-cv/' + cv?.id);
     };
 
     const handleOpenAvatarModal = () => {
@@ -45,7 +56,7 @@ function CV() {
         dispath(postAvatar({ token, data }));
     };
 
-    const handleOpenUpdateModal = () => {
+    const handleOpenUpdateModal = (data) => {
         setShowUpdateModal(true);
     };
 
@@ -53,16 +64,10 @@ function CV() {
         setShowUpdateModal(false);
     };
 
-    const handleSubmitUpdate = (data) => {};
+    const handleSubmitUpdate = (data) => {
+        dispath(putUpdateCV({ id: cv.id, token, data }));
+    };
 
-    useEffect(() => {
-        if (token) {
-            dispath(getCVWithToken(token));
-        }
-        // eslint-disable-next-line
-    }, [token]);
-
-    const checkPath = () => location.pathname === '/full-cv';
     const handleDownloadCV = () => {
         const doc = new jsPDF({
             format: 'a4',
@@ -101,15 +106,16 @@ function CV() {
                 handleSubmit={handleSubmitAvatar}
             />
             <UpdateCVModal
+                data={cv}
                 show={showUpdateModal}
                 handleClose={handleCloseUpdateModal}
                 handleSubmit={handleSubmitUpdate}
             />
             <div className="container">
                 <div className={cx('background-cv')}>
-                    {checkPath() ? (
+                    {id ? (
                         <div className={cx('cv-header')}>
-                            <p>Xem CV của Nhi</p>
+                            <p>Xem CV của {cv?.firstName}</p>
 
                             <div className={cx('header-btn-group')}>
                                 <CustomButton onClick={() => handleDownloadCV()}>Tải CV</CustomButton>
@@ -117,7 +123,7 @@ function CV() {
                         </div>
                     ) : (
                         <div className={cx('cv-header')}>
-                            <p>Xem CV của Nhi</p>
+                            <p>Xem CV của {cv?.firstName}</p>
 
                             <div className={cx('header-btn-group')}>
                                 <CustomButton onClick={handleOpenAvatarModal}>Cập nhật avatar</CustomButton>

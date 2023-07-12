@@ -14,6 +14,11 @@ export const post = async (path, data, options = {}) => {
     return response.data;
 };
 
+export const put = async (path, data, options = {}) => {
+    const response = await request.put(path, data, options);
+    return response.data;
+};
+
 export const authHeader = (token) => ({
     Authorization: `Bearer ${token}`,
     'Content-Type': 'application/json',

@@ -1,14 +1,12 @@
 // authSlice.js
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import request, { authHeader } from '~/axios/request';
+import request from '~/axios/request';
 
-const API_GET_PAYCYCLE = 'v2/private/paycycles';
+const API_GET_PAYCYCLE = 'v2/paycycles';
 
-export const getPaycycle = createAsyncThunk('paycycle/get', async (token) => {
-    const response = await request.get(API_GET_PAYCYCLE, {
-        headers: authHeader(token),
-    });
+export const getPaycycle = createAsyncThunk('paycycle/get', async () => {
+    const response = await request.get(API_GET_PAYCYCLE);
     return response.data.data;
 });
 
@@ -23,6 +21,7 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getPaycycle.fulfilled, (state, action) => {
             state.paycycles = action.payload;
+            console.log('paycycles', state.paycycles);
         });
     },
 });
