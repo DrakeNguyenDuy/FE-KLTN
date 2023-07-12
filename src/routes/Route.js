@@ -20,7 +20,7 @@ const alumusRoutes = [
     { path: '/profile', component: Profile, layout: DefaultLayout },
     { path: '/recruitment', component: Recruitment, layout: DefaultLayout },
     { path: '/cv', component: CV, layout: DefaultLayout },
-    { path: '/full-cv', component: CV, layout: null },
+    { path: '/full-cv/:id', component: CV, layout: null },
     { path: '/login', component: Login, layout: DefaultLayout },
     { path: '/register', component: Register, layout: DefaultLayout },
     { path: '/job/:id', component: JobDetail, layout: DefaultLayout },

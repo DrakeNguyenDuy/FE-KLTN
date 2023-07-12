@@ -10,7 +10,7 @@
     right: 10px;
     top: 50%;
     padding: 0;
-    transform: translateY(-25%);
+    transform: translateY(-50%);
     button {
         background-color: red;
         opacity: 0.8;
@@ -28,6 +28,7 @@
     margin-bottom: 0 !important;
 }
 .content-block {
+    min-height: 60px;
     padding: 8px 64px 8px 8px;
     position: relative;
     box-shadow: var(--box-shadow);
@@ -37,4 +38,7 @@
         margin-top: 16px;
     }
     margin-bottom: 8px;
+    & > * {
+        margin-bottom: 10px;
+    }
 }

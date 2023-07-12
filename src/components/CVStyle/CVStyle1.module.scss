@@ -46,11 +46,12 @@
         font-size: 15px;
         letter-spacing: 0.8px;
         margin-top: 16px;
+        margin-left: 20px;
         .details-info {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             .left-info,
             .right-info {
-                flex-grow: 1;
                 padding: 16px;
             }
             .item {
@@ -121,15 +122,10 @@
         }
     }
     .main-cv {
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         padding: 16px;
-        .main-cv-left,
-        .main-cv-right {
-            flex-grow: 1;
-        }
-        .main-block + .main-block {
-            margin-top: 32px;
-        }
+
         .main-block {
             margin: 16px;
             .main-block-title {

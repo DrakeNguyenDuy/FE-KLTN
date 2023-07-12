@@ -3,7 +3,6 @@ import className from 'classnames/bind';
 
 import Avatar from '~/components/Avatar/Avatar';
 import { Image } from 'react-bootstrap';
-import { useEffect } from 'react';
 
 const cx = className.bind(styles);
 
@@ -86,18 +85,19 @@ function CVStyle1({ data, ...props }) {
                             {/* <p>00/00/0000</p> */}
                             <p>{data?.dob}</p>
                         </div>
-                        <div className={cx('item', 'website')}>
-                            <div className={cx('item-title')}>
-                                <span>
-                                    <Image src="/static/imgs/fontawesome/faGlobe.png" />
-                                </span>
-                                Website:
+                        {data?.contacts !== undefined && data?.contacts.length !== 0 && (
+                            <div className={cx('item', 'website')}>
+                                <div className={cx('item-title')}>
+                                    <span>
+                                        <Image src="/static/imgs/fontawesome/faGlobe.png" />
+                                    </span>
+                                    Website:
+                                </div>
+                                {data?.contacts.map((contact, index) => (
+                                    <p key={index}>{contact?.name + ': ' + contact?.link}</p>
+                                ))}
                             </div>
-                            {/* <p>Facebook: https://www.facebook.com/*********************************</p> */}
-                            {data?.contacts.map((contact, index) => (
-                                <p key={index}>{contact?.name + ': ' + contact?.link}</p>
-                            ))}
-                        </div>
+                        )}
                     </div>
                 </div>
                 <div className={cx('details-target')}>
@@ -127,7 +127,7 @@ function CVStyle1({ data, ...props }) {
             </div>
 
             <div className={cx('main-cv')}>
-                <div className={cx('main-cv-left')}>
+                {data?.educations !== undefined && data?.educations.length !== 0 && (
                     <div className={cx('education-group', 'main-block')}>
                         <div className={cx('main-block-title')}>
                             <span>@</span>
@@ -162,11 +162,13 @@ function CVStyle1({ data, ...props }) {
                                 <p className={cx('time')}>(09/2019 - 09/2023)</p>
                             </div>
                             <div className={cx('item-body')}>
-                                <p className={cx('description')}>Điểm trung bình 5.0/4.0</p>\
+                                <p className={cx('description')}>Điểm trung bình 5.0/4.0</p>
                             </div>
                         </div> */}
                     </div>
+                )}
 
+                {data?.skills !== undefined && data?.skills.length !== 0 && (
                     <div className={cx('skills-group', 'main-block')}>
                         <div className={cx('main-block-title')}>
                             <span>@</span>
@@ -208,9 +210,10 @@ function CVStyle1({ data, ...props }) {
                             </div>
                         </div> */}
                     </div>
-                </div>
-                <div className={cx('main-cv-right')}>
-                    <div className={cx('education-group', 'main-block')}>
+                )}
+
+                {data?.workExperiences !== undefined && data?.workExperiences.length !== 0 && (
+                    <div className={cx('experiences-group', 'main-block')}>
                         <div className={cx('main-block-title')}>
                             <span>@</span>
                             Kinh nghiệm
@@ -272,8 +275,10 @@ function CVStyle1({ data, ...props }) {
                             </div>
                         </div> */}
                     </div>
+                )}
 
-                    <div className={cx('education-group', 'main-block')}>
+                {data?.certificates !== undefined && data?.certificates.length !== 0 && (
+                    <div className={cx('certificate-group', 'main-block')}>
                         <div className={cx('main-block-title')}>
                             <span>@</span>
                             Bằng cấp
@@ -308,7 +313,7 @@ function CVStyle1({ data, ...props }) {
                             </div>
                         </div> */}
                     </div>
-                </div>
+                )}
             </div>
         </div>
     );

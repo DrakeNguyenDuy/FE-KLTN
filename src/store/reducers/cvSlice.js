@@ -4,10 +4,23 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import request, { authHeader, authHeaderMultipart } from '~/axios/request';
 
 const API_GET_CV = 'v1/auth/cv';
+const API_UPDATE_CV = 'v1/auth/cv';
 const API_POST_AVATAR = 'v1/auth/profile/avatar';
 
 export const getCVWithToken = createAsyncThunk('cv/get', async (token) => {
     const response = await request.get(API_GET_CV, {
+        headers: authHeader(token),
+    });
+    return response.data;
+});
+
+export const getCVWithId = createAsyncThunk('cvid/get', async (id) => {
+    const response = await request.get(API_GET_CV + '/' + id);
+    return response.data;
+});
+
+export const putUpdateCV = createAsyncThunk('cv/update', async ({ id, token, data }) => {
+    const response = await request.put(API_UPDATE_CV + '/' + id, data, {
         headers: authHeader(token),
     });
     return response.data;
@@ -51,6 +64,16 @@ const slice = createSlice({
             console.log('res', action.payload);
         });
         builder.addCase(postAvatar.rejected, (state, action) => {
+            console.log('err');
+        });
+        builder.addCase(getCVWithId.fulfilled, (state, action) => {
+            state.cv = action.payload;
+            console.log('cv', state.cv);
+        });
+        builder.addCase(putUpdateCV.fulfilled, (state, action) => {
+            console.log('res', action.payload);
+        });
+        builder.addCase(putUpdateCV.rejected, (state, action) => {
             console.log('err');
         });
     },

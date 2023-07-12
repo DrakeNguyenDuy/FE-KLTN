@@ -8,7 +8,9 @@ const cx = className.bind(styles);
 function CustomButton({ isLoading = false, children, wrapperStyle, ...props }) {
     return (
         <div className={cx('wrapper', wrapperStyle)}>
-            <Button {...props}>{children}</Button>
+            <Button style={props.disabled ? { backgroundColor: '#eee' } : null} {...props}>
+                {children}
+            </Button>
             {isLoading ? (
                 <div className={cx('loading-overlay')}>
                     <BeatLoader size={20} color={'var(--primary-color)'} loading={isLoading} />
