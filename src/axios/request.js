@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { API_ENDPOINT } from '~/constant';
 
 const request = axios.create({
-    baseURL: 'http://localhost:8091/api/',
+    baseURL: API_ENDPOINT,
 });
 
 export const get = async (path, options = {}) => {

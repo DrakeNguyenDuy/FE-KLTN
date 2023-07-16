@@ -34,7 +34,6 @@ function CV() {
             dispath(getCVWithToken(token));
         }
         if (id) {
-            console.log('cvid', id);
             dispath(getCVWithId(id));
         }
         // eslint-disable-next-line
@@ -66,6 +65,74 @@ function CV() {
 
     const handleSubmitUpdate = (data) => {
         dispath(putUpdateCV({ id: cv.id, token, data }));
+    };
+
+    const convertFormatDate = (dateString) => {
+        if (dateString) {
+            const parts = dateString.split('/');
+            return `${parts[2]}-${parts[1]}-${parts[0]}`;
+        } else return null;
+    };
+    const mapCV = (data) => {
+        if (data) {
+            return {
+                id: data.id,
+                firstName: data.firstName,
+                lastName: data.lastName,
+                dob: convertFormatDate(data.dob),
+                address: data.address,
+                avatar: data.avatar,
+                gender: data.gender,
+                email: data.email,
+                phoneNumber: data.phoneNumber,
+                title: data.title,
+                carrer: data.carrer,
+                englishLevel: data.englishLevel,
+                introduce: data.introduce,
+                goal: data.goal,
+                websites:
+                    data.contacts === null
+                        ? []
+                        : data.contacts.map((contact) => ({ name: contact.name, link: contact.link })),
+                skills:
+                    data.skills === null
+                        ? []
+                        : data.skills.map((skill) => ({
+                              nameSkill: skill.nameSkill,
+                              rate: skill.rate,
+                              des: skill.des,
+                          })),
+                educations:
+                    data.educations === null
+                        ? []
+                        : data.educations.map((education) => ({
+                              school: education.school,
+                              major: education.major,
+                              startDate: convertFormatDate(education.startDate),
+                              isGraduated: education.isGraduated ? 'true' : 'false',
+                              endDate: convertFormatDate(education.endDate),
+                              description: education.description,
+                          })),
+                experiences:
+                    data.workExperiences === null
+                        ? []
+                        : data.workExperiences.map((experience) => ({
+                              titlePosition: experience.titlePosition,
+                              companyName: experience.companyName,
+                              startDate: convertFormatDate(experience.startDate),
+                              isCurrent: experience.endDate === null ? 'true' : 'false',
+                              endDate: convertFormatDate(experience.endDate),
+                              description: experience.description,
+                          })),
+                certificates:
+                    data.certificates === null
+                        ? []
+                        : data.certificates.map((certificate) => ({
+                              name: certificate.name,
+                              linkReference: certificate.linkReference,
+                          })),
+            };
+        } else return null;
     };
 
     const handleDownloadCV = () => {
@@ -106,7 +173,7 @@ function CV() {
                 handleSubmit={handleSubmitAvatar}
             />
             <UpdateCVModal
-                data={cv}
+                data={mapCV(cv)}
                 show={showUpdateModal}
                 handleClose={handleCloseUpdateModal}
                 handleSubmit={handleSubmitUpdate}
@@ -135,7 +202,11 @@ function CV() {
                     )}
                     <div className={cx('cv-wrapper')}>
                         <div ref={cvRef}>
-                            <CVStyle1 data={cv} />
+                            {cv ? (
+                                <CVStyle1 data={cv} />
+                            ) : (
+                                <div className={cx('update-cv-info')}>Bạn chưa có cv hãy cập nhật cv của bạn!</div>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -12,40 +12,56 @@ function GroupInput({
     model = {},
     data,
     renderItem = () => null,
-    onDelete = () => null,
+    // onDelete = () => null,
+    onDelete,
     onAdd = () => null,
+    onChange,
     ...props
 }) {
-    const [listBlock, setListBlock] = useState([]);
-    const ref = useRef();
+    // const [listBlock, setListBlock] = useState([]);
+    // const ref = useRef();
 
-    useEffect(() => {
-        if (data && data.length !== 0) {
-            setListBlock(data);
-        }
-        // eslint-disable-next-line
-    }, []);
+    // useEffect(() => {
+    //     if (data && data.length !== 0) {
+    //         setListBlock(data);
+    //     }
+    //     // eslint-disable-next-line
+    // }, []);
 
     const handleAdd = () => {
-        setListBlock([...listBlock, model]);
+        // setListBlock([...listBlock, model]);
         onAdd();
     };
 
     const handleDelete = (index) => {
-        const newList = listBlock.filter((block, i) => i !== index);
-        setListBlock(newList);
+        // const newList = listBlock.filter((block, i) => i !== index);
+        // setListBlock(newList);
         onDelete();
     };
     return (
         <div className={cx('wrapper')} {...props}>
-            <div id="group-input-wrapper" ref={ref}>
+            {/* <div id="group-input-wrapper" ref={ref}> */}
+            <div id="group-input-wrapper">
                 <Form.Group className={cx('group-content', 'mb-3')}>
                     <Form.Label>{name}</Form.Label>
-                    {listBlock?.map((itemData, index) => (
+                    {/* {listBlock?.map((itemData, index) => (
                         <div className={cx('content-block')} key={index}>
                             <CustomButton
                                 wrapperStyle={cx('delete-button')}
                                 onClick={() => handleDelete(index)}
+                                // disabled={listBlock.length === 1 ? true : false}
+                            >
+                                <FontAwesomeIcon icon={faXmark} />
+                            </CustomButton>
+                            {renderItem(itemData)}
+                        </div>
+                    ))} */}
+
+                    {data?.map((itemData, index) => (
+                        <div className={cx('content-block')} key={index} onChange={(e) => onChange(e, index)}>
+                            <CustomButton
+                                wrapperStyle={cx('delete-button')}
+                                onClick={() => onDelete(index)}
                                 // disabled={listBlock.length === 1 ? true : false}
                             >
                                 <FontAwesomeIcon icon={faXmark} />

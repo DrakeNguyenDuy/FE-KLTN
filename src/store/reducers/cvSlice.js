@@ -4,6 +4,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import request, { authHeader, authHeaderMultipart } from '~/axios/request';
 
 const API_GET_CV = 'v1/auth/cv';
+const API_GET_CV_NO_AUTH = 'v1/cv';
 const API_UPDATE_CV = 'v1/auth/cv';
 const API_POST_AVATAR = 'v1/auth/profile/avatar';
 
@@ -15,7 +16,7 @@ export const getCVWithToken = createAsyncThunk('cv/get', async (token) => {
 });
 
 export const getCVWithId = createAsyncThunk('cvid/get', async (id) => {
-    const response = await request.get(API_GET_CV + '/' + id);
+    const response = await request.get(API_GET_CV_NO_AUTH + '/' + id);
     return response.data;
 });
 
@@ -37,7 +38,7 @@ export const postAvatar = createAsyncThunk('cv/postAvatar', async ({ token, data
     return response.data;
 });
 
-function dataURItoBlob(dataURI) {
+const dataURItoBlob = (dataURI) => {
     var byteString = atob(dataURI.split(',')[1]);
     var ab = new ArrayBuffer(byteString.length);
     var ia = new Uint8Array(ab);
@@ -45,7 +46,7 @@ function dataURItoBlob(dataURI) {
         ia[i] = byteString.charCodeAt(i);
     }
     return new Blob([ab], { type: 'image/png' });
-}
+};
 
 const initialState = {
     cv: null,
