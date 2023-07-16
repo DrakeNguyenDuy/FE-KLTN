@@ -67,6 +67,14 @@
                 p {
                     font-weight: normal;
                 }
+                textarea {
+                    resize: none;
+                    &:disabled {
+                        background: none;
+                        border: none;
+                        color: #000;
+                    }
+                }
             }
         }
     }

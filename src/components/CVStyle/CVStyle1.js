@@ -3,26 +3,40 @@ import className from 'classnames/bind';
 
 import Avatar from '~/components/Avatar/Avatar';
 import { Image } from 'react-bootstrap';
+import { BASE_URL } from '~/constant';
+import { useEffect, useRef, useState } from 'react';
 
 const cx = className.bind(styles);
 
 function CVStyle1({ data, ...props }) {
+    const [valGoal, setValGoal] = useState('');
+    const textAreaRef = useRef(null);
+
+    useEffect(() => {
+        if (data) {
+            setValGoal(data.goal);
+        }
+        resizeTextArea();
+    }, [valGoal, data]);
+
+    const resizeTextArea = () => {
+        textAreaRef.current.style.height = textAreaRef.current.scrollHeight + 'px';
+    };
+
     return (
         <div className={cx('cv-body')} {...props}>
             <div className={cx('top-group-header')}></div>
             <div className={cx('group-header')}>
                 <div className={cx('avatar-wrapper')}>
-                    <Avatar src={data?.avatar} base64={true} alt="avatart" />
+                    <Avatar src={BASE_URL + data?.avatar} base64={false} alt="avatart" />
                 </div>
                 <div className={cx('short-profile-info')}>
                     <h2 className={cx('name')}>
-                        {/* MAO DOÃN NHI */}
                         {data?.lastName + ' ' + data?.firstName}
                         <span>
                             <Image src="/static/imgs/fontawesome/faCircleCheck.png" />
                         </span>
                     </h2>
-                    {/* <p className={cx('career')}>@Thực tập IT</p> */}
                     <p className={cx('career')}>@{data?.title}</p>
                 </div>
             </div>
@@ -36,21 +50,15 @@ function CVStyle1({ data, ...props }) {
                                 </span>
                                 Email:
                             </div>
-                            {/* <p>
-                                nhidoan@gmail.com nhidoan nhidoan nhidoan nhidoan nhidoan nhidoan nhidoan nhidoan
-                                nhidoan
-                            </p> */}
                             <p>{data?.email}</p>
                         </div>
                         <div className={cx('item')}>
                             <div className={cx('item-title')}>
                                 <span>
-                                    {/* <FontAwesomeIcon icon={faUser} /> */}
                                     <Image src="/static/imgs/fontawesome/faUser.png" />
                                 </span>
                                 Giới tính:
                             </div>
-                            {/* <p>Nữ</p> */}
                             <p>{data?.gender === 'M' ? 'Nam' : 'Nữ'}</p>
                         </div>
                         <div className={cx('item')}>
@@ -72,7 +80,6 @@ function CVStyle1({ data, ...props }) {
                                 </span>
                                 Số điện thoại:
                             </div>
-                            {/* <p>096+++++++</p> */}
                             <p>{data?.phoneNumber}</p>
                         </div>
                         <div className={cx('item')}>
@@ -82,10 +89,9 @@ function CVStyle1({ data, ...props }) {
                                 </span>
                                 Ngày sinh:
                             </div>
-                            {/* <p>00/00/0000</p> */}
                             <p>{data?.dob}</p>
                         </div>
-                        {data?.contacts !== undefined && data?.contacts.length !== 0 && (
+                        {data?.contacts !== undefined && data?.contacts !== null && data?.contacts.length !== 0 && (
                             <div className={cx('item', 'website')}>
                                 <div className={cx('item-title')}>
                                     <span>
@@ -108,26 +114,13 @@ function CVStyle1({ data, ...props }) {
                             </span>
                             Mục tiêu:
                         </div>
-                        {/* <p>
-                            Facebook: https://www.facebook.com/**** https://www.facebook.com/****
-                            https://www.facebook.com /****https://www.facebook.com/**** https://www.fac ebook.com/****
-                        </p> */}
-                        <p>{data?.goal}</p>
+                        <textarea disabled value={valGoal} ref={textAreaRef}></textarea>
                     </div>
-                    {/* <div className={cx('item', 'target')}>
-                        <div className={cx('item-title')}>
-                            <span>
-                                <Image src="/static/imgs/fontawesome/faCircleExclamation.png" />
-                            </span>
-                            Mục tiêu ngắn hạn:
-                        </div>
-                        <p>Facebook: https://www.facebook.com/****</p>
-                    </div> */}
                 </div>
             </div>
 
             <div className={cx('main-cv')}>
-                {data?.educations !== undefined && data?.educations.length !== 0 && (
+                {data?.educations !== undefined && data?.educations !== null && data?.educations.length !== 0 && (
                     <div className={cx('education-group', 'main-block')}>
                         <div className={cx('main-block-title')}>
                             <span>@</span>
@@ -141,34 +134,20 @@ function CVStyle1({ data, ...props }) {
                                         <Image src="/static/imgs/fontawesome/faGraduationCap.png" />
                                     </span>
                                     {education.school},<p className={cx('major')}> {education?.major}</p>
-                                    <p className={cx('time')}>({education?.startDate + ' - ' + education?.endDate})</p>
+                                    <p className={cx('time')}>
+                                        ({education?.startDate} {' - '}
+                                        {education?.isGraduated ? education?.endDate : 'Hiện tại'})
+                                    </p>
                                 </div>
                                 <div className={cx('item-body')}>
-                                    <p className={cx('description')}>
-                                        {education?.isGraduated
-                                            ? 'Trạng thái: Đã tốt nghiệp'
-                                            : 'Trong quá trình học tập'}
-                                    </p>
+                                    <p className={cx('description')}>{education?.description}</p>
                                 </div>
                             </div>
                         ))}
-                        {/* <div className={cx('item', 'school-item')}>
-                            <div className={cx('item-title')}>
-                                <span>
-                                    <Image src="/static/imgs/fontawesome/faGraduationCap.png" />
-                                </span>
-                                Đại học Nâm Lông TP.HCM,
-                                <p className={cx('major')}> Công nghệ thông tin</p>
-                                <p className={cx('time')}>(09/2019 - 09/2023)</p>
-                            </div>
-                            <div className={cx('item-body')}>
-                                <p className={cx('description')}>Điểm trung bình 5.0/4.0</p>
-                            </div>
-                        </div> */}
                     </div>
                 )}
 
-                {data?.skills !== undefined && data?.skills.length !== 0 && (
+                {data?.skills !== undefined && data?.skills !== null && data?.skills.length !== 0 && (
                     <div className={cx('skills-group', 'main-block')}>
                         <div className={cx('main-block-title')}>
                             <span>@</span>
@@ -185,99 +164,38 @@ function CVStyle1({ data, ...props }) {
                                 </div>
                             </div>
                         ))}
-                        {/* <div className={cx('item', 'school-item')}>
-                            <div className={cx('item-title')}>
-                                <p>- Ngoại ngữ: </p>
-                            </div>
-                            <div className={cx('item-body')}>
-                                <p className={cx('description')}>Tiếng Anh: có khả năng đọc hiểu tài liệu</p>
-                            </div>
-                        </div>
-                        <div className={cx('item', 'school-item')}>
-                            <div className={cx('item-title')}>
-                                <p>- Kỹ năng lập trình: </p>
-                            </div>
-                            <div className={cx('item-body')}>
-                                <p className={cx('description')}>Java, HTML, CSS, JavaScript, Reactjs, Git, MySQL</p>
-                            </div>
-                        </div>
-                        <div className={cx('item', 'school-item')}>
-                            <div className={cx('item-title')}>
-                                <p>- Phần mềm: </p>
-                            </div>
-                            <div className={cx('item-body')}>
-                                <p className={cx('description')}>Visual Studio Code, IntelliJ, Postman</p>
-                            </div>
-                        </div> */}
                     </div>
                 )}
 
-                {data?.workExperiences !== undefined && data?.workExperiences.length !== 0 && (
-                    <div className={cx('experiences-group', 'main-block')}>
-                        <div className={cx('main-block-title')}>
-                            <span>@</span>
-                            Kinh nghiệm
-                            <div></div>
-                        </div>
-                        {data?.workExperiences.map((workExperience, index) => (
-                            <div className={cx('item', 'school-item')} key={index}>
-                                <div className={cx('item-title')}>
-                                    <span>
-                                        <Image src="/static/imgs/fontawesome/faBriefcase.png" />
-                                    </span>
-                                    {workExperience?.titlePosition}, {workExperience?.companyName}
-                                    <p className={cx('time')}>({workExperience?.startDate})</p>
+                {data?.workExperiences !== undefined &&
+                    data?.workExperiences !== null &&
+                    data?.workExperiences.length !== 0 && (
+                        <div className={cx('experiences-group', 'main-block')}>
+                            <div className={cx('main-block-title')}>
+                                <span>@</span>
+                                Kinh nghiệm
+                                <div></div>
+                            </div>
+                            {data?.workExperiences.map((workExperience, index) => (
+                                <div className={cx('item', 'school-item')} key={index}>
+                                    <div className={cx('item-title')}>
+                                        <span>
+                                            <Image src="/static/imgs/fontawesome/faBriefcase.png" />
+                                        </span>
+                                        {workExperience?.titlePosition}, {workExperience?.companyName}
+                                        <p className={cx('time')}>
+                                            ({workExperience?.startDate} {' - '} {workExperience?.endDate})
+                                        </p>
+                                    </div>
+                                    <div className={cx('item-body')}>
+                                        <p className={cx('description')}>{workExperience?.description}</p>
+                                    </div>
                                 </div>
-                                <div className={cx('item-body')}>
-                                    <p className={cx('description')}>{workExperience?.description}</p>
-                                </div>
-                            </div>
-                        ))}
-                        {/* <div className={cx('item', 'school-item')}>
-                            <div className={cx('item-title')}>
-                                <span>
-                                    <Image src="/static/imgs/fontawesome/faBriefcase.png" />
-                                </span>
-                                Xây dựng website chat trực tuyến với Firebase và ReactJS
-                                <p className={cx('time')}>(27/12/2022 - 31/12/2022)</p>
-                            </div>
-                            <div className={cx('item-body')}>
-                                <p className={cx('description')}>
-                                    - Github: https://github.com/LuongHuuLuan/chat-app-firebase
-                                </p>
-                                <p className={cx('description')}>- Số lượng thành viên: 1 (Dự án cá nhân)</p>
-                                <p className={cx('description')}>- Công nghệ sử dụng: ReactJS, Firebase</p>
-                                <p className={cx('description')}>
-                                    - Các chức năng chính: Đăng nhập với google,tạo phòng chat, tham gia phòng chat,
-                                    chat
-                                </p>
-                            </div>
+                            ))}
                         </div>
+                    )}
 
-                        <div className={cx('item', 'school-item')}>
-                            <div className={cx('item-title')}>
-                                <span>
-                                    <Image src="/static/imgs/fontawesome/faBriefcase.png" />
-                                </span>
-                                Xây dựng website chat trực tuyến với Firebase và ReactJS
-                                <p className={cx('time')}>(27/12/2022 - 31/12/2022)</p>
-                            </div>
-                            <div className={cx('item-body')}>
-                                <p className={cx('description')}>
-                                    - Github: https://github.com/LuongHuuLuan/chat-app-firebase
-                                </p>
-                                <p className={cx('description')}>- Số lượng thành viên: 1 (Dự án cá nhân)</p>
-                                <p className={cx('description')}>- Công nghệ sử dụng: ReactJS, Firebase</p>
-                                <p className={cx('description')}>
-                                    - Các chức năng chính: Đăng nhập với google,tạo phòng chat, tham gia phòng chat,
-                                    chat
-                                </p>
-                            </div>
-                        </div> */}
-                    </div>
-                )}
-
-                {data?.certificates !== undefined && data?.certificates.length !== 0 && (
+                {data?.certificates !== undefined && data?.certificates !== null && data?.certificates.length !== 0 && (
                     <div className={cx('certificate-group', 'main-block')}>
                         <div className={cx('main-block-title')}>
                             <span>@</span>
@@ -299,19 +217,6 @@ function CVStyle1({ data, ...props }) {
                                 </div>
                             </div>
                         ))}
-                        {/* <div className={cx('item', 'school-item')}>
-                            <div className={cx('item-title')}>
-                                <span>
-                                    <Image src="/static/imgs/fontawesome/faBriefcase.png" />
-                                </span>
-                                Chứng chỉ đa cấp xuyên lục địa
-                            </div>
-                            <div className={cx('item-body')}>
-                                <a className={cx('link')} href="https://www.404.com/1">
-                                    <p>www.404.com/1</p>
-                                </a>
-                            </div>
-                        </div> */}
                     </div>
                 )}
             </div>

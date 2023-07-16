@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { auth, logout } from '~/store/reducers/authSlice';
 import Avatar from '~/components/Avatar/Avatar';
+import { BASE_URL } from '~/constant';
 const cx = className.bind(styles);
 
 function Header() {
@@ -34,7 +35,6 @@ function Header() {
     const handleLogout = () => {
         dispath(logout('alumus'));
     };
-
     return (
         <Navbar className={cx('header', 'p-0')} expand="lg">
             <Container className={cx('re-container', 'pe-0')}>
@@ -89,7 +89,7 @@ function Header() {
                             <div className={cx('dropdown-cusomize', 'd-dropdown-auth')}>
                                 <div className={cx('avatar')}>
                                     {user ? (
-                                        <Avatar src={user.avatar} base64 name={user.userName} />
+                                        <Avatar src={BASE_URL + user.avatar} base64={false} name={user.userName} />
                                     ) : (
                                         <FontAwesomeIcon size="xl" color="var(--secondary-color)" icon={faUser} />
                                     )}

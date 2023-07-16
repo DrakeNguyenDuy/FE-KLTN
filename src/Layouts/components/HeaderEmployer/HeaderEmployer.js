@@ -20,6 +20,7 @@ import { auth, logout } from '~/store/reducers/authSlice';
 import styles from './HeaderEmployer.module.scss';
 import { Link } from 'react-router-dom';
 import Avatar from '~/components/Avatar/Avatar';
+import { BASE_URL } from '~/constant';
 const cx = className.bind(styles);
 
 function HeaderEmployer() {
@@ -78,7 +79,7 @@ function HeaderEmployer() {
                             <div className={cx('dropdown-cusomize', 'd-dropdown-auth')}>
                                 <div className={cx('avatar')}>
                                     {user ? (
-                                        <Avatar src={user.avatar} base64 name={user.userName} />
+                                        <Avatar src={BASE_URL + user.avatar} base64={false} name={user.userName} />
                                     ) : (
                                         <FontAwesomeIcon size="xl" color="var(--secondary-color)" icon={faUser} />
                                     )}
