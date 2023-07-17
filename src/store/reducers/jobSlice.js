@@ -7,6 +7,7 @@ import request, { authHeader } from '~/axios/request';
 const API_GET_JOBS = 'v2/products';
 const API_GET_JOB_DETAILS = 'v2/product/';
 const API_POST_JOB = 'v2/private/product';
+const API_GET_JOB_LATEST = 'v2/products-lastest';
 
 export const getJobs = createAsyncThunk('job/get', async (page) => {
     const response = await request.get(API_GET_JOBS, {
@@ -17,6 +18,12 @@ export const getJobs = createAsyncThunk('job/get', async (page) => {
 
 export const getJobDetail = createAsyncThunk('jobDetail/get', async (id) => {
     const response = await request.get(API_GET_JOB_DETAILS + id);
+    return response.data;
+});
+
+export const getJobLastest = createAsyncThunk('jobLatest/get', async () => {
+    const response = await request.get(API_GET_JOB_LATEST);
+    console.log(response.data);
     return response.data;
 });
 
@@ -71,10 +78,14 @@ const getSkuJobName = (jobName) => {
     convertedName = convertedName + '-' + uuidv4();
     return convertedName;
 };
+const mapJob = (data) => ({});
 
 const initialState = {
     jobData: null,
     jobDetails: null,
+    jobLatest: null,
+    jobLatestLoading: false,
+    jobLoading: false,
 };
 
 const slice = createSlice({
@@ -82,8 +93,26 @@ const slice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
+        builder.addCase(getJobs.pending, (state, action) => {
+            state.jobLoading = true;
+        });
         builder.addCase(getJobs.fulfilled, (state, action) => {
             state.jobData = action.payload;
+            state.jobLoading = true;
+        });
+        builder.addCase(getJobs.rejected, (state, action) => {
+            state.jobLoading = false;
+        });
+        builder.addCase(getJobLastest.pending, (state, action) => {
+            state.jobLatest = action.payload;
+            state.jobLatestLoading = true;
+        });
+        builder.addCase(getJobLastest.fulfilled, (state, action) => {
+            state.jobLatest = action.payload;
+            state.jobLatestLoading = false;
+        });
+        builder.addCase(getJobLastest.rejected, (state, action) => {
+            state.jobLatestLoading = false;
         });
         builder.addCase(getJobDetail.fulfilled, (state, action) => {
             state.jobDetails = action.payload;

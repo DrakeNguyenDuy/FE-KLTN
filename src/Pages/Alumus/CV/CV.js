@@ -14,6 +14,7 @@ import { getCVWithId, getCVWithToken, postAvatar, putUpdateCV } from '~/store/re
 import CVStyle1 from '~/components/CVStyle/CVStyle1';
 import UploadAvatarModal from '~/components/UploadAvatarModal/UploadAvatarModal';
 import UpdateCVModal from '~/components/UpdateCVModal/UpdateCVModal';
+import Loading from '~/components/Loading/Loading';
 
 const cx = className.bind(styles);
 
@@ -26,6 +27,7 @@ function CV() {
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const token = useSelector((state) => state.auth.token);
     const cv = useSelector((state) => state.cv.cv);
+    const isLoading = useSelector((state) => state.cv.isLoading);
 
     const dispath = useDispatch();
 
@@ -53,6 +55,7 @@ function CV() {
 
     const handleSubmitAvatar = (data) => {
         dispath(postAvatar({ token, data }));
+        window.location.reload();
     };
 
     const handleOpenUpdateModal = (data) => {
@@ -65,6 +68,7 @@ function CV() {
 
     const handleSubmitUpdate = (data) => {
         dispath(putUpdateCV({ id: cv.id, token, data }));
+        window.location.reload();
     };
 
     const convertFormatDate = (dateString) => {
@@ -165,7 +169,9 @@ function CV() {
         });
     };
 
-    return (
+    return isLoading ? (
+        <Loading />
+    ) : (
         <div className={cx('wrapper')}>
             <UploadAvatarModal
                 show={showAvatarModal}
@@ -195,8 +201,12 @@ function CV() {
                             <div className={cx('header-btn-group')}>
                                 <CustomButton onClick={handleOpenAvatarModal}>Cập nhật avatar</CustomButton>
                                 <CustomButton onClick={handleOpenUpdateModal}>Chỉnh sửa CV</CustomButton>
-                                <CustomButton onClick={handleSeeFull}>Xem full</CustomButton>
-                                <CustomButton onClick={() => handleDownloadCV()}>Tải CV</CustomButton>
+                                {cv ? (
+                                    <>
+                                        <CustomButton onClick={handleSeeFull}>Xem full</CustomButton>
+                                        <CustomButton onClick={() => handleDownloadCV()}>Tải CV</CustomButton>
+                                    </>
+                                ) : null}
                             </div>
                         </div>
                     )}

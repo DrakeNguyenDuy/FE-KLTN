@@ -3,6 +3,7 @@ import className from 'classnames/bind';
 import { Button, Image } from 'react-bootstrap';
 
 import CustomCarousel from '~/components/CustomCarousel';
+import { BASE_URL } from './../../../../../constant/index';
 
 const cx = className.bind(styles);
 
@@ -45,25 +46,31 @@ const items = [
     },
 ];
 
-function EmployerCarousel() {
+function EmployerCarousel({ items }) {
     return (
         <CustomCarousel
             items={items}
             render={(item, index) => (
                 <div className={cx('banner-bg')}>
-                    <Image fluid className="d-block w-100" src={item.logoUrl} alt={item.logoUrl} />
+                    <Image fluid className="d-block w-100" src={BASE_URL + item.logo} alt={item.name} />
                     <div className={cx('banner-content')}>
                         <a href={item.companyUrl}>
-                            <Image fluid className={cx('banner-logo')} src={item.bannerUrl} width={200} height={200} />
+                            <Image
+                                fluid
+                                className={cx('banner-logo')}
+                                src={'static/imgs/logo-banner.png'}
+                                width={200}
+                                height={200}
+                            />
                         </a>
                         <div className={cx('banner-description')}>
                             <h2>
-                                <a href={item.companyUrl}>{item.name}</a>
+                                <a href={item.logo}>{item.name}</a>
                             </h2>
-                            <p className={cx('banner-slogan')}>{item.slogan}</p>
+                            <p className={cx('banner-slogan')}>{item.address}</p>
                             <p className={cx('banner-detail')}>{item.description}</p>
                         </div>
-                        <a href={item.companyUrl}>
+                        <a href={item.logo}>
                             <Button className={cx('banner-detail-button')}>Xem chi tiết</Button>
                         </a>
                     </div>

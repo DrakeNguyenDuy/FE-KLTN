@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 import Pagination from 'react-bootstrap/Pagination';
@@ -13,6 +13,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getJobs } from '~/store/reducers/jobSlice';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import UploadAvatarModal from '~/components/UploadAvatarModal/UploadAvatarModal';
+import { postAvatar } from '~/store/reducers/cvSlice';
+import { BASE_URL } from '~/constant';
 
 const cx = className.bind(styles);
 
@@ -23,9 +26,11 @@ const breadcrumbItems = [
 
 export default function Job() {
     // const [open, setOpen] = useState(false);
+    const [showAvatarModal, setShowAvatarModal] = useState(false);
     const dispath = useDispatch();
-    const jobs = useSelector((state) => state.job.jobData);
     const user = useSelector((state) => state.auth.user);
+    const token = useSelector((state) => state.auth.token);
+    const jobs = useSelector((state) => state.job.jobData);
 
     const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
@@ -50,8 +55,25 @@ export default function Job() {
         return result;
     };
 
+    const handleOpenAvatarModal = () => {
+        setShowAvatarModal(true);
+    };
+
+    const handleCloseAvatarModal = () => {
+        setShowAvatarModal(false);
+    };
+    const handleSubmitAvatar = (data) => {
+        dispath(postAvatar({ token, data }));
+        window.location.reload();
+    };
+
     return (
         <div className={cx('page-job')}>
+            <UploadAvatarModal
+                show={showAvatarModal}
+                handleClose={handleCloseAvatarModal}
+                handleSubmit={handleSubmitAvatar}
+            />
             <CustomBreadCrumb items={breadcrumbItems} className={cx('breadcrumb')} />
             <FindJob />
             <div className={cx('job-pannel')}>
@@ -82,7 +104,12 @@ export default function Job() {
                     </Col>
                     <Col lg={4} className={cx('ext-job')}>
                         <div className={cx('profile')}>
-                            <CardProfile name={user?.fullName} location={user?.districts[0].name} />
+                            <CardProfile
+                                name={user?.fullName}
+                                avatar={BASE_URL + user?.avatar}
+                                location={user?.districts[0].name}
+                                handleUpdateAvatar={handleOpenAvatarModal}
+                            />
                         </div>
                         <div className={cx('count-jobs')}>
                             <span>10</span>
@@ -94,6 +121,14 @@ export default function Job() {
                                 {/* <Job1 />
                                 <Job1 />
                                 <Job1 /> */}
+                                {jobs?.products.map((job) => (
+                                    <Job1
+                                        key={job.id}
+                                        data={job}
+                                        big={false}
+                                        onClick={() => navigate(`/job/${job.sku}`)}
+                                    />
+                                ))}
                             </div>
                             <div className={cx('view-all')}>Xem tất cả</div>
                         </div>
