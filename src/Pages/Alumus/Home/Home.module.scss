@@ -5,7 +5,7 @@
 }
 
 .job-wrapper {
-    height: 500px;
+    height: 400px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -17,8 +17,9 @@
 // for mobile
 @media only screen and (max-width: 767px) {
     .job-wrapper {
-        height: 400px;
-        margin-bottom: 35px;
+        height: auto;
+        padding: 16px;
+        margin-bottom: 32px;
     }
     .mobile-carousel {
         display: block;
@@ -27,26 +28,20 @@
     .desktop-carousel {
         display: none;
     }
-    .job-reponsive {
-        width: 100%;
-    }
 }
 // for tablet
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
     .job-wrapper {
         height: 600px;
-        margin-bottom: 35px;
-    }
-    .job-reponsive {
-        width: 50%;
+        padding: 32px;
+        display: grid;
     }
 }
 // for desktop
 @media only screen and (min-width: 1024px) and (max-width: 1439px) {
     .job-wrapper {
-        margin-bottom: 35px;
-    }
-    .job-reponsive {
-        width: 33.333%;
+        padding: 32px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
     }
 }

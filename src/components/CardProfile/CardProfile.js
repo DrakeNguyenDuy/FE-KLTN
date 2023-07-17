@@ -8,6 +8,7 @@ function CardProfile({
     avatar = 'https://antimatter.vn/wp-content/uploads/2022/12/anh-avatar-facebook-vo-danh-avt-fb-cho-nu-1.jpg',
     name = 'Khách',
     location = 'Chưa có',
+    handleUpdateAvatar,
     ...props
 }) {
     return (
@@ -22,7 +23,7 @@ function CardProfile({
             </div>
             <div className={cx('action')}>
                 <Button variant="outline-primary">Cập nhật hồ sơ</Button>
-                <Button>Cập nhật ảnh</Button>
+                <Button onClick={handleUpdateAvatar}>Cập nhật ảnh</Button>
             </div>
         </div>
     );

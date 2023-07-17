@@ -50,6 +50,8 @@ const dataURItoBlob = (dataURI) => {
 
 const initialState = {
     cv: null,
+    isLoading: false,
+    error: null,
 };
 
 const slice = createSlice({
@@ -57,19 +59,40 @@ const slice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
+        builder.addCase(getCVWithToken.pending, (state, action) => {
+            state.isLoading = true;
+            state.error = null;
+        });
         builder.addCase(getCVWithToken.fulfilled, (state, action) => {
             state.cv = action.payload;
+            state.isLoading = false;
+            state.error = null;
             console.log('cv', state.cv);
+        });
+        builder.addCase(getCVWithToken.rejected, (state, action) => {
+            state.isLoading = false;
+            console.log(action.error);
+            state.error = action.error;
+        });
+        builder.addCase(getCVWithId.pending, (state, action) => {
+            state.isLoading = true;
+            state.error = null;
+        });
+        builder.addCase(getCVWithId.fulfilled, (state, action) => {
+            state.cv = action.payload;
+            state.isLoading = false;
+            state.error = null;
+            console.log('cv', state.cv);
+        });
+        builder.addCase(getCVWithId.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.error;
         });
         builder.addCase(postAvatar.fulfilled, (state, action) => {
             console.log('res', action.payload);
         });
         builder.addCase(postAvatar.rejected, (state, action) => {
             console.log('err');
-        });
-        builder.addCase(getCVWithId.fulfilled, (state, action) => {
-            state.cv = action.payload;
-            console.log('cv', state.cv);
         });
         builder.addCase(putUpdateCV.fulfilled, (state, action) => {
             console.log('res', action.payload);

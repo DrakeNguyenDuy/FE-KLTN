@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, Card, Col, Row } from 'react-bootstrap';
-import styles from './Job.module.scss';
+import styles from './Job2.module.scss';
 import className from 'classnames/bind';
 import { Link } from 'react-router-dom';
 const cx = className.bind(styles);
-export default function Job({ name }) {
+export default function Job2({ name }) {
     return (
         <div className={cx('job', 'mw-100')}>
             <Row className={cx('content_job')}>
