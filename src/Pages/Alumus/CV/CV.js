@@ -25,21 +25,19 @@ function CV() {
 
     const [showAvatarModal, setShowAvatarModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
-    const token = useSelector((state) => state.auth.token);
     const cv = useSelector((state) => state.cv.cv);
     const isLoading = useSelector((state) => state.cv.isLoading);
 
     const dispath = useDispatch();
 
     useEffect(() => {
-        if (token) {
-            dispath(getCVWithToken(token));
-        }
         if (id) {
             dispath(getCVWithId(id));
+        } else {
+            dispath(getCVWithToken());
         }
         // eslint-disable-next-line
-    }, [token]);
+    }, []);
 
     const handleSeeFull = () => {
         navigate('/full-cv/' + cv?.id);
@@ -54,7 +52,7 @@ function CV() {
     };
 
     const handleSubmitAvatar = (data) => {
-        dispath(postAvatar({ token, data }));
+        dispath(postAvatar({ data }));
         window.location.reload();
     };
 
@@ -67,8 +65,7 @@ function CV() {
     };
 
     const handleSubmitUpdate = (data) => {
-        dispath(putUpdateCV({ id: cv.id, token, data }));
-        window.location.reload();
+        dispath(putUpdateCV({ id: cv.id, data }));
     };
 
     const convertFormatDate = (dateString) => {

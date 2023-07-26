@@ -15,7 +15,7 @@ function GroupInput({
     // onDelete = () => null,
     onDelete,
     onAdd = () => null,
-    onChange,
+    onChange = () => null,
     ...props
 }) {
     // const [listBlock, setListBlock] = useState([]);
@@ -66,7 +66,7 @@ function GroupInput({
                             >
                                 <FontAwesomeIcon icon={faXmark} />
                             </CustomButton>
-                            {renderItem(itemData)}
+                            {renderItem(itemData, index)}
                         </div>
                     ))}
                 </Form.Group>

@@ -14,23 +14,23 @@ import EmployerLogin from '~/Pages/Employer/Login';
 import ManageJob from '~/Pages/Employer/ManageJob';
 import PostJob from '~/Pages/Employer/PostJob/PostJob';
 
-const alumusRoutes = [
-    { path: '/', component: Home, layout: DefaultLayout },
-    { path: '/jobs', component: Job, layout: DefaultLayout },
-    { path: '/profile', component: Profile, layout: DefaultLayout },
-    { path: '/recruitment', component: Recruitment, layout: DefaultLayout },
-    { path: '/cv', component: CV, layout: DefaultLayout },
-    { path: '/full-cv/:id', component: CV, layout: null },
-    { path: '/login', component: Login, layout: DefaultLayout },
-    { path: '/register', component: Register, layout: DefaultLayout },
-    { path: '/job/:id', component: JobDetail, layout: DefaultLayout },
-];
-
-const employerRoutes = [
-    { path: '/employer/', component: EmployerHome, layout: EmployerLayout },
-    { path: '/employer/login', component: EmployerLogin, layout: EmployerLayout },
-    { path: '/employer/post-job', component: PostJob, layout: EmployerLayout },
-    { path: '/employer/manage-job', component: ManageJob, layout: EmployerLayout },
-];
-
-export { employerRoutes, alumusRoutes };
+const routes = {
+    alumus: [
+        { path: '/', component: Home, layout: DefaultLayout, auth: false },
+        { path: '/jobs', component: Job, layout: DefaultLayout, auth: false },
+        { path: '/profile', component: Profile, layout: DefaultLayout, auth: true },
+        { path: '/recruitment', component: Recruitment, layout: DefaultLayout, auth: true },
+        { path: '/cv', component: CV, layout: DefaultLayout, auth: true },
+        { path: '/full-cv/:id', component: CV, layout: null, auth: false },
+        { path: '/login', component: Login, layout: DefaultLayout, auth: false },
+        { path: '/register', component: Register, layout: DefaultLayout, auth: false },
+        { path: '/job/:id', component: JobDetail, layout: DefaultLayout, auth: false },
+    ],
+    employer: [
+        { path: '/employer/', component: EmployerHome, layout: EmployerLayout, auth: false },
+        { path: '/employer/login', component: EmployerLogin, layout: EmployerLayout, auth: false },
+        { path: '/employer/post-job', component: PostJob, layout: EmployerLayout, auth: true },
+        { path: '/employer/manage-job', component: ManageJob, layout: EmployerLayout, auth: true },
+    ],
+};
+export default routes;

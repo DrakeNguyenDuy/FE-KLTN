@@ -27,7 +27,6 @@ const slice = createSlice({
         });
         builder.addCase(getTopEmlpyer.fulfilled, (state, action) => {
             state.topEmployers = action.payload;
-            console.log(state.topEmployers);
             state.topEmloyerIsLoading = false;
             state.topEmployerError = null;
         });

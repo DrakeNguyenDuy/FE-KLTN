@@ -30,10 +30,12 @@ function Header() {
 
     useEffect(() => {
         dispath(auth('alumus'));
+        // eslint-disable-next-line
     }, [token]);
 
     const handleLogout = () => {
         dispath(logout('alumus'));
+        window.location.href = '/login';
     };
     return (
         <Navbar className={cx('header', 'p-0')} expand="lg">
@@ -58,8 +60,8 @@ function Header() {
                     <Offcanvas.Header closeButton>
                         <Offcanvas.Title>Tìm việc làm</Offcanvas.Title>
                     </Offcanvas.Header>
-                    <Offcanvas.Body>
-                        <Nav className={cx('wrap-offcanvas-body', 'w-100', 'justify-content-between')}>
+                    <Offcanvas.Body className={cx('wrap-offcanvas-body')}>
+                        <Nav className={cx('left-nav', 'justify-content-between')}>
                             {/* <NavDropdown className="fsc_1" title="Việc làm" id="basic-nav-dropdown">
                                 <Link to={'/jobs'} className="fsc_2 p-1 w-100 h-100">
                                     Tìm kiếm việc làm
@@ -68,24 +70,58 @@ function Header() {
                                 <NavDropdown.Item href="#action/3.3">OPtion 3</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.4">Option 4</NavDropdown.Item>
                             </NavDropdown> */}
-                            <Link to={'/jobs'} className="fsc_1">
-                                Tìm kiếm việc làm
-                            </Link>
-                            <Link to={'/profile'} className="fsc_1">
-                                Hồ sơ
-                            </Link>
-                            <Link to={'/cv'} className="fsc_1">
-                                CV của tôi
-                            </Link>
-                            <Link to={'/recruitment'} className="fsc_1">
-                                Ứng tuyển
-                            </Link>
-                            <NavDropdown className="fsc_1" title="Thông báo" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">Option 1</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">Option 2</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">OPtion 3</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.4">Option 4</NavDropdown.Item>
-                            </NavDropdown>
+                            <div className={cx('item-menu')}>
+                                <Link to={'/jobs'} className="fsc_1">
+                                    Việc làm
+                                </Link>
+                                {/* {user && (
+                                    <> */}
+                                <Link to={'/profile'} className="fsc_1">
+                                    Hồ sơ
+                                </Link>
+                                <Link to={'/cv'} className="fsc_1">
+                                    CV
+                                </Link>
+                                <Link to={'/recruitment'} className="fsc_1">
+                                    Ứng tuyển
+                                </Link>
+                                {/* <div className={cx('fsc_1', 'notify-group')}>
+                                    <p>Thông báo</p>
+                                    <div className={cx('notify-icon')}>
+                                        <FontAwesomeIcon icon={faBell} />
+                                        <span>2</span>
+                                    </div>
+
+                                    <div className={cx('notify-content')}></div>
+                                </div> */}
+                                <NavDropdown className="fsc_1" title="Thông báo" id="basic-nav-dropdown">
+                                    <NavDropdown.Item href="#action/3.1">Option 1</NavDropdown.Item>
+                                    <NavDropdown.Item href="#action/3.2">Option 2</NavDropdown.Item>
+                                    <NavDropdown.Item href="#action/3.3">OPtion 3</NavDropdown.Item>
+                                    <NavDropdown.Item href="#action/3.4">Option 4</NavDropdown.Item>
+                                </NavDropdown>
+                                {/* </> */}
+                                {/* )} */}
+                            </div>
+
+                            <div className={cx('wrapper-link-soft')}>
+                                <Link to={'/login'} className="fsc_2 mt-2 mb-2">
+                                    Đăng nhập
+                                </Link>
+                                <Link to={'/register'} className="fsc_2 mt-2 mb-2">
+                                    Đăng ký
+                                </Link>
+                                <Link to={'/logout'} className="fsc_2 mt-2 mb-2">
+                                    Đăng xuất
+                                </Link>
+                            </div>
+                            <Button className="button-no-bg">
+                                <Nav.Link href="/employer" className="fsc_2 ">
+                                    Dành cho nhà tuyển dụng
+                                </Nav.Link>
+                            </Button>
+                        </Nav>
+                        <div className={cx('nav-right')}>
                             <div className={cx('dropdown-cusomize', 'd-dropdown-auth')}>
                                 <div className={cx('avatar')}>
                                     {user ? (
@@ -135,29 +171,13 @@ function Header() {
                                     </OverlayTrigger>
                                 </div>
                             </div>
-                            <div className={cx('wrapper-link-soft')}>
-                                <Link to={'/login'} className="fsc_2 mt-2 mb-2">
-                                    Đăng nhập
-                                </Link>
-                                <Link to={'/register'} className="fsc_2 mt-2 mb-2">
-                                    Đăng ký
-                                </Link>
-                                <Link to={'/logout'} className="fsc_2 mt-2 mb-2">
-                                    Đăng xuất
-                                </Link>
-                            </div>
                             <div className={cx('round-a-side')}>
                                 <Nav.Link href="/employer" className="fsc_2 ">
                                     Dành cho nhà tuyển dụng
                                 </Nav.Link>
                                 <Image src="/assets/imgs/icons8-employee-48.png" />
                             </div>
-                            <Button className="button-no-bg">
-                                <Nav.Link href="/employer" className="fsc_2 ">
-                                    Dành cho nhà tuyển dụng
-                                </Nav.Link>
-                            </Button>
-                        </Nav>
+                        </div>
                     </Offcanvas.Body>
                 </Navbar.Offcanvas>
             </Container>

@@ -4,6 +4,7 @@ import { Button, Image } from 'react-bootstrap';
 
 import CustomCarousel from '~/components/CustomCarousel';
 import { BASE_URL } from './../../../../../constant/index';
+import Loading from '~/components/Loading/Loading';
 
 const cx = className.bind(styles);
 
@@ -46,37 +47,42 @@ const items = [
     },
 ];
 
-function EmployerCarousel({ items }) {
-    return (
-        <CustomCarousel
-            items={items}
-            render={(item, index) => (
-                <div className={cx('banner-bg')}>
-                    <Image fluid className="d-block w-100" src={BASE_URL + item.logo} alt={item.name} />
-                    <div className={cx('banner-content')}>
-                        <a href={item.companyUrl}>
-                            <Image
-                                fluid
-                                className={cx('banner-logo')}
-                                src={'static/imgs/logo-banner.png'}
-                                width={200}
-                                height={200}
-                            />
-                        </a>
-                        <div className={cx('banner-description')}>
-                            <h2>
-                                <a href={item.logo}>{item.name}</a>
-                            </h2>
-                            <p className={cx('banner-slogan')}>{item.address}</p>
-                            <p className={cx('banner-detail')}>{item.description}</p>
+function EmployerCarousel({ items, loading }) {
+    return loading ? (
+        <Loading />
+    ) : (
+        <>
+            <CustomCarousel
+                items={items}
+                render={(item, index) => (
+                    <div className={cx('banner-bg')}>
+                        <Image fluid className="d-block w-100" src={BASE_URL + item.background} alt={item.name} />
+                        <div className={cx('banner-content')}>
+                            <a href={item.companyUrl}>
+                                <Image
+                                    fluid
+                                    className={cx('banner-logo')}
+                                    // src={BASE_URL + item.logo}
+                                    src={'static/imgs/logo-banner.png'}
+                                    width={200}
+                                    height={200}
+                                />
+                            </a>
+                            <div className={cx('banner-description')}>
+                                <h2>
+                                    <a href={item.logo}>{item.name}</a>
+                                </h2>
+                                <p className={cx('banner-slogan')}>{item.sologan}</p>
+                                <p className={cx('banner-detail')}>{item.description}</p>
+                            </div>
+                            <a href={item.logo}>
+                                <Button className={cx('banner-detail-button')}>Xem chi tiết</Button>
+                            </a>
                         </div>
-                        <a href={item.logo}>
-                            <Button className={cx('banner-detail-button')}>Xem chi tiết</Button>
-                        </a>
                     </div>
-                </div>
-            )}
-        />
+                )}
+            />
+        </>
     );
 }
 

@@ -2,13 +2,15 @@
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import request, { authHeader, authHeaderMultipart } from '~/axios/request';
+import { getToken } from './authSlice';
 
 const API_GET_CV = 'v1/auth/cv';
 const API_GET_CV_NO_AUTH = 'v1/cv';
 const API_UPDATE_CV = 'v1/auth/cv';
 const API_POST_AVATAR = 'v1/auth/profile/avatar';
 
-export const getCVWithToken = createAsyncThunk('cv/get', async (token) => {
+export const getCVWithToken = createAsyncThunk('cv/get', async () => {
+    const token = getToken();
     const response = await request.get(API_GET_CV, {
         headers: authHeader(token),
     });
@@ -20,16 +22,17 @@ export const getCVWithId = createAsyncThunk('cvid/get', async (id) => {
     return response.data;
 });
 
-export const putUpdateCV = createAsyncThunk('cv/update', async ({ id, token, data }) => {
+export const putUpdateCV = createAsyncThunk('cv/update', async ({ id, data }) => {
+    const token = getToken();
     const response = await request.put(API_UPDATE_CV + '/' + id, data, {
         headers: authHeader(token),
     });
     return response.data;
 });
 
-export const postAvatar = createAsyncThunk('cv/postAvatar', async ({ token, data }) => {
+export const postAvatar = createAsyncThunk('cv/postAvatar', async ({ data }) => {
+    const token = getToken();
     const blobData = dataURItoBlob(data);
-    console.log(blobData);
     const formData = new FormData();
     formData.append('file', blobData, 'avatar.png');
     const response = await request.post(API_POST_AVATAR, formData, {
@@ -67,11 +70,9 @@ const slice = createSlice({
             state.cv = action.payload;
             state.isLoading = false;
             state.error = null;
-            console.log('cv', state.cv);
         });
         builder.addCase(getCVWithToken.rejected, (state, action) => {
             state.isLoading = false;
-            console.log(action.error);
             state.error = action.error;
         });
         builder.addCase(getCVWithId.pending, (state, action) => {
@@ -82,23 +83,23 @@ const slice = createSlice({
             state.cv = action.payload;
             state.isLoading = false;
             state.error = null;
-            console.log('cv', state.cv);
         });
         builder.addCase(getCVWithId.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.error;
         });
         builder.addCase(postAvatar.fulfilled, (state, action) => {
-            console.log('res', action.payload);
+            // console.log('res', action.payload);
         });
         builder.addCase(postAvatar.rejected, (state, action) => {
-            console.log('err');
+            // console.log('err');
         });
         builder.addCase(putUpdateCV.fulfilled, (state, action) => {
-            console.log('res', action.payload);
+            // console.log('res', action.payload);
+            window.location.reload();
         });
         builder.addCase(putUpdateCV.rejected, (state, action) => {
-            console.log('err');
+            // console.log('err');
         });
     },
 });

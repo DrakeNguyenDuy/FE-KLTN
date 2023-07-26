@@ -28,6 +28,10 @@ a {
         background-color: var(--secondary-color);
         border-radius: 0 100px 100px 0;
         display: inline-block;
+        // position: absolute;
+        // top: 50%;
+        // right: 250px;
+        // transform: translateY(-50%);
         // span {
         //     content: '';
         //     width: 60px;
@@ -47,6 +51,9 @@ a {
         align-items: center;
         border: 1px;
         border-color: var(--primary-color);
+        // position: absolute;
+        // top: 0;
+        // right: 0;
         a {
             color: var(--primary-color);
             &:hover {
@@ -91,10 +98,68 @@ a {
 .wrap-offcanvas-body {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    // position: relative;
+    height: 80px;
+    // width: calc(100% - 460px) !important;
+}
+.left-nav {
+    flex-grow: 1;
+}
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 30px;
 }
 .wrapper-link-soft {
     display: none;
     flex-direction: column-reverse;
+}
+.item-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-grow: 1;
+}
+.notify-group {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    gap: 8px;
+    p {
+        margin: 0;
+        padding: 0;
+    }
+    .notify-icon {
+        position: relative;
+        span {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            min-width: 16px;
+            min-height: 16px;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            font-size: 11px;
+            background-color: white;
+            color: red;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+        }
+    }
+    .notify-content {
+        min-width: 500px;
+        height: 300px;
+        position: absolute;
+        box-shadow: var(--box-shadow);
+        top: 100%;
+        background-color: #dddcdc;
+        z-index: 4;
+    }
 }
 
 @media only screen and (max-width: 992px) {

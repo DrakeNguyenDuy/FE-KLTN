@@ -23,8 +23,7 @@
     }
 }
 .button-group {
-    .btn-follow,
-    .btn-apply {
+    .btn-wrapper {
         width: 170px;
         height: 50px;
         button {
@@ -33,18 +32,29 @@
             font-weight: bold;
             border: 1px solid var(--primary-color);
         }
-    }
-    .btn-follow {
-        margin-bottom: 16px;
-        button {
-            background-color: #fff;
-            color: #0d6efd;
-            &:hover {
-                color: #fff;
-                background-color: #0d6efd;
+        & + .btn-wrapper {
+            margin-top: 16px;
+        }
+        &.btn-apply {
+            button {
+                background-color: #02b04e;
+                border: #02b04e;
+                &:hover {
+                    background-color: #02b04e;
+                }
             }
         }
     }
+    // .btn-follow {
+    //     button {
+    //         background-color: #fff;
+    //         color: #0d6efd;
+    //         &:hover {
+    //             color: #fff;
+    //             background-color: #0d6efd;
+    //         }
+    //     }
+    // }
 }
 .job-infor {
     .items-row {
@@ -77,6 +87,14 @@
             font-weight: bold;
         }
         .salary {
+            font-weight: normal;
+        }
+    }
+}
+.apply-modal {
+    p {
+        font-weight: bold;
+        span {
             font-weight: normal;
         }
     }

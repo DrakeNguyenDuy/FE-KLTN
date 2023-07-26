@@ -6,7 +6,7 @@ import styles from './JobPage.module.scss';
 import className from 'classnames/bind';
 import axios from 'axios';
 
-import Job1 from '~/components/Job1';
+import Job1 from '~/components/JobItem';
 import FindJob from '~/components/FindJob';
 import CustomBreadCrumb from '~/components/CustomBreadCrumb';
 import CardProfile from '~/components/CardProfile';

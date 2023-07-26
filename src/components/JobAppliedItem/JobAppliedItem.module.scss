@@ -1,0 +1,44 @@
+.job-apply-item {
+    box-shadow: var(--box-shadow);
+    border-radius: var(--boder-radius);
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    padding: 16px;
+    margin: 16px;
+    &:hover {
+        background-color: #dddcdc;
+        transition: linear 0.5s;
+    }
+    .job-apply-avt {
+        width: 150px;
+        height: 150px;
+        img {
+            border-radius: 50%;
+        }
+        margin: auto;
+    }
+    p {
+        margin: 0;
+        padding: 0;
+        font-weight: bold;
+        span {
+            font-weight: normal;
+        }
+        span.waiting {
+            color: green;
+        }
+        span.rejected {
+            color: red;
+        }
+        span.saw {
+            color: blue;
+        }
+    }
+    .job-apply-infor,
+    .job-apply-cv,
+    .job-apply-state,
+    .job-apply-button {
+        margin: auto 0;
+    }
+}

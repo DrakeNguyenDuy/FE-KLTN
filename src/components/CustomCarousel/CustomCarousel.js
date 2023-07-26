@@ -4,6 +4,7 @@ import className from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleChevronLeft, faCircleChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { useRef, useState } from 'react';
+import Loading from '../Loading/Loading';
 
 const cx = className.bind(styles);
 
@@ -16,6 +17,7 @@ function CustomCarousel({
     children,
     wrapperClass,
     stylesIndicator,
+    loading,
     ...props
 }) {
     const [activeIndex, setIndex] = useState(0);
@@ -33,45 +35,51 @@ function CustomCarousel({
 
     return !!items && !!render ? (
         <div className={cx('wrapper', wrapperClass)}>
-            <Carousel
-                ref={carouselRef}
-                activeIndex={activeIndex}
-                onSelect={goToIndex}
-                controls={showControl}
-                indicators={showIndicator}
-                interval={10000000}
-                {...props}
-            >
-                {items.map((item, index) => (
-                    <Carousel.Item key={index}>{render(item, index)}</Carousel.Item>
-                ))}
-            </Carousel>
-            {showCustomIndicator ? (
-                <div className={cx('my-carousel-control', stylesIndicator)}>
-                    <FontAwesomeIcon
-                        size="xl"
-                        color="var(--primary-color)"
-                        icon={faCircleChevronLeft}
-                        onClick={onPrev}
-                    />
-                    <ol className={cx('my-carousel-indicators')}>
+            {loading ? (
+                <Loading />
+            ) : (
+                <>
+                    <Carousel
+                        ref={carouselRef}
+                        activeIndex={activeIndex}
+                        onSelect={goToIndex}
+                        controls={showControl}
+                        indicators={showIndicator}
+                        interval={10000000}
+                        {...props}
+                    >
                         {items.map((item, index) => (
-                            <li
-                                key={index}
-                                onClick={() => goToIndex(index)}
-                                className={activeIndex === index ? cx('active') : ''}
-                            ></li>
+                            <Carousel.Item key={index}>{render(item, index)}</Carousel.Item>
                         ))}
-                    </ol>
-                    <FontAwesomeIcon
-                        size="xl"
-                        color="var(--primary-color)"
-                        icon={faCircleChevronRight}
-                        onClick={onNext}
-                    />
-                </div>
-            ) : null}
-            {children}
+                    </Carousel>
+                    {showCustomIndicator ? (
+                        <div className={cx('my-carousel-control', stylesIndicator)}>
+                            <FontAwesomeIcon
+                                size="xl"
+                                color="var(--primary-color)"
+                                icon={faCircleChevronLeft}
+                                onClick={onPrev}
+                            />
+                            <ol className={cx('my-carousel-indicators')}>
+                                {items.map((item, index) => (
+                                    <li
+                                        key={index}
+                                        onClick={() => goToIndex(index)}
+                                        className={activeIndex === index ? cx('active') : ''}
+                                    ></li>
+                                ))}
+                            </ol>
+                            <FontAwesomeIcon
+                                size="xl"
+                                color="var(--primary-color)"
+                                icon={faCircleChevronRight}
+                                onClick={onNext}
+                            />
+                        </div>
+                    ) : null}
+                    {children}
+                </>
+            )}
         </div>
     ) : null;
 }
