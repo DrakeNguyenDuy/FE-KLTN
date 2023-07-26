@@ -27,9 +27,13 @@
     .desktop-carousel {
         display: none;
     }
-    .job-reponsive {
-        width: 100%;
-    }
+    // .job-reponsive {
+    //     width: 100%;
+    //     &:hover {
+    //         background-color: #dddcdc;
+    //         transition: linear 0.5s;
+    //     }
+    // }
 }
 // for tablet
 @media only screen and (min-width: 768px) and (max-width: 1023px) {

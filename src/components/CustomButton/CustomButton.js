@@ -5,10 +5,10 @@ import styles from './CustomButton.module.scss';
 
 const cx = className.bind(styles);
 
-function CustomButton({ isLoading = false, children, wrapperStyle, ...props }) {
+function CustomButton({ isLoading = false, children, wrapperStyle, onClick, ...props }) {
     return (
         <div className={cx('wrapper', wrapperStyle)}>
-            <Button style={props.disabled ? { backgroundColor: '#eee' } : null} {...props}>
+            <Button style={props.disabled ? { backgroundColor: '#eee' } : null} onClick={onClick} {...props}>
                 {children}
             </Button>
             {isLoading ? (

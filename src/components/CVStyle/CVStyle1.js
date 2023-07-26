@@ -184,7 +184,8 @@ function CVStyle1({ data, ...props }) {
                                         </span>
                                         {workExperience?.titlePosition}, {workExperience?.companyName}
                                         <p className={cx('time')}>
-                                            ({workExperience?.startDate} {' - '} {workExperience?.endDate})
+                                            ({workExperience?.startDate} {' - '}{' '}
+                                            {workExperience?.endDate === null ? 'Hiện tại' : workExperience?.endDate})
                                         </p>
                                     </div>
                                     <div className={cx('item-body')}>

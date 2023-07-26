@@ -14,7 +14,9 @@ function CardProfile({
     return (
         <div className={cx('wrapper')}>
             <div className={cx('profile')}>
-                <Image alt="avatar" src={avatar} className={cx('avatar')} width={100} height={100} />
+                <div className={cx('avatar')}>
+                    <Image alt="avatar" src={avatar} />
+                </div>
                 <div className={cx('content')}>
                     <p>Ứng viên</p>
                     <h4>{name}</h4>
@@ -22,7 +24,14 @@ function CardProfile({
                 </div>
             </div>
             <div className={cx('action')}>
-                <Button variant="outline-primary">Cập nhật hồ sơ</Button>
+                <Button
+                    variant="outline-primary"
+                    onClick={() => {
+                        window.location.href = '/profile';
+                    }}
+                >
+                    Cập nhật hồ sơ
+                </Button>
                 <Button onClick={handleUpdateAvatar}>Cập nhật ảnh</Button>
             </div>
         </div>

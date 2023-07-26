@@ -1,2 +1,1 @@
-
-export {alumusRoutes, employerRoutes} from './Route';
+export { default } from './Route';

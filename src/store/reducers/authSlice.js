@@ -7,20 +7,33 @@ const API_EMPLOYER_LOGIN = 'v1/private/login';
 
 const API_ALUMUS_LOGIN = 'v1/customer/login';
 
-const API_AUTH_EMPLOYER = 'v1/private/user/profile';
+export const API_GET_EMPLOYER = 'v1/private/user/profile';
+const API_AUTH_EMPLOYER = 'v1/private/store';
 
-const API_AUTH_ALUMUS = 'v1/auth/customer/profile';
+export const API_AUTH_ALUMUS = 'v1/auth/customer/profile';
 
 const API_AUTH_ALUMUS_PROFILE = 'v1/auth/profile';
 
-const getToken = (type) => {
+export const getToken = (type) => {
     const token = JSON.parse(localStorage.getItem(type === 'employer' ? 'employerToken' : 'alumusToken'));
     return token;
 };
 
+export const getAuthUsername = async (type) => {
+    const token = getToken();
+    let userName = null;
+    if (token) {
+        const authRes = await request.get(type === 'employer' ? API_GET_EMPLOYER : API_AUTH_ALUMUS, {
+            headers: authHeader(token),
+        });
+        userName = authRes.data.userName;
+    }
+    return userName;
+};
+
 const getUser = async (data) => {
     let user = null;
-    const response = await request.get(data.type === 'employer' ? API_AUTH_EMPLOYER : API_AUTH_ALUMUS, {
+    const response = await request.get(data.type === 'employer' ? API_GET_EMPLOYER : API_AUTH_ALUMUS, {
         headers: authHeader(data.token),
     });
     user = response.data;
@@ -29,9 +42,25 @@ const getUser = async (data) => {
             headers: authHeader(data.token),
         });
         user = { ...user, ...res.data };
+    } else {
+        const res = await request.get(API_AUTH_EMPLOYER + '/' + user.merchant, {
+            headers: authHeader(data.token),
+        });
+        user = {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.emailAddress,
+            userName: user.userName,
+            active: user.active,
+            code: user.merchant,
+            companyName: res.data.name,
+            companyEmail: res.data.email,
+            phoneCompany: res.data.phone,
+            addressCompany: res.data.address,
+            logoCompany: res.data.logo,
+        };
     }
-    console.log(user);
-
     return user;
 };
 
@@ -48,7 +77,7 @@ export const login = createAsyncThunk('auth/login', async (data) => {
 });
 
 export const auth = createAsyncThunk('auth/authUser', async (type) => {
-    const token = getToken(type);
+    const token = await getToken(type);
     if (token) {
         const res = await getUser({ token: token, type: type });
         return { user: res, token: token };
@@ -88,6 +117,7 @@ const slice = createSlice({
                 if (action.payload) {
                     state.user = action.payload.user;
                     state.token = action.payload.token;
+                    state.authLoading = true;
                 }
             })
             .addCase(logout.fulfilled, (state, action) => {

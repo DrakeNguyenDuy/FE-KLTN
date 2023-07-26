@@ -1,38 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from './Home.module.scss';
 import className from 'classnames/bind';
 
-import Job from '~/components/Job1';
+import JobItem from '~/components/JobItem';
 import EmployerCarousel from './components/EmployerCarousel';
 import WelcomeCarousel from './components/WelcomeCarousel';
 import CustomCarousel from '~/components/CustomCarousel';
 import { useDispatch, useSelector } from 'react-redux';
 import { getJobLastest } from '~/store/reducers/jobSlice';
-import { useNavigate } from 'react-router-dom';
-import Loading from '~/components/Loading/Loading';
 import { getTopEmlpyer } from '~/store/reducers/searchSlice';
 
 const cx = className.bind(styles);
 
 function Home() {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const jobsLatest = useSelector((state) => state.job.jobLatest);
     const topEmployers = useSelector((state) => state.search.topEmployers);
     const jobLatestLoading = useSelector((state) => state.job.jobLatestLoading);
     const topEmloyerIsLoading = useSelector((state) => state.search.topEmloyerIsLoading);
 
-    const [itemsDesktop, setItemsDesktop] = useState([]);
-    const [itemsMobile, setItemsMobile] = useState([]);
-
     useEffect(() => {
-        dispatch(getJobLastest());
+        dispatch(getJobLastest('alumus'));
         dispatch(getTopEmlpyer());
+        // eslint-disable-next-line
     }, []);
-    useEffect(() => {
-        setItemsDesktop(getItems(jobsLatest, 4));
-        setItemsMobile(getItems(jobsLatest, 2));
-    }, [jobsLatest]);
 
     const getItems = (items, numItem) => {
         let result = [];
@@ -62,56 +53,54 @@ function Home() {
 
     return (
         <div id="home">
-            {jobLatestLoading && topEmloyerIsLoading ? (
-                <Loading />
-            ) : (
-                <>
-                    <section>
-                        <WelcomeCarousel />
-                    </section>
-                    <section>
-                        <div className="session-title">Việc làm mới nhất</div>
-                        {/* desktop */}
-                        <CustomCarousel
-                            items={itemsDesktop}
-                            wrapperClass={cx('desktop-carousel')}
-                            render={(itemOnSlie) => (
-                                <div className={cx('job-wrapper')}>
-                                    {itemOnSlie.map((item, index) => (
-                                        <Job
-                                            key={index}
-                                            data={item}
-                                            className={cx('job-reponsive')}
-                                            // onClick={() => navigate(`/job/${item.sku}`)}
-                                        />
-                                    ))}
-                                </div>
-                            )}
-                        />
-                        {/* mobile */}
-                        <CustomCarousel
-                            items={itemsMobile}
-                            wrapperClass={cx('mobile-carousel')}
-                            render={(itemOnSlie) => (
-                                <div className={cx('job-wrapper')}>
-                                    {itemOnSlie.map((item, index) => (
-                                        <Job
-                                            key={index}
-                                            data={item}
-                                            className={cx('job-reponsive')}
-                                            // onClick={() => navigate(`/job/${item.sku}`)}
-                                        />
-                                    ))}
-                                </div>
-                            )}
-                        />
-                    </section>
-                    <section>
-                        <div className="session-title">Nhà tuyển dụng nổi bậc</div>
-                        <EmployerCarousel items={topEmployers} />
-                    </section>
-                </>
-            )}
+            <section>
+                <WelcomeCarousel />
+            </section>
+            <section>
+                <div className="session-title">Việc làm mới nhất</div>
+                {/* desktop */}
+                <CustomCarousel
+                    // items={itemsDesktop}
+                    items={getItems(jobsLatest, 4)}
+                    wrapperClass={cx('desktop-carousel')}
+                    render={(itemOnSlie) => (
+                        <div className={cx('job-wrapper')}>
+                            {itemOnSlie.map((item, index) => (
+                                <JobItem
+                                    key={index}
+                                    data={item}
+                                    // className={cx('job-reponsive')}
+                                    // onClick={() => navigate(`/job/${item.sku}`)}
+                                />
+                            ))}
+                        </div>
+                    )}
+                    loading={jobLatestLoading}
+                />
+                {/* mobile */}
+                <CustomCarousel
+                    // items={itemsMobile}
+                    items={getItems(jobsLatest, 2)}
+                    wrapperClass={cx('mobile-carousel')}
+                    render={(itemOnSlie) => (
+                        <div className={cx('job-wrapper')}>
+                            {itemOnSlie.map((item, index) => (
+                                <JobItem
+                                    key={index}
+                                    data={item}
+                                    // className={cx('job-reponsive')}
+                                    // onClick={() => navigate(`/job/${item.sku}`)}
+                                />
+                            ))}
+                        </div>
+                    )}
+                    loading={jobLatestLoading}
+                />
+            </section>
+            <section>
+                <div className="session-title">Nhà tuyển dụng nổi bậc</div>
+                <EmployerCarousel items={topEmployers} loading={topEmloyerIsLoading} />
+            </section>
         </div>
     );
 }

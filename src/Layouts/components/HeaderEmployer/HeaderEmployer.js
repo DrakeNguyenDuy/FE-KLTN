@@ -79,7 +79,11 @@ function HeaderEmployer() {
                             <div className={cx('dropdown-cusomize', 'd-dropdown-auth')}>
                                 <div className={cx('avatar')}>
                                     {user ? (
-                                        <Avatar src={BASE_URL + user.avatar} base64={false} name={user.userName} />
+                                        <Avatar
+                                            src={BASE_URL + user.logoCompany.path}
+                                            base64={false}
+                                            name={user.userName}
+                                        />
                                     ) : (
                                         <FontAwesomeIcon size="xl" color="var(--secondary-color)" icon={faUser} />
                                     )}

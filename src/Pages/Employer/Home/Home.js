@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Home.module.scss';
 import className from 'classnames/bind';
 
-import Job from '~/components/Job1';
+import Job from '~/components/JobItem';
 import EmployerCarousel from './components/EmployerCarousel';
 import WelcomeCarousel from './components/WelcomeCarousel';
 import CustomCarousel from '~/components/CustomCarousel';

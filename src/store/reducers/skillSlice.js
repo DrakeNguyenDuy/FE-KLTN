@@ -11,8 +11,15 @@ export const getSkill = createAsyncThunk('skill/get', async () => {
     return skillOptions;
 });
 
+export const getSkillId = createAsyncThunk('skillId/get', async () => {
+    const response = await request.get(API_GET_SKILL);
+    const skillOptions = response.data.data.map((skill) => ({ value: skill.id, label: skill.name }));
+    return skillOptions;
+});
+
 const initialState = {
     skills: [],
+    skillsId: [],
 };
 
 const slice = createSlice({
@@ -23,6 +30,10 @@ const slice = createSlice({
         builder.addCase(getSkill.fulfilled, (state, action) => {
             state.skills = action.payload;
             console.log('skills', state.skills);
+        });
+        builder.addCase(getSkillId.fulfilled, (state, action) => {
+            state.skillsId = action.payload;
+            console.log('skills', state.skillsId);
         });
     },
 });

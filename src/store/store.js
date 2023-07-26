@@ -11,6 +11,7 @@ import paycycleSlice from './reducers/paycycleSlice';
 import cvSlice from './reducers/cvSlice';
 import profileSlice from './reducers/profileSlice';
 import searchSlice from './reducers/searchSlice';
+import recruitmentSlice from './reducers/recruitmentSlice';
 
 const store = configureStore({
     reducer: {
@@ -26,6 +27,7 @@ const store = configureStore({
         cv: cvSlice,
         profile: profileSlice,
         search: searchSlice,
+        recruitment: recruitmentSlice,
     },
 });
 

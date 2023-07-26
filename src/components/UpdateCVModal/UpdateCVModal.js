@@ -118,7 +118,7 @@ function UpdateCVModal({ data, show, handleClose, handleSubmit }) {
     return (
         <Modal show={show} onHide={onClose} className="modal-update-profile">
             <Modal.Header closeButton>
-                <Modal.Title>Cập nhật Hồ sơ</Modal.Title>
+                <Modal.Title>Cập nhật CV</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form ref={formRef}>
@@ -641,9 +641,7 @@ function UpdateCVModal({ data, show, handleClose, handleSubmit }) {
                         )}
                     />
                 </Form>
-                <p id="cv-update-error" className={cx('form-error', 'cv-certificate-name', 'my-form-hidden')}>
-                    sssss
-                </p>
+                <p id="cv-update-error" className={cx('form-error', 'cv-certificate-name', 'my-form-hidden')}></p>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={onClose}>

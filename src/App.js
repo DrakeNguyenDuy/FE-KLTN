@@ -2,15 +2,16 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { Fragment } from 'react';
 import React from 'react';
-import { alumusRoutes, employerRoutes } from './routes';
 import DefaultLayout from '~/Layouts/DefaultLayout';
+import routes from './routes/Route';
+import Auth from './components/Auth/Auth';
 
 function App() {
     return (
         <Router>
             <div className="container">
                 <Routes>
-                    {alumusRoutes.map((route, index) => {
+                    {routes.alumus.map((route, index) => {
                         let Layout = DefaultLayout;
                         if (route.layout) {
                             Layout = route.layout;
@@ -23,14 +24,16 @@ function App() {
                                 key={index}
                                 path={route.path}
                                 element={
-                                    <Layout>
-                                        <Page />
-                                    </Layout>
+                                    <Auth role={'alumus'}>
+                                        <Layout>
+                                            <Page />
+                                        </Layout>
+                                    </Auth>
                                 }
                             />
                         );
                     })}
-                    {employerRoutes.map((route, index) => {
+                    {routes.employer.map((route, index) => {
                         let Layout = DefaultLayout;
                         if (route.layout) {
                             Layout = route.layout;
@@ -43,9 +46,11 @@ function App() {
                                 key={index}
                                 path={route.path}
                                 element={
-                                    <Layout>
-                                        <Page />
-                                    </Layout>
+                                    <Auth role={'employer'}>
+                                        <Layout>
+                                            <Page />
+                                        </Layout>
+                                    </Auth>
                                 }
                             />
                         );
