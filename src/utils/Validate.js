@@ -1,12 +1,10 @@
-export const validate = (currentElement, rules, value, selector, fieldName, passwordSelector) => {
+export const validate = (currentElement, rules, value, selector, fieldName, passwordValue) => {
     let isValidate = true;
     let message = '';
     for (let i = 0; i < rules.length; i++) {
         const rule = rules[i];
         let test = true;
         if (rule === RULES.IS_CONFIRM_PASSWORD) {
-            const passwordElement = document.querySelector(passwordSelector);
-            const passwordValue = passwordElement.value;
             test = validateObj[rule].test(value, passwordValue);
         } else {
             test = validateObj[rule].test(value, validateObj[rule].pattern);
@@ -26,12 +24,18 @@ export const validate = (currentElement, rules, value, selector, fieldName, pass
         errorElement.classList.remove('my-form-hidden');
     }
 };
-export const validateValue = (value, rules, fieldName) => {
+export const validateValue = (value, rules, fieldName, passwordValue) => {
     let isValidate = true;
     let message = '';
     for (let i = 0; i < rules.length; i++) {
         const rule = rules[i];
-        if (!validateObj[rule].test(value, validateObj[rule].pattern)) {
+        let test = true;
+        if (rule === RULES.IS_CONFIRM_PASSWORD) {
+            test = validateObj[rule].test(value, passwordValue);
+        } else {
+            test = validateObj[rule].test(value, validateObj[rule].pattern);
+        }
+        if (!test) {
             isValidate = false;
             message = fieldName ? fieldName + ' ' : 'Trường này ';
             message += validateObj[rule].message;
@@ -303,17 +307,28 @@ const handleValidateUpdateProfile = (data) => {
     return null;
 };
 
-// const handleValidateRegisterForm = () => {
-//      // check firstname valid
-//      const checkFirstName = validateValue(data.firstName, [RULES.IS_REQUIRE], 'Họ');
-//      if (!checkFirstName.isValidate) return checkFirstName.message;
-//      // check lastname valid
-//      const checkLastName = validateValue(data.lastName, [RULES.IS_REQUIRE], 'Tên');
-//      if (!checkLastName.isValidate) return checkLastName.message;
-//      // check email valid
-//      const checkEmail = validateValue(data.email, [RULES.IS_REQUIRE, RULES.IS_EMAIL], 'Email');
-//      if (!checkEmail.isValidate) return checkEmail.message;
-// };
+const handleValidateRegisterForm = (data, passwordValue) => {
+    // check firstname valid
+    const checkFirstName = validateValue(data.firstName, [RULES.IS_REQUIRE], 'Họ');
+    if (!checkFirstName.isValidate) return checkFirstName.message;
+    // check lastname valid
+    const checkLastName = validateValue(data.lastName, [RULES.IS_REQUIRE], 'Tên');
+    if (!checkLastName.isValidate) return checkLastName.message;
+    // check email valid
+    const checkEmail = validateValue(data.emailAddress, [RULES.IS_REQUIRE, RULES.IS_EMAIL], 'Email');
+    if (!checkEmail.isValidate) return checkEmail.message;
+    const checkPassword = validateValue(data.password, [RULES.IS_REQUIRE, RULES.IS_PASSWORD], 'Mật khẩu');
+    if (!checkPassword.isValidate) return checkPassword.message;
+    // check confirm password
+    const checkConfirmPassword = validateValue(
+        data.confirmPassword,
+        [RULES.IS_CONFIRM_PASSWORD],
+        'Nhập lại mật khẩu',
+        passwordValue,
+    );
+    if (!checkConfirmPassword.isValidate) return checkConfirmPassword.message;
+    return null;
+};
 
 export const validateUpdateCV = (data, selector) => {
     const errorElement = document.querySelector(selector);
@@ -341,9 +356,9 @@ export const validateUpdateProfile = (data, selector) => {
     }
 };
 
-export const validateRegisterForm = (data, selector) => {
+export const validateRegisterForm = (data, selector, passwordValue) => {
     const errorElement = document.querySelector(selector);
-    const validateMessage = handleValidateUpdateProfile(data);
+    const validateMessage = handleValidateRegisterForm(data, passwordValue);
     if (validateMessage === null) {
         errorElement.classList.add('my-form-hidden');
         return true;

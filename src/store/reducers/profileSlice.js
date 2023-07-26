@@ -12,6 +12,7 @@ export const getProfile = createAsyncThunk('profile/get', async () => {
     const response = await request.get(API_GET_PROFILE, {
         headers: authHeader(token),
     });
+    console.log('response.data', typeof response.data);
     return response.data;
 });
 

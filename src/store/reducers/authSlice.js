@@ -4,15 +4,12 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import request, { authHeader } from '~/axios/request';
 
 const API_EMPLOYER_LOGIN = 'v1/private/login';
-
 const API_ALUMUS_LOGIN = 'v1/customer/login';
-
-export const API_GET_EMPLOYER = 'v1/private/user/profile';
+const API_GET_EMPLOYER = 'v1/private/user/profile';
 const API_AUTH_EMPLOYER = 'v1/private/store';
-
-export const API_AUTH_ALUMUS = 'v1/auth/customer/profile';
-
+const API_AUTH_ALUMUS = 'v1/auth/customer/profile';
 const API_AUTH_ALUMUS_PROFILE = 'v1/auth/profile';
+const API_REGISTER_ALUMUS = 'v1/customer/register';
 
 export const getToken = (type) => {
     const token = JSON.parse(localStorage.getItem(type === 'employer' ? 'employerToken' : 'alumusToken'));
@@ -61,6 +58,7 @@ const getUser = async (data) => {
             logoCompany: res.data.logo,
         };
     }
+    console.log(user);
     return user;
 };
 
@@ -73,6 +71,11 @@ export const login = createAsyncThunk('auth/login', async (data) => {
         data.type === 'employer' ? 'employerToken' : 'alumusToken',
         JSON.stringify(response.data.token),
     );
+    return response.data;
+});
+
+export const registerAlumus = createAsyncThunk('auth/registerAlumus', async (data) => {
+    const response = await request.post(API_REGISTER_ALUMUS, data);
     return response.data;
 });
 
@@ -93,6 +96,9 @@ const initialState = {
     loading: false,
     error: null,
     user: null,
+    registerAlumus: null,
+    registerAlumusLoading: false,
+    registerAlumusMessage: null,
 };
 
 const slice = createSlice({
@@ -125,6 +131,18 @@ const slice = createSlice({
                 state.loading = false;
                 state.error = null;
                 state.user = null;
+            })
+            .addCase(registerAlumus.pending, (state, action) => {
+                state.registerAlumusLoading = true;
+            })
+            .addCase(registerAlumus.fulfilled, (state, action) => {
+                state.registerAlumusLoading = false;
+                state.registerAlumus = action.payload;
+                state.registerAlumusMessage = 'success';
+            })
+            .addCase(registerAlumus.rejected, (state, action) => {
+                state.registerAlumusLoading = false;
+                state.registerAlumusMessage = 'fail';
             });
     },
 });
