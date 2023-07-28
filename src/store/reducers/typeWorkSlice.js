@@ -19,7 +19,7 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getTypeWork.fulfilled, (state, action) => {
             state.typeWorks = action.payload;
-            console.log('typeWorks', state.typeWorks);
+            // console.log('typeWorks', state.typeWorks);
         });
     },
 });

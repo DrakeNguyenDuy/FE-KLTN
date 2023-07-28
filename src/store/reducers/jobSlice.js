@@ -31,7 +31,7 @@ export const postLikeJob = createAsyncThunk('like/post', async ({ codeJob, isFol
             headers: authHeader(token),
         },
     );
-    console.log('isFl', isFollow, codeJob);
+    // console.log('isFl', isFollow, codeJob);
     return {
         codeJob,
         status: response.status === HttpStatusCode.Ok ? !isFollow : isFollow,
@@ -48,11 +48,11 @@ export const getJobDetail = createAsyncThunk('jobDetail/get', async ({ id, type 
 
 export const getJobLastest = createAsyncThunk('jobLatest/get', async (type) => {
     const user = await getAuthUsername(type);
-    console.log(user);
+    // console.log(user);
     const response = await request.get(API_GET_JOB_LATEST, {
         params: user ? { username: user } : null,
     });
-    console.log(response);
+    // console.log(response);
     return response.data;
 });
 
@@ -69,7 +69,7 @@ export const getJobApplied = createAsyncThunk('jobApplied/get', async () => {
 
         result.push({ companyLogo: jobDetails.data.logo, ...job });
     }
-    console.log('result', result);
+    // console.log('result', result);
     return result;
 });
 
@@ -79,7 +79,7 @@ export const getJobLiked = createAsyncThunk('jobLiked/get', async () => {
         headers: authHeader(token),
     });
     const jobLiked = response.data;
-    console.log(jobLiked);
+    // console.log(jobLiked);
     let result = [];
     for (let i = 0; i < jobLiked.length; i++) {
         const job = jobLiked[i];
@@ -87,7 +87,7 @@ export const getJobLiked = createAsyncThunk('jobLiked/get', async () => {
 
         result.push({ companyLogo: jobDetails.data.logo, ...job });
     }
-    console.log('result', result);
+    // console.log('result', result);
     return result;
 });
 
@@ -223,7 +223,7 @@ const slice = createSlice({
         });
         builder.addCase(postLikeJob.fulfilled, (state, action) => {
             state.follow = action.payload;
-            console.log(state.follow);
+            // console.log(state.follow);
         });
         // // like job
         // builder.addCase(postLikeJob.fulfilled, (state, action) => {

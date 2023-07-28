@@ -7,6 +7,7 @@ import { getToken } from './authSlice';
 const API_GET_CV = 'v1/auth/cv';
 const API_GET_CV_NO_AUTH = 'v1/cv';
 const API_UPDATE_CV = 'v1/auth/cv';
+const API_CREATE_CV = 'v1/auth/cv';
 const API_POST_AVATAR = 'v1/auth/profile/avatar';
 
 export const getCVWithToken = createAsyncThunk('cv/get', async () => {
@@ -25,6 +26,14 @@ export const getCVWithId = createAsyncThunk('cvid/get', async (id) => {
 export const putUpdateCV = createAsyncThunk('cv/update', async ({ id, data }) => {
     const token = getToken();
     const response = await request.put(API_UPDATE_CV + '/' + id, data, {
+        headers: authHeader(token),
+    });
+    return response.data;
+});
+
+export const createCV = createAsyncThunk('cv/create', async (data) => {
+    const token = getToken();
+    const response = await request.post(API_CREATE_CV, data, {
         headers: authHeader(token),
     });
     return response.data;
@@ -90,6 +99,7 @@ const slice = createSlice({
         });
         builder.addCase(postAvatar.fulfilled, (state, action) => {
             // console.log('res', action.payload);
+            window.location.reload();
         });
         builder.addCase(postAvatar.rejected, (state, action) => {
             // console.log('err');
@@ -100,6 +110,9 @@ const slice = createSlice({
         });
         builder.addCase(putUpdateCV.rejected, (state, action) => {
             // console.log('err');
+        });
+        builder.addCase(createCV.fulfilled, (state, action) => {
+            window.location.reload();
         });
     },
 });

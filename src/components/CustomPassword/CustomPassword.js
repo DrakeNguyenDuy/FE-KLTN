@@ -20,6 +20,9 @@ function CustomPassword({ labelName, placeholder, controlId, onBlur, ...props })
                     type={showPassword ? 'text' : 'password'}
                     placeholder={placeholder}
                     onBlur={onBlur}
+                    onCopy={(e) => {
+                        e.preventDefault();
+                    }}
                     {...props}
                 />
                 <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} onClick={toggleShowPassword} />

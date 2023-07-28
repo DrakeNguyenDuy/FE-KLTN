@@ -52,7 +52,7 @@ function Home() {
     };
 
     return (
-        <div id="home">
+        <div id="home" className={cx('wrapper')}>
             <section>
                 <WelcomeCarousel />
             </section>

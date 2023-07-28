@@ -21,7 +21,6 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getCareer.fulfilled, (state, action) => {
             state.careers = action.payload.list;
-            console.log('careers', state.careers);
         });
     },
 });

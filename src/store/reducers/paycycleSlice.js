@@ -21,7 +21,7 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getPaycycle.fulfilled, (state, action) => {
             state.paycycles = action.payload;
-            console.log('paycycles', state.paycycles);
+            // console.log('paycycles', state.paycycles);
         });
     },
 });

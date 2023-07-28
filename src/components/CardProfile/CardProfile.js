@@ -1,16 +1,19 @@
 import { Button, Image } from 'react-bootstrap';
 import styles from './CardProfile.module.scss';
 import className from 'classnames/bind';
+import { useNavigate } from 'react-router-dom';
 
 const cx = className.bind(styles);
 
 function CardProfile({
-    avatar = 'https://antimatter.vn/wp-content/uploads/2022/12/anh-avatar-facebook-vo-danh-avt-fb-cho-nu-1.jpg',
-    name = 'Khách',
-    location = 'Chưa có',
+    avatar = 'static/imgs/profile-default-avatar.jpg',
+    name = 'Chưa cập nhật',
+    location = 'Chưa cập nhật',
     handleUpdateAvatar,
     ...props
 }) {
+    const navigate = useNavigate();
+    console.log(avatar);
     return (
         <div className={cx('wrapper')}>
             <div className={cx('profile')}>
@@ -24,12 +27,7 @@ function CardProfile({
                 </div>
             </div>
             <div className={cx('action')}>
-                <Button
-                    variant="outline-primary"
-                    onClick={() => {
-                        window.location.href = '/profile';
-                    }}
-                >
+                <Button variant="outline-primary" onClick={() => navigate('/profile')}>
                     Cập nhật hồ sơ
                 </Button>
                 <Button onClick={handleUpdateAvatar}>Cập nhật ảnh</Button>

@@ -5,11 +5,21 @@ import request, { authHeader } from '~/axios/request';
 import { getToken } from './authSlice';
 
 const API_GET_PROFILE = 'v1/auth/profile';
+const API_CREATE_PROFILE = 'v1/auth/profile';
 const API_UPDATE_PROFILE = 'v1/auth/profile';
 
 export const getProfile = createAsyncThunk('profile/get', async () => {
     const token = getToken();
     const response = await request.get(API_GET_PROFILE, {
+        headers: authHeader(token),
+    });
+    console.log('response.data', typeof response.data);
+    return response.data;
+});
+
+export const createProfile = createAsyncThunk('profile/post', async (data) => {
+    const token = getToken();
+    const response = await request.post(API_CREATE_PROFILE, data, {
         headers: authHeader(token),
     });
     return response.data;
@@ -42,6 +52,12 @@ const slice = createSlice({
         });
         builder.addCase(getProfile.rejected, (state, action) => {
             state.profileIsLoading = false;
+        });
+        builder.addCase(createProfile.fulfilled, (state, action) => {
+            window.location.reload();
+        });
+        builder.addCase(putUpdateProfile.fulfilled, (state, action) => {
+            window.location.reload();
         });
     },
 });
