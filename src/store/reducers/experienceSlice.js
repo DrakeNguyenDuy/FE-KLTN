@@ -19,7 +19,7 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getExperience.fulfilled, (state, action) => {
             state.experiences = action.payload;
-            console.log('experiences', state.experiences);
+            // console.log('experiences', state.experiences);
         });
     },
 });

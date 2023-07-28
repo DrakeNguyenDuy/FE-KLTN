@@ -19,7 +19,7 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getPosition.fulfilled, (state, action) => {
             state.positions = action.payload;
-            console.log('positions', state.positions);
+            // console.log('positions', state.positions);
         });
     },
 });

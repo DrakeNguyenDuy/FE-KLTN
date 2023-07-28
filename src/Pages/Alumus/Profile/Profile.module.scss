@@ -99,6 +99,13 @@
     .description-content {
         margin-top: 16px;
         text-align: center;
+        .group-btns {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
         p {
             margin: 0;
             padding: 0;
@@ -108,4 +115,9 @@
             text-align: left;
         }
     }
+}
+.form-error {
+    margin-left: 4px;
+    color: red;
+    font-size: 14px;
 }

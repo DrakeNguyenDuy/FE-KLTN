@@ -10,7 +10,7 @@ import { robotoNormal } from './fonts/robotoNormal';
 import { robotoItalic } from './fonts/robotoItalic';
 import { robotoBold } from './fonts/robotoBold';
 import { robotoBoldItalic } from './fonts/robotoBoldItalic';
-import { getCVWithId, getCVWithToken, postAvatar, putUpdateCV } from '~/store/reducers/cvSlice';
+import { createCV, getCVWithId, getCVWithToken, postAvatar, putUpdateCV } from '~/store/reducers/cvSlice';
 import CVStyle1 from '~/components/CVStyle/CVStyle1';
 import UploadAvatarModal from '~/components/UploadAvatarModal/UploadAvatarModal';
 import UpdateCVModal from '~/components/UpdateCVModal/UpdateCVModal';
@@ -29,7 +29,7 @@ function CV() {
     const isLoading = useSelector((state) => state.cv.isLoading);
 
     const dispath = useDispatch();
-
+    console.log('cv', cv);
     useEffect(() => {
         if (id) {
             dispath(getCVWithId(id));
@@ -53,7 +53,6 @@ function CV() {
 
     const handleSubmitAvatar = (data) => {
         dispath(postAvatar({ data }));
-        window.location.reload();
     };
 
     const handleOpenUpdateModal = (data) => {
@@ -65,7 +64,11 @@ function CV() {
     };
 
     const handleSubmitUpdate = (data) => {
-        dispath(putUpdateCV({ id: cv.id, data }));
+        if (cv) {
+            dispath(putUpdateCV({ id: cv.id, data }));
+        } else {
+            dispath(createCV(data));
+        }
     };
 
     const convertFormatDate = (dateString) => {
@@ -193,15 +196,14 @@ function CV() {
                         </div>
                     ) : (
                         <div className={cx('cv-header')}>
-                            <p>Xem CV của {cv?.firstName}</p>
-
+                            {cv && <p>Xem CV của {cv?.firstName}</p>}
                             <div className={cx('header-btn-group')}>
-                                <CustomButton onClick={handleOpenAvatarModal}>Cập nhật avatar</CustomButton>
-                                <CustomButton onClick={handleOpenUpdateModal}>Chỉnh sửa CV</CustomButton>
                                 {cv ? (
                                     <>
+                                        <CustomButton onClick={handleOpenAvatarModal}>Cập nhật avatar</CustomButton>
+                                        <CustomButton onClick={handleOpenUpdateModal}>Chỉnh sửa CV</CustomButton>
                                         <CustomButton onClick={handleSeeFull}>Xem full</CustomButton>
-                                        <CustomButton onClick={() => handleDownloadCV()}>Tải CV</CustomButton>
+                                        <CustomButton onClick={handleDownloadCV}>Tải CV</CustomButton>
                                     </>
                                 ) : null}
                             </div>
@@ -212,7 +214,14 @@ function CV() {
                             {cv ? (
                                 <CVStyle1 data={cv} />
                             ) : (
-                                <div className={cx('update-cv-info')}>Bạn chưa có cv hãy cập nhật cv của bạn!</div>
+                                <>
+                                    <div className={cx('update-cv-info')}>
+                                        CV của bạn chưa được tạo. Hãy tạo cv của bạn để ứng tuyển việc làm ngay.
+                                    </div>
+                                    <CustomButton wrapperStyle={cx('create-cv')} onClick={handleOpenUpdateModal}>
+                                        Tạo CV
+                                    </CustomButton>
+                                </>
                             )}
                         </div>
                     </div>

@@ -1,5 +1,12 @@
 .wrapper {
     padding-bottom: 8rem;
+    transform: translateY(-100%);
+    animation: slide-in 0.8s forwards;
+}
+@keyframes slide-in {
+    100% {
+        transform: translateY(0%);
+    }
 }
 .page-content {
     position: relative;

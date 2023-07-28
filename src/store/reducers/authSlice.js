@@ -134,6 +134,7 @@ const slice = createSlice({
             })
             .addCase(registerAlumus.pending, (state, action) => {
                 state.registerAlumusLoading = true;
+                state.registerAlumusMessage = null;
             })
             .addCase(registerAlumus.fulfilled, (state, action) => {
                 state.registerAlumusLoading = false;
