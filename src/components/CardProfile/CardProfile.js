@@ -13,7 +13,6 @@ function CardProfile({
     ...props
 }) {
     const navigate = useNavigate();
-    console.log(avatar);
     return (
         <div className={cx('wrapper')}>
             <div className={cx('profile')}>

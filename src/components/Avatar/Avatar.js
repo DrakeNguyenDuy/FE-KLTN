@@ -12,6 +12,7 @@ function Avatar({
     height,
     name = 'default',
     color = '#12ad5d',
+    loading,
     ...props
 }) {
     const getLastCharacter = (name) => {

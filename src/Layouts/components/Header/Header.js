@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './Header.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { auth, logout } from '~/store/reducers/authSlice';
 import Avatar from '~/components/Avatar/Avatar';
@@ -27,6 +27,7 @@ function Header() {
     const token = useSelector((state) => state.auth.token);
     const user = useSelector((state) => state.auth.user);
     const dispath = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispath(auth('alumus'));
@@ -35,7 +36,8 @@ function Header() {
 
     const handleLogout = () => {
         dispath(logout('alumus'));
-        window.location.href = '/login';
+        // window.location.href = '/login';
+        // navigate('/login');
     };
     return (
         <Navbar className={cx('header', 'p-0')} expand="lg">

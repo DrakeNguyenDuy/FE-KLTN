@@ -96,6 +96,7 @@ const initialState = {
     loading: false,
     error: null,
     user: null,
+    authLoading: false,
     registerAlumus: null,
     registerAlumusLoading: false,
     registerAlumusMessage: null,
@@ -119,18 +120,25 @@ const slice = createSlice({
                 state.loading = false;
                 state.error = action.error.message;
             })
+            .addCase(auth.pending, (state, action) => {
+                state.authLoading = true;
+            })
             .addCase(auth.fulfilled, (state, action) => {
                 if (action.payload) {
                     state.user = action.payload.user;
                     state.token = action.payload.token;
-                    state.authLoading = true;
                 }
+                state.authLoading = false;
+            })
+            .addCase(auth.rejected, (state, action) => {
+                state.authLoading = false;
             })
             .addCase(logout.fulfilled, (state, action) => {
                 state.token = null;
                 state.loading = false;
                 state.error = null;
                 state.user = null;
+                window.location.href = '/login';
             })
             .addCase(registerAlumus.pending, (state, action) => {
                 state.registerAlumusLoading = true;
