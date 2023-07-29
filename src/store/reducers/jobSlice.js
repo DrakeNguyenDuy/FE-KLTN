@@ -14,13 +14,27 @@ const API_GET_JOB_APPLIED = 'v1/auth/recruitment';
 const API_GET_JOB_LIKED = 'v1/auth/rating';
 const API_POST_JOB_LIKED = 'v1/auth/rating';
 
-export const getJobs = createAsyncThunk('job/get', async ({ page, type }) => {
-    const user = await getAuthUsername(type);
-    const response = await request.get(API_GET_JOBS, {
-        params: user ? { page: page, count: 5, username: user } : { page: page, count: 5 },
-    });
-    return response.data;
-});
+export const getJobs = createAsyncThunk(
+    'job/get',
+    async ({ search, career, area, typeWork, paycycle, experience, order, page, type }) => {
+        const user = await getAuthUsername(type);
+        const response = await request.get(API_GET_JOBS, {
+            params: {
+                page: page === 0 ? page : page - 1,
+                count: 5,
+                username: user,
+                search: search === '' ? null : search,
+                career: career === '' ? null : career,
+                area: area === '' ? null : area,
+                paycycle: paycycle === '' ? null : paycycle,
+                typeWork: typeWork === '' ? null : typeWork,
+                experience: experience === '' ? null : experience,
+                order: order === '' ? null : order,
+            },
+        });
+        return response.data;
+    },
+);
 
 export const postLikeJob = createAsyncThunk('like/post', async ({ codeJob, isFollow }) => {
     const token = await getToken();

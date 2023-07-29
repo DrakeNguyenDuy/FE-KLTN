@@ -15,6 +15,9 @@ import CVStyle1 from '~/components/CVStyle/CVStyle1';
 import UploadAvatarModal from '~/components/UploadAvatarModal/UploadAvatarModal';
 import UpdateCVModal from '~/components/UpdateCVModal/UpdateCVModal';
 import Loading from '~/components/Loading/Loading';
+import { getProfile } from '~/store/reducers/profileSlice';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const cx = className.bind(styles);
 
@@ -26,15 +29,16 @@ function CV() {
     const [showAvatarModal, setShowAvatarModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const cv = useSelector((state) => state.cv.cv);
+    const profile = useSelector((state) => state.profile.profile);
     const isLoading = useSelector((state) => state.cv.isLoading);
 
     const dispath = useDispatch();
-    console.log('cv', cv);
     useEffect(() => {
         if (id) {
             dispath(getCVWithId(id));
         } else {
             dispath(getCVWithToken());
+            dispath(getProfile());
         }
         // eslint-disable-next-line
     }, []);
@@ -56,12 +60,30 @@ function CV() {
     };
 
     const handleOpenUpdateModal = (data) => {
-        setShowUpdateModal(true);
+        if (profile) {
+            setShowUpdateModal(true);
+        } else {
+            notify();
+        }
     };
 
     const handleCloseUpdateModal = () => {
         setShowUpdateModal(false);
     };
+
+    const notify = () =>
+        toast(
+            <p>
+                Bạn hãy cập nhật hồ sơ cá nhân trước để tạo cv.
+                <br />
+                <span
+                    onClick={() => navigate('/profile')}
+                    style={{ marginTop: '8px', color: 'blue', textDecoration: 'underline' }}
+                >
+                    Cập nhật ngay
+                </span>
+            </p>,
+        );
 
     const handleSubmitUpdate = (data) => {
         if (cv) {
@@ -173,6 +195,7 @@ function CV() {
         <Loading />
     ) : (
         <div className={cx('wrapper')}>
+            <ToastContainer />
             <UploadAvatarModal
                 show={showAvatarModal}
                 handleClose={handleCloseAvatarModal}

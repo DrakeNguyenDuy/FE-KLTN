@@ -30,7 +30,6 @@ const slice = createSlice({
         });
         builder.addCase(postApplyJob.fulfilled, (state, action) => {
             state.apply = action.payload;
-            window.location.reload();
         });
     },
 });

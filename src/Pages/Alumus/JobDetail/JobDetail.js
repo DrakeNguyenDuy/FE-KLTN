@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from './JobDetail.module.scss';
 import className from 'classnames/bind';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,10 +32,12 @@ import RequireLogin from '~/components/RequireLogin/RequireLogin';
 import { getCVWithToken } from '~/store/reducers/cvSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getProfile } from '~/store/reducers/profileSlice';
 
 const cx = className.bind(styles);
 
 function JobDetail() {
+    const navigate = useNavigate();
     const dispath = useDispatch();
     const [showModal, setShowModal] = useState(false);
     const [showRequireLogin, setShowRequireLogin] = useState(false);
@@ -49,7 +51,6 @@ function JobDetail() {
     const cvLoading = useSelector((state) => state.cv.isLoading);
 
     const { id } = useParams();
-
     const breadcrumbItems = [
         { name: 'Trang chủ', href: '/' },
         { name: 'Việc làm', href: '/jobs' },
@@ -63,7 +64,7 @@ function JobDetail() {
     useEffect(() => {
         dispath(getJobDetail({ id, type: 'alumus' }));
         // eslint-disable-next-line
-    }, [followStatus]);
+    }, [followStatus, applyStatus]);
 
     const convertFormatDate = (dateString) => {
         if (dateString && dateString.includes('-')) {
@@ -73,7 +74,11 @@ function JobDetail() {
     };
 
     const handleOpenModal = () => {
-        setShowModal(true);
+        if (cv) {
+            setShowModal(true);
+        } else {
+            notifyCreateProfile();
+        }
     };
     const handleCloseModal = () => {
         setShowModal(false);
@@ -84,6 +89,19 @@ function JobDetail() {
     };
 
     const notify = () => toast('Đã ứng tuyển thành công!');
+    const notifyCreateProfile = () =>
+        toast(
+            <p>
+                Bạn hãy cập nhật cv để có thể ứng tuyển công việc.
+                <br />
+                <span
+                    onClick={() => navigate('/cv')}
+                    style={{ marginTop: '8px', color: 'blue', textDecoration: 'underline' }}
+                >
+                    Cập nhật ngay
+                </span>
+            </p>,
+        );
 
     const handleLikeJob = (e) => {
         e.stopPropagation();
@@ -189,7 +207,6 @@ function JobDetail() {
                             <FontAwesomeIcon icon={jobDetails?.follow ? faThumbsDown : faHeart} />{' '}
                             {jobDetails?.follow ? 'Bỏ theo dõi' : 'Theo dõi'}
                         </CustomButton> */}
-                        {console.log(jobDetails)}
                         {jobDetails?.applied ? (
                             <CustomButton
                                 onClick={(e) => e.stopPropagation()}

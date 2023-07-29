@@ -31,7 +31,7 @@ function Login() {
     const formRef = useRef();
 
     useEffect(() => {
-        dispath(logout('alumus'));
+        // dispath(logout('alumus'));
         // eslint-disable-next-line
     }, []);
 
