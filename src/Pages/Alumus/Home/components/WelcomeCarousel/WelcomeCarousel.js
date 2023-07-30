@@ -14,8 +14,8 @@ const cx = className.bind(styles);
 
 const items = [
     { imageURL: 'static/imgs/carousel_1.jpg' },
-    { imageURL: 'static/imgs/carousel_1.jpg' },
-    { imageURL: 'static/imgs/carousel_1.jpg' },
+    { imageURL: 'static/imgs/carousel_2.jpg' },
+    { imageURL: 'static/imgs/carousel_3.jpg' },
 ];
 
 function WelcomeCarousel() {
@@ -23,7 +23,6 @@ function WelcomeCarousel() {
     const navigate = useNavigate();
     const districts = useSelector((state) => state.location.districts);
     const [searchValue, setSearchValue] = useState('');
-    // const [areaSelected, setAreaSelected] = useState('');
     const areaRef = useRef(null);
 
     useEffect(() => {

@@ -10,11 +10,14 @@ const API_UPDATE_PROFILE = 'v1/auth/profile';
 
 export const getProfile = createAsyncThunk('profile/get', async () => {
     const token = getToken();
-    const response = await request.get(API_GET_PROFILE, {
-        headers: authHeader(token),
-    });
-    console.log('response.data', typeof response.data);
-    return response.data;
+    if (token) {
+        const response = await request.get(API_GET_PROFILE, {
+            headers: authHeader(token),
+        });
+        console.log('response.data', typeof response.data);
+        return response.data;
+    }
+    return null;
 });
 
 export const createProfile = createAsyncThunk('profile/post', async (data) => {
