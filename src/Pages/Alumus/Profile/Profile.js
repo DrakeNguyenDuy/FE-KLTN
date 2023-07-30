@@ -60,7 +60,7 @@ function Profile() {
             }
         }
         // eslint-disable-next-line
-    }, []);
+    }, [token]);
 
     const handleOpenAvatarModal = () => {
         setShowAvatarModal(true);

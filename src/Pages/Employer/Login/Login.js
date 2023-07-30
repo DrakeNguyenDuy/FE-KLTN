@@ -31,7 +31,8 @@ function Login() {
     const formRef = useRef();
 
     useEffect(() => {
-        dispath(logout('employer'));
+        // dispath(logout('employer'));
+        localStorage.removeItem('employerToken');
         // eslint-disable-next-line
     }, []);
 

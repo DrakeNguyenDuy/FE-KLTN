@@ -33,6 +33,7 @@ function Login() {
     useEffect(() => {
         // dispath(logout('alumus'));
         // eslint-disable-next-line
+        localStorage.removeItem('alumusToken');
     }, []);
 
     useEffect(() => {

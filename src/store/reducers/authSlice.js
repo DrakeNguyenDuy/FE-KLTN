@@ -89,6 +89,7 @@ export const auth = createAsyncThunk('auth/authUser', async (type) => {
 
 export const logout = createAsyncThunk('auth/logout', async (type) => {
     localStorage.removeItem(type === 'employer' ? 'employerToken' : 'alumusToken');
+    return type;
 });
 
 const initialState = {
@@ -138,7 +139,7 @@ const slice = createSlice({
                 state.loading = false;
                 state.error = null;
                 state.user = null;
-                window.location.href = '/login';
+                window.location.href = action.payload === 'employer' ? '/employer/login' : '/login';
             })
             .addCase(registerAlumus.pending, (state, action) => {
                 state.registerAlumusLoading = true;
