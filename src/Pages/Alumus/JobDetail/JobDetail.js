@@ -32,7 +32,6 @@ import RequireLogin from '~/components/RequireLogin/RequireLogin';
 import { getCVWithToken } from '~/store/reducers/cvSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getProfile } from '~/store/reducers/profileSlice';
 
 const cx = className.bind(styles);
 
@@ -86,6 +85,7 @@ function JobDetail() {
     const handleUpdate = () => {
         dispath(postApplyJob(jobDetails.sku));
         notify();
+        handleCloseModal();
     };
 
     const notify = () => toast('Đã ứng tuyển thành công!');
@@ -172,6 +172,7 @@ function JobDetail() {
                             // src={'/static/imgs/logo-banner.png'}
                             // alt={'/static/imgs/carousel_1.jpg'}
                             src={BASE_URL + jobDetails?.logo}
+                            // src={jobDetails?.logo}
                         />
                     </div>
                     <div className={cx('overview-description')}>

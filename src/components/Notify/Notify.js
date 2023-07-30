@@ -5,7 +5,7 @@ import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './Notify.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { getNotify } from '~/store/reducers/notifySlice';
+import { getNotify, putNotify } from '~/store/reducers/notifySlice';
 import Loading from '../Loading/Loading';
 const cx = className.bind(styles);
 
@@ -14,6 +14,7 @@ function Notify() {
     const token = useSelector((state) => state.auth.token);
     const notifies = useSelector((state) => state.notify.notifies);
     const notifyLoading = useSelector((state) => state.notify.loading);
+    const toggleNotify = useSelector((state) => state.notify.toggleNotify);
     const [notifyOpen, setNotifyOpen] = useState(false);
     const notifyIconRef = useRef();
 
@@ -36,14 +37,11 @@ function Notify() {
             dispath(getNotify());
         }
         // eslint-disable-next-line
-    }, [token]);
-
-    const date = '2023-07-23';
-    const newDate = new Date(date);
-    console.log(newDate);
+    }, [token, toggleNotify]);
 
     const toggleNotifyIcon = () => {
         setNotifyOpen(!notifyOpen);
+        if (notifies && notifies.count !== 0) dispath(putNotify());
     };
     const closeNotify = () => {
         setNotifyOpen(false);

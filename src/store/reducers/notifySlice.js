@@ -3,6 +3,7 @@ import request, { authHeader } from '~/axios/request';
 import { getToken } from './authSlice';
 
 const API_GET_NOTIFY = 'v1/auth/notification';
+const API_PUT_NOTIFY = 'v1/auth/notification/opened';
 
 export const getNotify = createAsyncThunk('notify/get', async () => {
     const token = getToken();
@@ -10,7 +11,8 @@ export const getNotify = createAsyncThunk('notify/get', async () => {
         headers: authHeader(token),
     });
     let countNotifies = 0;
-    const notifies = response.data;
+    const notifies = response.data.reverse();
+    console.log(notifies);
     for (let i = 0; i < notifies.length; i++) {
         if (!notifies[i].opened) {
             countNotifies++;
@@ -22,9 +24,17 @@ export const getNotify = createAsyncThunk('notify/get', async () => {
     };
 });
 
+export const putNotify = createAsyncThunk('notify/put', async () => {
+    const token = getToken();
+    const response = await request.put(API_PUT_NOTIFY, null, {
+        headers: authHeader(token),
+    });
+});
+
 const initialState = {
     notifies: { count: 0, notifies: [] },
     loading: false,
+    toggleNotify: false,
 };
 
 const slice = createSlice({
@@ -41,6 +51,9 @@ const slice = createSlice({
         });
         builder.addCase(getNotify.rejected, (state, action) => {
             state.loading = false;
+        });
+        builder.addCase(putNotify.fulfilled, (state, action) => {
+            state.toggleNotify = !state.toggleNotify;
         });
     },
 });
