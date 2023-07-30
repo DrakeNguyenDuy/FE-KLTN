@@ -27,7 +27,6 @@ function UpdateCVModal({ data, show, handleClose, handleSubmit }) {
         dispath(getSkill());
 
         if (data) {
-            console.log(data.goal);
             setWebsites(data.websites);
             setSkills(data.skills);
             setEducations(data.educations);
