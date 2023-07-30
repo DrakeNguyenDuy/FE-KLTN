@@ -18,6 +18,7 @@ import Loading from '~/components/Loading/Loading';
 import { getProfile } from '~/store/reducers/profileSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NotLogin from '~/components/NotLogin/NotLogin';
 
 const cx = className.bind(styles);
 
@@ -28,6 +29,7 @@ function CV() {
 
     const [showAvatarModal, setShowAvatarModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
+    const token = useSelector((state) => state.auth.token);
     const cv = useSelector((state) => state.cv.cv);
     const profile = useSelector((state) => state.profile.profile);
     const isLoading = useSelector((state) => state.cv.isLoading);
@@ -41,7 +43,7 @@ function CV() {
             dispath(getProfile());
         }
         // eslint-disable-next-line
-    }, []);
+    }, [token]);
 
     const handleSeeFull = () => {
         navigate('/full-cv/' + cv?.id);
@@ -193,7 +195,7 @@ function CV() {
 
     return isLoading ? (
         <Loading />
-    ) : (
+    ) : token ? (
         <div className={cx('wrapper')}>
             <ToastContainer />
             <UploadAvatarModal
@@ -251,6 +253,8 @@ function CV() {
                 </div>
             </div>
         </div>
+    ) : (
+        <NotLogin />
     );
 }
 

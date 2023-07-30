@@ -122,45 +122,6 @@ a {
     justify-content: space-evenly;
     flex-grow: 1;
 }
-.notify-group {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    position: relative;
-    gap: 8px;
-    p {
-        margin: 0;
-        padding: 0;
-    }
-    .notify-icon {
-        position: relative;
-        span {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            min-width: 16px;
-            min-height: 16px;
-            height: 16px;
-            width: 16px;
-            border-radius: 50%;
-            font-size: 11px;
-            background-color: white;
-            color: red;
-            align-items: center;
-            justify-content: center;
-            display: flex;
-        }
-    }
-    .notify-content {
-        min-width: 500px;
-        height: 300px;
-        position: absolute;
-        box-shadow: var(--box-shadow);
-        top: 100%;
-        background-color: #dddcdc;
-        z-index: 4;
-    }
-}
 
 @media only screen and (max-width: 992px) {
     .dropdown-cusomize {

@@ -11,41 +11,13 @@ import JobApplied from '~/components/JobAppliedItem/JobAppliedItem';
 import JobLiked from '~/components/JobLikedItem/JobLikedItem';
 import { getJobApplied, getJobLiked } from '~/store/reducers/jobSlice';
 import Loading from '~/components/Loading/Loading';
+import NotLogin from '~/components/NotLogin/NotLogin';
 
 const cx = className.bind(styles);
 
-const mockJobApplied = [
-    {
-        logo: 'static/imgs/logo-banner.png',
-        name: 'Thực tập sinh IT',
-        nameCompany: 'Công ty JJD',
-        applyDate: '12/07/2020',
-        cvId: '92772af3-4e29-4fd2-a6e5-dd4a1c4cc14e',
-        state: 'waiting',
-        jobId: 'job2',
-    },
-    {
-        logo: 'static/imgs/logo-banner.png',
-        name: 'Thực tập sinh IT',
-        nameCompany: 'Công ty JJD',
-        applyDate: '12/07/2020',
-        cvId: '92772af3-4e29-4fd2-a6e5-dd4a1c4cc14e',
-        state: 'rejected',
-        jobId: 'job2',
-    },
-    {
-        logo: 'static/imgs/logo-banner.png',
-        name: 'Thực tập sinh IT',
-        nameCompany: 'Công ty JJD',
-        applyDate: '12/07/2020',
-        cvId: '92772af3-4e29-4fd2-a6e5-dd4a1c4cc14e',
-        state: 'saw',
-        jobId: 'job2',
-    },
-];
-
 function Recruitment() {
     const dispath = useDispatch();
+    const token = useSelector((state) => state.auth.token);
     const jobApplied = useSelector((state) => state.job.jobApplied);
     const isLoading = useSelector((state) => state.job.jobAppliedLoading);
     const jobLiked = useSelector((state) => state.job.jobLiked);
@@ -54,13 +26,15 @@ function Recruitment() {
     const followStatus = useSelector((state) => state.job.follow);
     useEffect(() => {
         dispath(getJobApplied());
-    }, []);
+        // eslint-disable-next-line
+    }, [token]);
 
     useEffect(() => {
         dispath(getJobLiked());
+        // eslint-disable-next-line
     }, [followStatus]);
 
-    return (
+    return token ? (
         <div className={cx('wrapper', 'recruitment')}>
             <Tabs defaultActiveKey="jobApplied" transition={false} id="noanim-tab-example" className="mb-3">
                 <Tab eventKey="jobApplied" title="Công việc đã ứng tuyển">
@@ -93,6 +67,8 @@ function Recruitment() {
                 </Tab>
             </Tabs>
         </div>
+    ) : (
+        <NotLogin />
     );
 }
 

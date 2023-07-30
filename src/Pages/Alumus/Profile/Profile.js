@@ -25,6 +25,7 @@ import Loading from '~/components/Loading/Loading';
 import { BASE_URL } from '~/constant';
 import { RULES, validate, validateCreateProfile } from '~/utils/Validate';
 import './Profile.scss';
+import NotLogin from '~/components/NotLogin/NotLogin';
 
 const cx = className.bind(styles);
 
@@ -37,6 +38,7 @@ function Profile() {
 
     const dispath = useDispatch();
     const profile = useSelector((state) => state.profile.profile);
+    const token = useSelector((state) => state.auth.token);
     const isLoading = useSelector((state) => state.profile.profileIsLoading);
     const careers = useSelector((state) => state.career.careers);
     const experiences = useSelector((state) => state.experience.experiences);
@@ -46,15 +48,16 @@ function Profile() {
     const skillsList = useSelector((state) => state.skill.skillsId);
 
     useEffect(() => {
-        dispath(getProfile());
-
-        if (!profile) {
-            dispath(getSkillId());
-            dispath(getCareer());
-            dispath(getExperience());
-            dispath(getTypeWork());
-            dispath(getDistrict(1));
-            dispath(getPaycycle());
+        if (token) {
+            dispath(getProfile());
+            if (!profile) {
+                dispath(getSkillId());
+                dispath(getCareer());
+                dispath(getExperience());
+                dispath(getTypeWork());
+                dispath(getDistrict(1));
+                dispath(getPaycycle());
+            }
         }
         // eslint-disable-next-line
     }, []);
@@ -116,9 +119,9 @@ function Profile() {
         <div className="container">
             {isLoading ? (
                 <Loading />
-            ) : (
+            ) : token ? (
                 <div className={cx('wrapper')}>
-                    {typeof profile !== 'string' && (
+                    {profile && typeof profile !== 'string' && (
                         <>
                             <UploadAvatarModal
                                 show={showAvatarModal}
@@ -134,7 +137,6 @@ function Profile() {
                             />
                         </>
                     )}
-
                     <div className="row">
                         <div className="col-md-7">
                             {profile ? (
@@ -516,6 +518,8 @@ function Profile() {
                         </div>
                     </div>
                 </div>
+            ) : (
+                <NotLogin />
             )}
         </div>
     );

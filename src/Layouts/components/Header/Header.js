@@ -1,33 +1,22 @@
 import React, { useEffect } from 'react';
-import {
-    Container,
-    Nav,
-    Navbar,
-    OverlayTrigger,
-    Popover,
-    Button,
-    ListGroup,
-    Offcanvas,
-    NavDropdown,
-    Image,
-} from 'react-bootstrap';
+import { Container, Nav, Navbar, OverlayTrigger, Popover, Button, ListGroup, Offcanvas, Image } from 'react-bootstrap';
 import className from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './Header.module.scss';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { auth, logout } from '~/store/reducers/authSlice';
 import Avatar from '~/components/Avatar/Avatar';
 import { BASE_URL } from '~/constant';
+import Notify from '~/components/Notify/Notify';
 const cx = className.bind(styles);
 
 function Header() {
     const token = useSelector((state) => state.auth.token);
     const user = useSelector((state) => state.auth.user);
     const dispath = useDispatch();
-    const navigate = useNavigate();
 
     useEffect(() => {
         dispath(auth('alumus'));
@@ -87,21 +76,60 @@ function Header() {
                                 <Link to={'/recruitment'} className="fsc_1">
                                     Ứng tuyển
                                 </Link>
-                                {/* <div className={cx('fsc_1', 'notify-group')}>
+                                {/* <div
+                                    className={cx('fsc_1', 'notify-group')}
+                                    onClick={toggleNotifyIcon}
+                                    ref={notifyIconRef}
+                                >
                                     <p>Thông báo</p>
                                     <div className={cx('notify-icon')}>
                                         <FontAwesomeIcon icon={faBell} />
                                         <span>2</span>
+                                        <div className={cx('notify-content', notifyOpen ? 'open' : 'close')}>
+                                            <div className={cx('notify-header')}>Thông báo</div>
+                                            <div className={cx('notify-body')}>
+                                                <div className={cx('notify-item', 'new')}>
+                                                    <p className={cx('notify-value')}>
+                                                        Bạn vừa ứng tuyển thành công vào công việc Đây là sản phẩm mới 1
+                                                    </p>
+                                                    <p className={cx('notify-time')}>23/07/2023</p>
+                                                </div>
+                                                <div className={cx('notify-item')}>
+                                                    <p className={cx('notify-value')}>
+                                                        Bạn vừa ứng tuyển thành công vào công việc Đây là sản phẩm mới 1
+                                                    </p>
+                                                    <p className={cx('notify-time')}>23/07/2023</p>
+                                                </div>
+                                                <div className={cx('notify-item')}>
+                                                    <p className={cx('notify-value')}>
+                                                        Bạn vừa ứng tuyển thành công vào công việc Đây là sản phẩm mới 1
+                                                    </p>
+                                                    <p className={cx('notify-time')}>23/07/2023</p>
+                                                </div>
+                                                <div className={cx('notify-item')}>
+                                                    <p className={cx('notify-value')}>
+                                                        Bạn vừa ứng tuyển thành công vào công việc Đây là sản phẩm mới 1
+                                                    </p>
+                                                    <p className={cx('notify-time')}>23/07/2023</p>
+                                                </div>
+                                                <div className={cx('notify-item')}>
+                                                    <p className={cx('notify-value')}>
+                                                        Bạn vừa ứng tuyển thành công vào công việc Đây là sản phẩm mới 1
+                                                    </p>
+                                                    <p className={cx('notify-time')}>23/07/2023</p>
+                                                </div>
+                                            </div>
+                                            <div className={cx('notify-footer')}></div>
+                                        </div>
                                     </div>
-
-                                    <div className={cx('notify-content')}></div>
                                 </div> */}
-                                <NavDropdown className="fsc_1" title="Thông báo" id="basic-nav-dropdown">
+                                <Notify />
+                                {/* <NavDropdown className="fsc_1" title="Thông báo" id="basic-nav-dropdown">
                                     <NavDropdown.Item href="#action/3.1">Option 1</NavDropdown.Item>
                                     <NavDropdown.Item href="#action/3.2">Option 2</NavDropdown.Item>
                                     <NavDropdown.Item href="#action/3.3">OPtion 3</NavDropdown.Item>
                                     <NavDropdown.Item href="#action/3.4">Option 4</NavDropdown.Item>
-                                </NavDropdown>
+                                </NavDropdown> */}
                                 {/* </> */}
                                 {/* )} */}
                             </div>

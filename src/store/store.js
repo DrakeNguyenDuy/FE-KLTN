@@ -12,6 +12,7 @@ import cvSlice from './reducers/cvSlice';
 import profileSlice from './reducers/profileSlice';
 import searchSlice from './reducers/searchSlice';
 import recruitmentSlice from './reducers/recruitmentSlice';
+import notifySlice from './reducers/notifySlice';
 
 const store = configureStore({
     reducer: {
@@ -28,6 +29,7 @@ const store = configureStore({
         profile: profileSlice,
         search: searchSlice,
         recruitment: recruitmentSlice,
+        notify: notifySlice,
     },
 });
 
