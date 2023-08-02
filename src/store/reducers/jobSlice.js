@@ -1,5 +1,3 @@
-// authSlice.js
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import request, { authHeader } from '~/axios/request';
@@ -7,12 +5,11 @@ import { getAuthUsername, getToken } from './authSlice';
 import { HttpStatusCode } from 'axios';
 
 const API_GET_JOBS = 'v2/products';
-const API_GET_JOB_DETAILS = 'v2/product/';
+const API_GET_JOB_DETAILS = 'v2/product';
 const API_POST_JOB = 'v2/private/product';
 const API_GET_JOB_LATEST = 'v2/products-lastest';
 const API_GET_JOB_APPLIED = 'v1/auth/recruitment';
-const API_GET_JOB_LIKED = 'v1/auth/rating';
-const API_POST_JOB_LIKED = 'v1/auth/rating';
+const API_JOB_LIKED = 'v1/auth/rating';
 
 export const getJobs = createAsyncThunk(
     'job/get',
@@ -39,13 +36,12 @@ export const getJobs = createAsyncThunk(
 export const postLikeJob = createAsyncThunk('like/post', async ({ codeJob, isFollow }) => {
     const token = await getToken();
     const response = await request.post(
-        `${API_POST_JOB_LIKED}/${codeJob}`,
+        `${API_JOB_LIKED}/${codeJob}`,
         {},
         {
             headers: authHeader(token),
         },
     );
-    // console.log('isFl', isFollow, codeJob);
     return {
         codeJob,
         status: response.status === HttpStatusCode.Ok ? !isFollow : isFollow,
@@ -54,7 +50,7 @@ export const postLikeJob = createAsyncThunk('like/post', async ({ codeJob, isFol
 
 export const getJobDetail = createAsyncThunk('jobDetail/get', async ({ id, type }) => {
     const user = await getAuthUsername(type);
-    const response = await request.get(API_GET_JOB_DETAILS + id, {
+    const response = await request.get(API_GET_JOB_DETAILS + '/' + id, {
         params: user ? { username: user } : null,
     });
     return response.data;
@@ -62,11 +58,9 @@ export const getJobDetail = createAsyncThunk('jobDetail/get', async ({ id, type 
 
 export const getJobLastest = createAsyncThunk('jobLatest/get', async (type) => {
     const user = await getAuthUsername(type);
-    // console.log(user);
     const response = await request.get(API_GET_JOB_LATEST, {
         params: user ? { username: user } : null,
     });
-    // console.log(response);
     return response.data;
 });
 
@@ -79,29 +73,26 @@ export const getJobApplied = createAsyncThunk('jobApplied/get', async () => {
     let result = [];
     for (let i = 0; i < jobApplied.length; i++) {
         const job = jobApplied[i];
-        const jobDetails = await request.get(API_GET_JOB_DETAILS + job.codeJob);
+        const jobDetails = await request.get(API_GET_JOB_DETAILS + '/' + job.codeJob);
 
         result.push({ companyLogo: jobDetails.data.logo, ...job });
     }
-    // console.log('result', result);
     return result;
 });
 
 export const getJobLiked = createAsyncThunk('jobLiked/get', async () => {
     const token = await getToken();
-    const response = await request.get(API_GET_JOB_LIKED, {
+    const response = await request.get(API_JOB_LIKED, {
         headers: authHeader(token),
     });
     const jobLiked = response.data;
-    // console.log(jobLiked);
     let result = [];
     for (let i = 0; i < jobLiked.length; i++) {
         const job = jobLiked[i];
-        const jobDetails = await request.get(API_GET_JOB_DETAILS + job.codeJob);
+        const jobDetails = await request.get(API_GET_JOB_DETAILS + '/' + job.codeJob);
 
         result.push({ companyLogo: jobDetails.data.logo, ...job });
     }
-    // console.log('result', result);
     return result;
 });
 
@@ -237,13 +228,7 @@ const slice = createSlice({
         });
         builder.addCase(postLikeJob.fulfilled, (state, action) => {
             state.follow = action.payload;
-            // console.log(state.follow);
         });
-        // // like job
-        // builder.addCase(postLikeJob.fulfilled, (state, action) => {
-        //     state.jobLiked = action.payload;
-        //     state.jobLikedLoading = false;
-        // });
     },
 });
 

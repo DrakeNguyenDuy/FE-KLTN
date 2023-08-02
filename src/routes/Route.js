@@ -1,9 +1,10 @@
 import DefaultLayout from '~/Layouts/DefaultLayout';
 import EmployerLayout from '~/Layouts/EmployerLayout';
 import CV from '~/Pages/Alumus/CV/CV';
+import CompanyDetails from '~/Pages/Alumus/CompanyDetails/CompanyDetails';
 import Home from '~/Pages/Alumus/Home';
 import Job from '~/Pages/Alumus/Job';
-import JobDetail from '~/Pages/Alumus/JobDetail';
+import JobDetails from '~/Pages/Alumus/JobDetails';
 import Login from '~/Pages/Alumus/Login';
 import Profile from '~/Pages/Alumus/Profile';
 import Recruitment from '~/Pages/Alumus/Recruitment';
@@ -24,7 +25,8 @@ const routes = {
         { path: '/full-cv/:id', component: CV, layout: null, auth: false },
         { path: '/login', component: Login, layout: DefaultLayout, auth: false },
         { path: '/register', component: Register, layout: DefaultLayout, auth: false },
-        { path: '/job/:id', component: JobDetail, layout: DefaultLayout, auth: true },
+        { path: '/job/:id', component: JobDetails, layout: DefaultLayout, auth: true },
+        { path: '/company/:code', component: CompanyDetails, layout: DefaultLayout, auth: true },
     ],
     employer: [
         { path: '/employer/', component: EmployerHome, layout: EmployerLayout, auth: false },

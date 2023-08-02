@@ -35,7 +35,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const cx = className.bind(styles);
 
-function JobDetail() {
+function JobDetails() {
     const navigate = useNavigate();
     const dispath = useDispatch();
     const [showModal, setShowModal] = useState(false);
@@ -271,4 +271,4 @@ function JobDetail() {
     );
 }
 
-export default JobDetail;
+export default JobDetails;
