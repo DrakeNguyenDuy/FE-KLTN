@@ -9,11 +9,13 @@ import CustomCarousel from '~/components/CustomCarousel';
 import { useDispatch, useSelector } from 'react-redux';
 import { getJobLastest } from '~/store/reducers/jobSlice';
 import { getTopEmlpyer } from '~/store/reducers/searchSlice';
+import { useNavigate } from 'react-router-dom';
 
 const cx = className.bind(styles);
 
 function Home() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const jobsLatest = useSelector((state) => state.job.jobLatest);
     const topEmployers = useSelector((state) => state.search.topEmployers);
     const jobLatestLoading = useSelector((state) => state.job.jobLatestLoading);
@@ -60,18 +62,12 @@ function Home() {
                 <div className="session-title">Việc làm mới nhất</div>
                 {/* desktop */}
                 <CustomCarousel
-                    // items={itemsDesktop}
                     items={getItems(jobsLatest, 4)}
                     wrapperClass={cx('desktop-carousel')}
                     render={(itemOnSlie) => (
                         <div className={cx('job-wrapper')}>
                             {itemOnSlie.map((item, index) => (
-                                <JobItem
-                                    key={index}
-                                    data={item}
-                                    // className={cx('job-reponsive')}
-                                    // onClick={() => navigate(`/job/${item.sku}`)}
-                                />
+                                <JobItem key={index} data={item} onClick={() => navigate(`/job/${item.sku}`)} />
                             ))}
                         </div>
                     )}
@@ -79,18 +75,12 @@ function Home() {
                 />
                 {/* mobile */}
                 <CustomCarousel
-                    // items={itemsMobile}
                     items={getItems(jobsLatest, 2)}
                     wrapperClass={cx('mobile-carousel')}
                     render={(itemOnSlie) => (
                         <div className={cx('job-wrapper')}>
                             {itemOnSlie.map((item, index) => (
-                                <JobItem
-                                    key={index}
-                                    data={item}
-                                    // className={cx('job-reponsive')}
-                                    // onClick={() => navigate(`/job/${item.sku}`)}
-                                />
+                                <JobItem key={index} data={item} onClick={() => navigate(`/job/${item.sku}`)} />
                             ))}
                         </div>
                     )}

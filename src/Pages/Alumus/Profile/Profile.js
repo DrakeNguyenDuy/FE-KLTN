@@ -165,7 +165,7 @@ function Profile() {
                                                 src={
                                                     profile?.avatar
                                                         ? BASE_URL + profile?.avatar
-                                                        : 'static/imgs/profile-default-avatar.jpg'
+                                                        : '/static/imgs/profile-default-avatar.jpg'
                                                 }
                                                 base64={false}
                                             />

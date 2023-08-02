@@ -1,5 +1,3 @@
-// authSlice.js
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import request from '~/axios/request';
 
@@ -49,15 +47,12 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getProvince.fulfilled, (state, action) => {
             state.provinces = action.payload;
-            // console.log('provinces', state.provinces);
         });
         builder.addCase(getDistrict.fulfilled, (state, action) => {
             state.districts = action.payload;
-            // console.log('districts', state.districts);
         });
         builder.addCase(getWard.fulfilled, (state, action) => {
             state.wards = action.payload;
-            // console.log('wards', state.wards);
         });
     },
 });

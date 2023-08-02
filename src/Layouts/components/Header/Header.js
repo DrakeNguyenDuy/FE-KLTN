@@ -48,14 +48,6 @@ function Header() {
                     </Offcanvas.Header>
                     <Offcanvas.Body className={cx('wrap-offcanvas-body')}>
                         <Nav className={cx('left-nav', 'justify-content-between')}>
-                            {/* <NavDropdown className="fsc_1" title="Việc làm" id="basic-nav-dropdown">
-                                <Link to={'/jobs'} className="fsc_2 p-1 w-100 h-100">
-                                    Tìm kiếm việc làm
-                                </Link>
-                                <NavDropdown.Item href="#action/3.2">Option 2</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">OPtion 3</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.4">Option 4</NavDropdown.Item>
-                            </NavDropdown> */}
                             <div className={cx('item-menu')}>
                                 <Link to={'/jobs'} className="fsc_1">
                                     Việc làm
@@ -71,62 +63,7 @@ function Header() {
                                 <Link to={'/recruitment'} className="fsc_1">
                                     Ứng tuyển
                                 </Link>
-                                {/* <div
-                                    className={cx('fsc_1', 'notify-group')}
-                                    onClick={toggleNotifyIcon}
-                                    ref={notifyIconRef}
-                                >
-                                    <p>Thông báo</p>
-                                    <div className={cx('notify-icon')}>
-                                        <FontAwesomeIcon icon={faBell} />
-                                        <span>2</span>
-                                        <div className={cx('notify-content', notifyOpen ? 'open' : 'close')}>
-                                            <div className={cx('notify-header')}>Thông báo</div>
-                                            <div className={cx('notify-body')}>
-                                                <div className={cx('notify-item', 'new')}>
-                                                    <p className={cx('notify-value')}>
-                                                        Bạn vừa ứng tuyển thành công vào công việc Đây là sản phẩm mới 1
-                                                    </p>
-                                                    <p className={cx('notify-time')}>23/07/2023</p>
-                                                </div>
-                                                <div className={cx('notify-item')}>
-                                                    <p className={cx('notify-value')}>
-                                                        Bạn vừa ứng tuyển thành công vào công việc Đây là sản phẩm mới 1
-                                                    </p>
-                                                    <p className={cx('notify-time')}>23/07/2023</p>
-                                                </div>
-                                                <div className={cx('notify-item')}>
-                                                    <p className={cx('notify-value')}>
-                                                        Bạn vừa ứng tuyển thành công vào công việc Đây là sản phẩm mới 1
-                                                    </p>
-                                                    <p className={cx('notify-time')}>23/07/2023</p>
-                                                </div>
-                                                <div className={cx('notify-item')}>
-                                                    <p className={cx('notify-value')}>
-                                                        Bạn vừa ứng tuyển thành công vào công việc Đây là sản phẩm mới 1
-                                                    </p>
-                                                    <p className={cx('notify-time')}>23/07/2023</p>
-                                                </div>
-                                                <div className={cx('notify-item')}>
-                                                    <p className={cx('notify-value')}>
-                                                        Bạn vừa ứng tuyển thành công vào công việc Đây là sản phẩm mới 1
-                                                    </p>
-                                                    <p className={cx('notify-time')}>23/07/2023</p>
-                                                </div>
-                                            </div>
-                                            <div className={cx('notify-footer')}></div>
-                                        </div>
-                                    </div>
-                                </div> */}
                                 <Notify />
-                                {/* <NavDropdown className="fsc_1" title="Thông báo" id="basic-nav-dropdown">
-                                    <NavDropdown.Item href="#action/3.1">Option 1</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.2">Option 2</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.3">OPtion 3</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.4">Option 4</NavDropdown.Item>
-                                </NavDropdown> */}
-                                {/* </> */}
-                                {/* )} */}
                             </div>
 
                             <div className={cx('wrapper-link-soft')}>
@@ -160,20 +97,10 @@ function Header() {
                                     ) : (
                                         <FontAwesomeIcon size="xl" color="var(--secondary-color)" icon={faUser} />
                                     )}
-                                    {/* {user ? (
-                                        <Avatar
-                                            src={user.avatar ? BASE_URL + user.avatar : null}
-                                            base64={false}
-                                            name={user.userName}
-                                        />
-                                    ) : (
-                                        <FontAwesomeIcon size="xl" color="var(--secondary-color)" icon={faUser} />
-                                    )} */}
                                 </div>
                                 <div className={cx('action-auth')}>
                                     <Link to={'/login'} className="fsc_2">
                                         {authLoading ? <Loading /> : token && user ? user.userName : 'Đăng nhập'}
-                                        {/* {user ? user.userName : 'Đăng nhập'} */}
                                     </Link>
                                     <OverlayTrigger
                                         rootClose

@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 const cx = className.bind(styles);
 
 function CardProfile({
-    avatar = 'static/imgs/profile-default-avatar.jpg',
+    avatar = '/static/imgs/profile-default-avatar.jpg',
     name = 'Chưa cập nhật',
     location = 'Chưa cập nhật',
     handleUpdateAvatar,

@@ -1,5 +1,3 @@
-// authSlice.js
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import request from '~/axios/request';
 
@@ -21,7 +19,6 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getPaycycle.fulfilled, (state, action) => {
             state.paycycles = action.payload;
-            // console.log('paycycles', state.paycycles);
         });
     },
 });
