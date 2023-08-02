@@ -2,9 +2,8 @@ import { Button, Image } from 'react-bootstrap';
 import styles from './CardProfile.module.scss';
 import className from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getProfile } from '~/store/reducers/profileSlice';
 
 const cx = className.bind(styles);
 
@@ -16,13 +15,11 @@ function CardProfile({
     ...props
 }) {
     const navigate = useNavigate();
-    const dispath = useDispatch();
     const token = useSelector((state) => state.auth.token);
     const profile = useSelector((state) => state.profile.profile);
 
     useEffect(() => {
         if (token) {
-            dispath(getProfile());
         }
         // eslint-disable-next-line
     }, []);

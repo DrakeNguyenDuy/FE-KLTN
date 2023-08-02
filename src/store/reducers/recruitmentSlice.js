@@ -4,6 +4,7 @@ import { getToken } from './authSlice';
 import { getNotify } from './notifySlice';
 
 const API_POST_APPLY_JOB = 'v1/auth/recruitment/apply';
+const API_GET_STATUS_PROCESS = 'v1/status-process';
 
 export const postApplyJob = createAsyncThunk('apply/post', async (codeJob, { dispatch }) => {
     const token = await getToken();
@@ -18,8 +19,15 @@ export const postApplyJob = createAsyncThunk('apply/post', async (codeJob, { dis
     return response.data === 'Apply success';
 });
 
+export const getApplyStatus = createAsyncThunk('applyStatus/get', async () => {
+    const response = await request.get(API_GET_STATUS_PROCESS);
+    return response.data;
+});
+
 const initialState = {
     apply: null,
+    status: [],
+    statusLoading: false,
 };
 
 const slice = createSlice({
@@ -32,6 +40,16 @@ const slice = createSlice({
         });
         builder.addCase(postApplyJob.fulfilled, (state, action) => {
             state.apply = action.payload;
+        });
+        builder.addCase(getApplyStatus.pending, (state, action) => {
+            state.statusLoading = true;
+        });
+        builder.addCase(getApplyStatus.fulfilled, (state, action) => {
+            state.status = action.payload;
+            state.statusLoading = false;
+        });
+        builder.addCase(getApplyStatus.rejected, (state, action) => {
+            state.statusLoading = true;
         });
     },
 });

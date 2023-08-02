@@ -267,14 +267,18 @@ export default function Job() {
                     <div className={cx('job-pannel')}>
                         <Row className={cx('me-0', 'row_c')}>
                             <Col lg={8} className={cx('list-job')}>
-                                {jobs?.products.map((job) => (
-                                    <JobItem
-                                        key={job.id}
-                                        big={true}
-                                        data={job}
-                                        onClick={() => navigate(`/job/${job.sku}`)}
-                                    />
-                                ))}
+                                {jobs && jobs.products.length !== 0 ? (
+                                    jobs.products.map((job) => (
+                                        <JobItem
+                                            key={job.id}
+                                            big={true}
+                                            data={job}
+                                            onClick={() => navigate(`/job/${job.sku}`)}
+                                        />
+                                    ))
+                                ) : (
+                                    <div className={cx('job-not-found')}>Không tìm thấy</div>
+                                )}
                             </Col>
                             <Col lg={4} className={cx('ext-job')}>
                                 <div className={cx('profile')}>

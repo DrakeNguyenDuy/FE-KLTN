@@ -15,7 +15,6 @@ import CVStyle1 from '~/components/CVStyle/CVStyle1';
 import UploadAvatarModal from '~/components/UploadAvatarModal/UploadAvatarModal';
 import UpdateCVModal from '~/components/UpdateCVModal/UpdateCVModal';
 import Loading from '~/components/Loading/Loading';
-import { getProfile } from '~/store/reducers/profileSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NotLogin from '~/components/NotLogin/NotLogin';
@@ -32,6 +31,7 @@ function CV() {
     const token = useSelector((state) => state.auth.token);
     const cv = useSelector((state) => state.cv.cv);
     const profile = useSelector((state) => state.profile.profile);
+    const authLoading = useSelector((state) => state.auth.authLoading);
     const isLoading = useSelector((state) => state.cv.isLoading);
 
     const dispath = useDispatch();
@@ -40,10 +40,9 @@ function CV() {
             dispath(getCVWithId(id));
         } else {
             dispath(getCVWithToken());
-            dispath(getProfile());
         }
         // eslint-disable-next-line
-    }, [token]);
+    }, []);
 
     const handleSeeFull = () => {
         navigate('/full-cv/' + cv?.id);
@@ -192,23 +191,27 @@ function CV() {
             },
         });
     };
-
+    if (!authLoading && !token) return <NotLogin />;
     return isLoading ? (
         <Loading />
-    ) : token ? (
+    ) : (
         <div className={cx('wrapper')}>
             <ToastContainer />
-            <UploadAvatarModal
-                show={showAvatarModal}
-                handleClose={handleCloseAvatarModal}
-                handleSubmit={handleSubmitAvatar}
-            />
-            <UpdateCVModal
-                data={mapCV(cv)}
-                show={showUpdateModal}
-                handleClose={handleCloseUpdateModal}
-                handleSubmit={handleSubmitUpdate}
-            />
+            {cv !== -1 && (
+                <>
+                    <UploadAvatarModal
+                        show={showAvatarModal}
+                        handleClose={handleCloseAvatarModal}
+                        handleSubmit={handleSubmitAvatar}
+                    />
+                    <UpdateCVModal
+                        data={mapCV(cv)}
+                        show={showUpdateModal}
+                        handleClose={handleCloseUpdateModal}
+                        handleSubmit={handleSubmitUpdate}
+                    />
+                </>
+            )}
             <div className="container">
                 <div className={cx('background-cv')}>
                     {id ? (
@@ -221,9 +224,9 @@ function CV() {
                         </div>
                     ) : (
                         <div className={cx('cv-header')}>
-                            {cv && <p>Xem CV của {cv?.firstName}</p>}
+                            {cv !== -1 && <p>Xem CV của {cv?.firstName}</p>}
                             <div className={cx('header-btn-group')}>
-                                {cv ? (
+                                {cv && cv !== -1 ? (
                                     <>
                                         <CustomButton onClick={handleOpenAvatarModal}>Cập nhật avatar</CustomButton>
                                         <CustomButton onClick={handleOpenUpdateModal}>Chỉnh sửa CV</CustomButton>
@@ -236,9 +239,7 @@ function CV() {
                     )}
                     <div className={cx('cv-wrapper')}>
                         <div ref={cvRef}>
-                            {cv ? (
-                                <CVStyle1 data={cv} />
-                            ) : (
+                            {cv === -1 ? (
                                 <>
                                     <div className={cx('update-cv-info')}>
                                         CV của bạn chưa được tạo. Hãy tạo cv của bạn để ứng tuyển việc làm ngay.
@@ -247,14 +248,14 @@ function CV() {
                                         Tạo CV
                                     </CustomButton>
                                 </>
+                            ) : (
+                                <CVStyle1 data={cv} />
                             )}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    ) : (
-        <NotLogin />
     );
 }
 

@@ -148,10 +148,10 @@ function UpdateProfileModal({ data, show, handleClose, handleSubmit }) {
                             }
                         >
                             <option value="">Trình độ tiếng anh</option>
-                            <option value="LV1">Không biết</option>
-                            <option value="LV2">Đọc hiểu cơ bản</option>
-                            <option value="LV3">Giao tiếp tốt</option>
-                            <option value="LV4">Thành thạo các kỹ năng</option>
+                            <option value="LV0">Không biết</option>
+                            <option value="LV1">Đọc hiểu cơ bản</option>
+                            <option value="LV2">Giao tiếp tốt</option>
+                            <option value="LV3">Thành thạo các kỹ năng</option>
                         </Form.Select>
                         <p className={cx('form-error', 'pf-error', 'my-form-hidden')}></p>
                     </Form.Group>
@@ -212,7 +212,7 @@ function UpdateProfileModal({ data, show, handleClose, handleSubmit }) {
                                     }}
                                 />
                                 <Form.Select
-                                    aria-label="Mức độ thông thạo kỹ năng"
+                                    aria-label="Đánh giá kỹ năng"
                                     defaultValue={data.rate}
                                     onChange={(e) => {
                                         const value = e.target.value;

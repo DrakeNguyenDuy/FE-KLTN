@@ -63,6 +63,9 @@
         }
         .details-target {
             padding: 0 16px;
+            .item {
+                margin-top: 0;
+            }
             .target {
                 p {
                     font-weight: normal;

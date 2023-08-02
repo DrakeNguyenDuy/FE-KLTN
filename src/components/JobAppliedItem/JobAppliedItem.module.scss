@@ -25,14 +25,17 @@
         span {
             font-weight: normal;
         }
-        span.waiting {
-            color: green;
-        }
-        span.rejected {
+        span.fail {
             color: red;
         }
-        span.saw {
+        span.applied,
+        span.checking,
+        span.interview,
+        span.deal {
             color: blue;
+        }
+        span.pass {
+            color: green;
         }
     }
     .job-apply-infor,

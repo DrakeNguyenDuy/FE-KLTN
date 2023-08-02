@@ -10,17 +10,26 @@ const cx = className.bind(styles);
 
 function CVStyle1({ data, ...props }) {
     const [valGoal, setValGoal] = useState('');
+    const [valIntroduce, setValIntroduce] = useState('');
     const textAreaRef = useRef(null);
+    const introduceRef = useRef(null);
 
     useEffect(() => {
         if (data) {
             setValGoal(data.goal);
+            setValIntroduce(data.introduce);
         }
         resizeTextArea();
-    }, [valGoal, data]);
+        // eslint-disable-next-line
+    }, [valGoal, valIntroduce, data]);
 
     const resizeTextArea = () => {
-        textAreaRef.current.style.height = textAreaRef.current.scrollHeight + 'px';
+        if (valGoal) {
+            textAreaRef.current.style.height = textAreaRef.current.scrollHeight + 'px';
+        }
+        if (valIntroduce) {
+            introduceRef.current.style.height = introduceRef.current.scrollHeight + 'px';
+        }
     };
 
     return (
@@ -106,17 +115,32 @@ function CVStyle1({ data, ...props }) {
                         )}
                     </div>
                 </div>
-                <div className={cx('details-target')}>
-                    <div className={cx('item', 'target')}>
-                        <div className={cx('item-title')}>
-                            <span>
-                                <Image src="/static/imgs/fontawesome/faCircleExclamation.png" />
-                            </span>
-                            Mục tiêu:
+                {valIntroduce && (
+                    <div className={cx('details-target')}>
+                        <div className={cx('item', 'target')}>
+                            <div className={cx('item-title')}>
+                                <span>
+                                    <Image src="/static/imgs/fontawesome/faCircleExclamation.png" />
+                                </span>
+                                Giới thiệu:
+                            </div>
+                            <textarea disabled value={valIntroduce} ref={introduceRef}></textarea>
                         </div>
-                        <textarea disabled value={valGoal} ref={textAreaRef}></textarea>
                     </div>
-                </div>
+                )}
+                {valGoal && (
+                    <div className={cx('details-target')}>
+                        <div className={cx('item', 'target')}>
+                            <div className={cx('item-title')}>
+                                <span>
+                                    <Image src="/static/imgs/fontawesome/faCircleExclamation.png" />
+                                </span>
+                                Mục tiêu:
+                            </div>
+                            <textarea disabled value={valGoal} ref={textAreaRef}></textarea>
+                        </div>
+                    </div>
+                )}
             </div>
 
             <div className={cx('main-cv')}>

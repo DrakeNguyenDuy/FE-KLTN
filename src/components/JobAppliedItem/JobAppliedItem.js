@@ -10,6 +10,14 @@ import { BASE_URL } from '~/constant';
 
 const cx = className.bind(styles);
 
+const status = {
+    APPLIED: 'Đã ứng tuyển',
+    CHECKING: 'Đang kiểm tra CV',
+    INTERVIEW: 'Phỏng vấn',
+    DEAL: 'Thương lượng lương',
+    PASS: 'Trúng tuyển',
+    FAIL: 'Đã từ chối',
+};
 function JobApplied({ data, ...props }) {
     const navigate = useNavigate();
 
@@ -44,24 +52,9 @@ function JobApplied({ data, ...props }) {
                 </p>
             </div>
             <div className={cx('job-apply-state')}>
-                {data?.status === 'CHECKING' && (
-                    <p>
-                        {/* Trạng thái: <span>Đang chờ duyệt</span> */}
-                        Trạng thái: <span className={cx('waiting')}>Đang chờ duyệt</span>
-                    </p>
-                )}
-                {data?.status === 'rejected' && (
-                    <p>
-                        {/* Trạng thái: <span>Đang chờ duyệt</span> */}
-                        Trạng thái: <span className={cx('rejected')}>Đã từ chối</span>
-                    </p>
-                )}
-                {data?.status === 'saw' && (
-                    <p>
-                        {/* Trạng thái: <span>Đang chờ duyệt</span> */}
-                        Trạng thái: <span className={cx('saw')}>Đã xem</span>
-                    </p>
-                )}
+                <p>
+                    Trạng thái: <span className={cx(data?.status.toLowerCase())}>{status[data?.status]}</span>
+                </p>
             </div>
             <div className={cx('job-apply-button')}>
                 <CustomButton onClick={() => navigate(`/job/${data?.codeJob}`)}>

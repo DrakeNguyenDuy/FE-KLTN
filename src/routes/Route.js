@@ -16,15 +16,15 @@ import PostJob from '~/Pages/Employer/PostJob/PostJob';
 
 const routes = {
     alumus: [
-        { path: '/', component: Home, layout: DefaultLayout, auth: false },
-        { path: '/jobs', component: Job, layout: DefaultLayout, auth: false },
+        { path: '/', component: Home, layout: DefaultLayout, auth: true },
+        { path: '/jobs', component: Job, layout: DefaultLayout, auth: true },
         { path: '/profile', component: Profile, layout: DefaultLayout, auth: true },
         { path: '/recruitment', component: Recruitment, layout: DefaultLayout, auth: true },
         { path: '/cv', component: CV, layout: DefaultLayout, auth: true },
         { path: '/full-cv/:id', component: CV, layout: null, auth: false },
         { path: '/login', component: Login, layout: DefaultLayout, auth: false },
         { path: '/register', component: Register, layout: DefaultLayout, auth: false },
-        { path: '/job/:id', component: JobDetail, layout: DefaultLayout, auth: false },
+        { path: '/job/:id', component: JobDetail, layout: DefaultLayout, auth: true },
     ],
     employer: [
         { path: '/employer/', component: EmployerHome, layout: EmployerLayout, auth: false },

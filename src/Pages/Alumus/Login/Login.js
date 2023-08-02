@@ -10,7 +10,7 @@ import styles from './Login.module.scss';
 
 import CustomPassword from '~/components/CustomPassword';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, logout } from '~/store/reducers/authSlice';
+import { login } from '~/store/reducers/authSlice';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '~/components/CustomButton/CustomButton';
 
@@ -31,7 +31,6 @@ function Login() {
     const formRef = useRef();
 
     useEffect(() => {
-        // dispath(logout('alumus'));
         // eslint-disable-next-line
         localStorage.removeItem('alumusToken');
     }, []);

@@ -15,11 +15,13 @@ export const getCVWithToken = createAsyncThunk('cv/get', async () => {
     const response = await request.get(API_GET_CV, {
         headers: authHeader(token),
     });
+    if (typeof response.data === 'string') return -1;
     return response.data;
 });
 
 export const getCVWithId = createAsyncThunk('cvid/get', async (id) => {
     const response = await request.get(API_GET_CV_NO_AUTH + '/' + id);
+    if (typeof response.data === 'string') return -1;
     return response.data;
 });
 

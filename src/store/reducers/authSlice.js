@@ -58,7 +58,6 @@ const getUser = async (data) => {
             logoCompany: res.data.logo,
         };
     }
-    console.log(user);
     return user;
 };
 
