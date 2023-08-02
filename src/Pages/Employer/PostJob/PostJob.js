@@ -84,7 +84,6 @@ function PostJob() {
     const formRef = useRef();
 
     useEffect(() => {
-        console.log(user);
         dispath(getCareer());
         dispath(getSkill());
         dispath(getTypeWork());
@@ -121,7 +120,7 @@ function PostJob() {
             numberOfRecruitments: formRef.current['JobNum'].value,
             description: jobDescription,
         };
-        dispath(createJob({ job: jobData, token, employer: user.merchant }));
+        dispath(createJob({ job: jobData, token, employer: user.code }));
     };
 
     const handlePostJobLater = () => {

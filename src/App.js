@@ -4,7 +4,6 @@ import { Fragment } from 'react';
 import React from 'react';
 import DefaultLayout from '~/Layouts/DefaultLayout';
 import routes from './routes/Route';
-import Auth from './components/Auth/Auth';
 
 function App() {
     return (
@@ -24,11 +23,15 @@ function App() {
                                 key={index}
                                 path={route.path}
                                 element={
-                                    <Auth role={'alumus'}>
+                                    route.layout ? (
+                                        <Layout type="alumus" auth={route.auth}>
+                                            <Page />
+                                        </Layout>
+                                    ) : (
                                         <Layout>
                                             <Page />
                                         </Layout>
-                                    </Auth>
+                                    )
                                 }
                             />
                         );
@@ -46,11 +49,15 @@ function App() {
                                 key={index}
                                 path={route.path}
                                 element={
-                                    <Auth role={'employer'}>
+                                    route.layout ? (
+                                        <Layout type="employer" auth={route.auth}>
+                                            <Page />
+                                        </Layout>
+                                    ) : (
                                         <Layout>
                                             <Page />
                                         </Layout>
-                                    </Auth>
+                                    )
                                 }
                             />
                         );
