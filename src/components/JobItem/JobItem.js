@@ -12,6 +12,7 @@ import { BASE_URL } from '~/constant';
 import CustomButton from '../CustomButton/CustomButton';
 import { postLikeJob } from '~/store/reducers/jobSlice';
 import RequireLogin from '../RequireLogin/RequireLogin';
+import { formatCurrency, formatDateString } from '~/utils/Format';
 
 const cx = className.bind(styles);
 export default function JobItem({ big = true, data, ...props }) {
@@ -36,13 +37,6 @@ export default function JobItem({ big = true, data, ...props }) {
         } else {
             setShow(true);
         }
-    };
-
-    const convertFormatDate = (dateString) => {
-        if (dateString && dateString.includes('-')) {
-            const parts = dateString.split('-');
-            return `${parts[2]}/${parts[1]}/${parts[0]}`;
-        } else return dateString;
     };
 
     const orderedSkill = (skills) => {
@@ -83,7 +77,8 @@ export default function JobItem({ big = true, data, ...props }) {
                                     <FontAwesomeIcon icon={faCalendar} />
                                     <p>
                                         {/* dateExperience */}
-                                        Hạn nộp hồ sơ: {convertFormatDate(data?.dateExperience)}
+                                        Hạn nộp hồ sơ:{' '}
+                                        {formatDateString('YYYY/MM/DD', '-', 'DD/MM/YYYY', '/', data?.dateExperience)}
                                     </p>
                                 </div>
                             </Row>
@@ -97,12 +92,12 @@ export default function JobItem({ big = true, data, ...props }) {
                         {big ? (
                             <Row className={cx('sub_row', 'salary')}>
                                 {/* finalPrice */}
-                                Mức lương: {data?.price} VNĐ {'/'} {data?.payCycle}
+                                Mức lương: {formatCurrency(data?.price)} {'/'} {data?.payCycle}
                             </Row>
                         ) : (
                             <Row className={cx('sub_row', 'salary')}>
                                 {/* finalPrice */}
-                                Mức lương: {data?.price} VNĐ {'/'} {data?.payCycle}
+                                Mức lương: {formatCurrency(data?.price)} {'/'} {data?.payCycle}
                             </Row>
                         )}
                         {big ? (
@@ -163,7 +158,7 @@ export default function JobItem({ big = true, data, ...props }) {
                                     <FontAwesomeIcon icon={faCalendar} />
                                     <p>
                                         {/* dateExperience */}
-                                        {convertFormatDate(data?.dateExperience)}
+                                        {formatDateString('YYYY/MM/DD', '-', 'DD/MM/YYYY', '/', data?.dateExperience)}
                                     </p>
                                 </div>
                             </Row>

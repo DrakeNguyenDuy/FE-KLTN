@@ -56,6 +56,7 @@ const getUser = async (data) => {
             logoCompany: res.data.logo,
         };
     }
+    console.log('get user');
     return user;
 };
 
@@ -78,6 +79,7 @@ export const registerAlumus = createAsyncThunk('auth/registerAlumus', async (dat
 
 export const auth = createAsyncThunk('auth/authUser', async (type) => {
     const token = await getToken(type);
+    console.log('auth');
     if (token) {
         const res = await getUser({ token: token, type: type });
         return { user: res, token: token };

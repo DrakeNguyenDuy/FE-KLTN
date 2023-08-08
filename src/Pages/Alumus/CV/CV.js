@@ -87,7 +87,7 @@ function CV() {
         );
 
     const handleSubmitUpdate = (data) => {
-        if (cv) {
+        if (cv && cv !== -1) {
             dispath(putUpdateCV({ id: cv.id, data }));
         } else {
             dispath(createCV(data));

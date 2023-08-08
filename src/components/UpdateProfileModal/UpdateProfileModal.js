@@ -223,7 +223,6 @@ function UpdateProfileModal({ data, show, handleClose, handleSubmit }) {
                                                 break;
                                             }
                                         }
-                                        console.log(newList);
                                         setSkills(newList);
                                     }}
                                     onBlur={(e) =>
@@ -232,11 +231,11 @@ function UpdateProfileModal({ data, show, handleClose, handleSubmit }) {
                                             [RULES.IS_REQUIRE],
                                             e.target.value,
                                             '.pf-error',
-                                            'Mức độ ưu tiên kỹ năng',
+                                            'Đánh giá kỹ năng',
                                         )
                                     }
                                 >
-                                    <option value="">Mức độ ưu tiên gợi ý cho kỹ năng này</option>
+                                    <option value="">Đánh giá kỹ năng</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>

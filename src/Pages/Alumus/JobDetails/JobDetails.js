@@ -73,7 +73,7 @@ function JobDetails() {
     };
 
     const handleOpenModal = () => {
-        if (cv) {
+        if (cv && cv !== -1) {
             setShowModal(true);
         } else {
             notifyCreateProfile();

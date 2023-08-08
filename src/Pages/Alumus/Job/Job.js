@@ -59,13 +59,31 @@ export default function Job() {
     const order = searchParams.get('order');
 
     const [showAvatarModal, setShowAvatarModal] = useState(false);
-    const [searchValue, setSearchValue] = useState('');
-    const [areaSelected, setAreaSelected] = useState([]);
-    const [careerSelected, setCareerSelected] = useState([]);
-    const [formWorkSelected, setformWorkSelected] = useState('');
-    const [experienceSelected, setExperienceSelected] = useState('');
-    const [payCircleSelected, setPayCircleSelected] = useState('');
-    const [orderSelected, setOrderSelected] = useState('');
+    const [searchValue, setSearchValue] = useState(search ? search : '');
+    const [areaSelected, setAreaSelected] = useState(
+        area
+            ? () => {
+                  const areaArr = area.split(', ');
+                  return districts
+                      .filter((district) => areaArr.includes(district.name))
+                      .map((district) => ({ value: district.name, label: district.name }));
+              }
+            : [],
+    );
+    const [careerSelected, setCareerSelected] = useState(
+        career
+            ? () => {
+                  const careerArr = career.split(', ');
+                  return careers
+                      .filter((career) => careerArr.includes(career.code))
+                      .map((career) => ({ value: career.name, label: career.name }));
+              }
+            : [],
+    );
+    const [formWorkSelected, setformWorkSelected] = useState(typeWork ? typeWork : '');
+    const [experienceSelected, setExperienceSelected] = useState(experience ? experience : '');
+    const [payCircleSelected, setPayCircleSelected] = useState(paycycle ? paycycle : '');
+    const [orderSelected, setOrderSelected] = useState(order ? order : '');
 
     useEffect(() => {
         dispath(getCareer());
@@ -118,10 +136,10 @@ export default function Job() {
             );
             searchParams['area'] = area;
         }
-        if (formWorkSelected.trim().length !== 0) searchParams['typeWork'] = formWorkSelected;
-        if (payCircleSelected.trim().length !== 0) searchParams['paycycle'] = payCircleSelected;
-        if (experienceSelected.trim().length !== 0) searchParams['experience'] = experienceSelected;
-        if (orderSelected.trim().length !== 0) searchParams['order'] = orderSelected;
+        formWorkSelected.trim().length !== 0 && (searchParams['typeWork'] = formWorkSelected);
+        payCircleSelected.trim().length !== 0 && (searchParams['paycycle'] = payCircleSelected);
+        experienceSelected.trim().length !== 0 && (searchParams['experience'] = experienceSelected);
+        orderSelected.trim().length !== 0 && (searchParams['order'] = orderSelected);
         return searchParams;
     };
 
@@ -129,13 +147,13 @@ export default function Job() {
         let searchParams = {
             page: page,
         };
-        if (search) searchParams['search'] = search;
-        if (career) searchParams['career'] = career;
-        if (area) searchParams['area'] = area;
-        if (typeWork) searchParams['typeWork'] = typeWork;
-        if (paycycle) searchParams['paycycle'] = paycycle;
-        if (experience) searchParams['experience'] = experience;
-        if (order) searchParams['order'] = order;
+        search && (searchParams['search'] = search);
+        career && (searchParams['career'] = career);
+        area && (searchParams['area'] = area);
+        typeWork && (searchParams['typeWork'] = typeWork);
+        paycycle && (searchParams['paycycle'] = paycycle);
+        experience && (searchParams['experience'] = experience);
+        order && (searchParams['order'] = order);
         return searchParams;
     };
 

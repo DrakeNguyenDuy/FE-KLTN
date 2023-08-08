@@ -54,6 +54,7 @@ const mapItemDesktop = mapItem(items, 6);
 const mapItemMobile = mapItem(items, 2);
 
 function Home() {
+    console.log('home');
     return (
         <div id="home">
             <section>

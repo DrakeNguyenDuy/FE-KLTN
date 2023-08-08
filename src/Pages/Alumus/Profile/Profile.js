@@ -439,7 +439,7 @@ function Profile() {
                                                         }}
                                                     />
                                                     <Form.Select
-                                                        aria-label="Mức độ thông thạo kỹ năng"
+                                                        aria-label="Đánh giá kỹ năng"
                                                         defaultValue={data.rate}
                                                         onChange={(e) => {
                                                             const value = e.target.value;
@@ -450,7 +450,6 @@ function Profile() {
                                                                     break;
                                                                 }
                                                             }
-                                                            console.log(newList);
                                                             setSkills(newList);
                                                         }}
                                                         onBlur={(e) =>
@@ -459,11 +458,11 @@ function Profile() {
                                                                 [RULES.IS_REQUIRE],
                                                                 e.target.value,
                                                                 '.pf-error',
-                                                                'Mức độ ưu tiên kỹ năng',
+                                                                'Đánh giá kỹ năng',
                                                             )
                                                         }
                                                     >
-                                                        <option value="">Mức độ ưu tiên gợi ý cho kỹ năng này</option>
+                                                        <option value="">Đánh giá kỹ năng</option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>

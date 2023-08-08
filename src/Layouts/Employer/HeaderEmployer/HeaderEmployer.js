@@ -1,28 +1,42 @@
-import React from 'react';
-import { Container, Nav, Navbar, OverlayTrigger, Popover, Button, ListGroup, Offcanvas, Image } from 'react-bootstrap';
+import React, { useEffect } from 'react';
+import {
+    Container,
+    Nav,
+    Navbar,
+    OverlayTrigger,
+    Popover,
+    Button,
+    ListGroup,
+    Offcanvas,
+    NavDropdown,
+    Image,
+} from 'react-bootstrap';
 import className from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
-
-import styles from './Header.module.scss';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '~/store/reducers/authSlice';
+import { auth, logout } from '~/store/reducers/authSlice';
+
+import styles from './HeaderEmployer.module.scss';
+import { Link } from 'react-router-dom';
 import Avatar from '~/components/Avatar/Avatar';
 import { BASE_URL } from '~/constant';
-import Notify from '~/components/Notify/Notify';
-import Loading from '~/components/Loading/Loading';
 const cx = className.bind(styles);
 
-function Header() {
+function HeaderEmployer() {
     const token = useSelector((state) => state.auth.token);
-    const authLoading = useSelector((state) => state.auth.authLoading);
     const user = useSelector((state) => state.auth.user);
     const dispath = useDispatch();
 
+    // useEffect(() => {
+    //     dispath(auth('employer'));
+    //     // eslint-disable-next-line
+    // }, [token]);
+
     const handleLogout = () => {
-        dispath(logout('alumus'));
+        dispath(logout('employer'));
     };
+
     return (
         <Navbar className={cx('header', 'p-0')} expand="lg">
             <Container className={cx('re-container', 'pe-0')}>
@@ -44,53 +58,30 @@ function Header() {
                 />
                 <Navbar.Offcanvas id="basic-navbar-nav" aria-labelledby="basic-navbar-nav">
                     <Offcanvas.Header closeButton>
-                        <Offcanvas.Title>Tìm việc làm</Offcanvas.Title>
+                        <Offcanvas.Title>Tuyển dụng</Offcanvas.Title>
                     </Offcanvas.Header>
-                    <Offcanvas.Body className={cx('wrap-offcanvas-body')}>
-                        <Nav className={cx('left-nav', 'justify-content-between')}>
-                            <div className={cx('item-menu')}>
-                                <Link to={'/jobs'} className="fsc_1">
-                                    Việc làm
-                                </Link>
-                                {/* {user && (
-                                    <> */}
-                                <Link to={'/profile'} className="fsc_1">
-                                    Hồ sơ
-                                </Link>
-                                <Link to={'/cv'} className="fsc_1">
-                                    CV
-                                </Link>
-                                <Link to={'/recruitment'} className="fsc_1">
-                                    Ứng tuyển
-                                </Link>
-                                <Notify />
-                            </div>
-
-                            <div className={cx('wrapper-link-soft')}>
-                                <Link to={'/login'} className="fsc_2 mt-2 mb-2">
-                                    Đăng nhập
-                                </Link>
-                                <Link to={'/register'} className="fsc_2 mt-2 mb-2">
-                                    Đăng ký
-                                </Link>
-                                <Link to={'/logout'} className="fsc_2 mt-2 mb-2">
-                                    Đăng xuất
-                                </Link>
-                            </div>
-                            <Button className="button-no-bg">
-                                <Nav.Link href="/employer" className="fsc_2 ">
-                                    Dành cho nhà tuyển dụng
-                                </Nav.Link>
-                            </Button>
-                        </Nav>
-                        <div className={cx('nav-right')}>
+                    <Offcanvas.Body>
+                        <Nav className={cx('wrap-offcanvas-body', 'w-100', 'justify-content-between')}>
+                            <Link to={'/employer/manage-job'} className="fsc_1">
+                                Quản lý tuyển dụng
+                            </Link>
+                            <Link to={'/profile'} className="fsc_1">
+                                Hồ sơ
+                            </Link>
+                            <Nav.Link href="/employer/post-job" className="fsc_1">
+                                Đăng tin tuyển dụng
+                            </Nav.Link>
+                            <NavDropdown className="fsc_1" title="Thông báo" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="#action/3.1">Option 1</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.2">Option 2</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.3">OPtion 3</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.4">Option 4</NavDropdown.Item>
+                            </NavDropdown>
                             <div className={cx('dropdown-cusomize', 'd-dropdown-auth')}>
                                 <div className={cx('avatar')}>
-                                    {authLoading ? (
-                                        <Loading />
-                                    ) : token && user ? (
+                                    {user ? (
                                         <Avatar
-                                            src={user.avatar ? BASE_URL + user.avatar : null}
+                                            src={BASE_URL + user.logoCompany.path}
                                             base64={false}
                                             name={user.userName}
                                         />
@@ -99,8 +90,8 @@ function Header() {
                                     )}
                                 </div>
                                 <div className={cx('action-auth')}>
-                                    <Link to={'/login'} className="fsc_2">
-                                        {authLoading ? <Loading /> : token && user ? user.userName : 'Đăng nhập'}
+                                    <Link to={'/employer/login'} className="fsc_2">
+                                        {user ? user.userName : 'Đăng nhập'}
                                     </Link>
                                     <OverlayTrigger
                                         rootClose
@@ -139,13 +130,29 @@ function Header() {
                                     </OverlayTrigger>
                                 </div>
                             </div>
+                            <div className={cx('wrapper-link-soft')}>
+                                <Link to={'/login'} className="fsc_2 mt-2 mb-2">
+                                    Đăng nhập
+                                </Link>
+                                <Link to={'/register'} className="fsc_2 mt-2 mb-2">
+                                    Đăng ký
+                                </Link>
+                                <Link to={'/logout'} className="fsc_2 mt-2 mb-2">
+                                    Đăng xuất
+                                </Link>
+                            </div>
                             <div className={cx('round-a-side')}>
-                                <Nav.Link href="/employer" className="fsc_2 ">
-                                    Dành cho nhà tuyển dụng
+                                <Nav.Link href="/" className="fsc_2 ">
+                                    Dành cho ứng viên
                                 </Nav.Link>
                                 <Image src="/assets/imgs/icons8-employee-48.png" />
                             </div>
-                        </div>
+                            <Button className="button-no-bg">
+                                <Nav.Link href="/" className="fsc_2 ">
+                                    Dành cho ứng viên
+                                </Nav.Link>
+                            </Button>
+                        </Nav>
                     </Offcanvas.Body>
                 </Navbar.Offcanvas>
             </Container>
@@ -153,4 +160,4 @@ function Header() {
     );
 }
 
-export default Header;
+export default HeaderEmployer;

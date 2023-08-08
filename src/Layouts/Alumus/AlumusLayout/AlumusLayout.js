@@ -1,10 +1,9 @@
 import React from 'react';
-
-import Header from '~/Layouts/components/Header';
-import Footer from '~/Layouts/components/Footer';
+import Header from '~/Layouts/Alumus/Header';
+import Footer from '~/Layouts/commonComponents/Footer';
 import Auth from '~/components/Auth/Auth';
 
-function DefaultLayout({ children, type, auth }) {
+function AlummusLayout({ children, type, auth }) {
     return auth ? (
         <Auth type={type}>
             <Header />
@@ -20,4 +19,4 @@ function DefaultLayout({ children, type, auth }) {
     );
 }
 
-export default DefaultLayout;
+export default AlummusLayout;

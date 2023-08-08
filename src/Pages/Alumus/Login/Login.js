@@ -33,6 +33,17 @@ function Login() {
     useEffect(() => {
         // eslint-disable-next-line
         localStorage.removeItem('alumusToken');
+        const handleEnter = (e) => {
+            if (e.key === 'Enter') {
+                submit();
+            }
+        };
+        document.addEventListener('keydown', handleEnter);
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener('keydown', handleEnter);
+        };
+        // eslint-disable-next-line
     }, []);
 
     useEffect(() => {

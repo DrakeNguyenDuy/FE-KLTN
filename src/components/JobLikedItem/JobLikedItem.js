@@ -16,6 +16,7 @@ import { postApplyJob } from '~/store/reducers/recruitmentSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import Loading from '../Loading/Loading';
 import { getCVWithToken } from '~/store/reducers/cvSlice';
+import { formatDateString } from '~/utils/Format';
 const cx = className.bind(styles);
 
 function JobLiked({ data }) {
@@ -29,6 +30,7 @@ function JobLiked({ data }) {
     useEffect(() => {
         dispath(getCVWithToken());
         dispath(getJobDetail({ id: codeJob, type: 'alumus' }));
+        // eslint-disable-next-line
     }, []);
 
     const dispath = useDispatch();
@@ -39,13 +41,6 @@ function JobLiked({ data }) {
         dispath(postLikeJob({ codeJob, isFollow: true }));
     };
 
-    const convertFormatDate = (dateString) => {
-        const convertDate = dateString.split(' ')[0];
-        if (convertDate) {
-            const parts = convertDate.split('-');
-            return `${parts[2]}/${parts[1]}/${parts[0]}`;
-        } else return null;
-    };
     const notify = () => toast('Đã ứng tuyển thành công!');
     const handleOpenModal = () => {
         setShowModal(true);
@@ -114,7 +109,8 @@ function JobLiked({ data }) {
                         Tên công ty: <span>{data?.nameCompany}</span>
                     </p>
                     <p>
-                        Hạn nộp hồ sơ: <span>{convertFormatDate(data?.dateRating)}</span>
+                        Hạn nộp hồ sơ:{' '}
+                        <span>{formatDateString('YYYY/MM/DD', '-', 'DD/MM/YYYY', '/', data?.dateRating)}</span>
                     </p>
                 </div>
                 <div className={cx('job-like-button')}>
