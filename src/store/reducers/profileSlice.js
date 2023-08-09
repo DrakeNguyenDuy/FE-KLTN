@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import request, { authHeader } from '~/axios/request';
-import { getToken } from './authSlice';
+import { getToken } from '~/utils/LocalStorage';
 
 const API_PROFILE = 'v1/auth/profile';
 

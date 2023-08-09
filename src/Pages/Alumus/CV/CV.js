@@ -4,20 +4,20 @@ import className from 'classnames/bind';
 import { useNavigate, useParams } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import CustomButton from '~/components/CustomButton/CustomButton';
+import CustomButton from '~/components/common/CustomButton';
+import UpdateCVModal from '~/components/alumus/UpdateCVModal';
+import UploadAvatarModal from '~/components/common/UploadAvatarModal';
+import CVStyle1 from '~/components/alumus/CVStyle/CVStyle1';
+import Loading from '~/components/common/Loading';
+import NotLogin from '~/components/common/NotLogin';
 import { robotoNormal } from './fonts/robotoNormal';
 import { robotoItalic } from './fonts/robotoItalic';
 import { robotoBold } from './fonts/robotoBold';
 import { robotoBoldItalic } from './fonts/robotoBoldItalic';
 import { createCV, getCVWithId, getCVWithToken, postAvatar, putUpdateCV } from '~/store/reducers/cvSlice';
-import CVStyle1 from '~/components/CVStyle/CVStyle1';
-import UploadAvatarModal from '~/components/UploadAvatarModal/UploadAvatarModal';
-import UpdateCVModal from '~/components/UpdateCVModal/UpdateCVModal';
-import Loading from '~/components/Loading/Loading';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import NotLogin from '~/components/NotLogin/NotLogin';
 
 const cx = className.bind(styles);
 
@@ -28,10 +28,10 @@ function CV() {
 
     const [showAvatarModal, setShowAvatarModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
-    const token = useSelector((state) => state.auth.token);
+    const user = useSelector((state) => state.alumusAuth.user);
+    const authLoading = useSelector((state) => state.alumusAuth.authLoading);
     const cv = useSelector((state) => state.cv.cv);
     const profile = useSelector((state) => state.profile.profile);
-    const authLoading = useSelector((state) => state.auth.authLoading);
     const isLoading = useSelector((state) => state.cv.isLoading);
 
     const dispath = useDispatch();
@@ -87,7 +87,7 @@ function CV() {
         );
 
     const handleSubmitUpdate = (data) => {
-        if (cv) {
+        if (cv && cv !== -1) {
             dispath(putUpdateCV({ id: cv.id, data }));
         } else {
             dispath(createCV(data));
@@ -191,7 +191,7 @@ function CV() {
             },
         });
     };
-    if (!authLoading && !token) return <NotLogin />;
+    if (!authLoading && !user && !id) return <NotLogin />;
     return isLoading ? (
         <Loading />
     ) : (

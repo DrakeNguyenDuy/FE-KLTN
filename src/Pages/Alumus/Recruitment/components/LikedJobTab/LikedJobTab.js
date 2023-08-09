@@ -2,9 +2,10 @@ import classNames from 'classnames/bind';
 import styles from './LikedJobTab.module.scss';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Loading from '~/components/Loading/Loading';
-import { getJobLiked } from '~/store/reducers/jobSlice';
-import JobLiked from '~/components/JobLikedItem/JobLikedItem';
+
+import Loading from '~/components/common/Loading';
+import JobLiked from '~/components/common/JobLikedItem';
+import { getJobLiked } from '~/store/reducers/common/jobSlice';
 
 const cx = classNames.bind(styles);
 

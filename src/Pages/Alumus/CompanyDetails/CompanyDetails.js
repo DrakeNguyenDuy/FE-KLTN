@@ -1,14 +1,16 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './CompanyDetails.module.scss';
 import className from 'classnames/bind';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { getEmployerDetail } from '~/store/reducers/employerSlice';
-import Avatar from '~/components/Avatar/Avatar';
-import JobItem from '~/components/JobItem/JobItem';
+
+import Avatar from '~/components/common/Avatar';
+import JobItem from '~/components/common/JobItem';
+import CustomBreadCrumb from '~/components/common/CustomBreadCrumb';
+import Loading from '~/components/common/Loading';
+
+import { getEmployerDetail } from '~/store/reducers/common/employerSlice';
 import { BASE_URL } from '~/constant';
-import CustomBreadCrumb from '~/components/CustomBreadCrumb/CustomBreadCrumb';
-import Loading from '~/components/Loading/Loading';
 
 const cx = className.bind(styles);
 

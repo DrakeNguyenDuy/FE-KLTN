@@ -7,25 +7,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faMars, faPen, faVenus } from '@fortawesome/free-solid-svg-icons';
 import { Form, Image } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { createProfile, getProfile, putUpdateProfile } from '~/store/reducers/profileSlice';
-import { postAvatar } from '~/store/reducers/cvSlice';
-import { getSkillId } from '~/store/reducers/skillSlice';
-import { getCareer } from '~/store/reducers/careerSlice';
-import { getExperience } from '~/store/reducers/experienceSlice';
-import { getTypeWork } from '~/store/reducers/typeWorkSlice';
-import { getDistrict } from '~/store/reducers/locationSlice';
-import { getPaycycle } from '~/store/reducers/paycycleSlice';
+import './Profile.scss';
 
-import UploadAvatarModal from '~/components/UploadAvatarModal/UploadAvatarModal';
-import UpdateProfileModal from '~/components/UpdateProfileModal/UpdateProfileModal';
-import CustomButton from '~/components/CustomButton/CustomButton';
-import Avatar from '~/components/Avatar/Avatar';
-import GroupInput from '~/components/GroupInput/GroupInput';
-import Loading from '~/components/Loading/Loading';
+import UploadAvatarModal from '~/components/common/UploadAvatarModal';
+import UpdateProfileModal from '~/components/alumus/UpdateProfileModal';
+import CustomButton from '~/components/common/CustomButton';
+import Avatar from '~/components/common/Avatar';
+import GroupInput from '~/components/common/GroupInput';
+import Loading from '~/components/common/Loading';
+import NotLogin from '~/components/common/NotLogin';
 import { BASE_URL } from '~/constant';
 import { RULES, validate, validateCreateProfile } from '~/utils/Validate';
-import './Profile.scss';
-import NotLogin from '~/components/NotLogin/NotLogin';
+import { postAvatar } from '~/store/reducers/cvSlice';
+import { getSkillId } from '~/store/reducers/common/skillSlice';
+import { getCareer } from '~/store/reducers/common/careerSlice';
+import { getExperience } from '~/store/reducers/common/experienceSlice';
+import { getTypeWork } from '~/store/reducers/common/typeWorkSlice';
+import { getDistrict } from '~/store/reducers/common/locationSlice';
+import { getPaycycle } from '~/store/reducers/common/paycycleSlice';
+import { createProfile, getProfile, putUpdateProfile } from '~/store/reducers/profileSlice';
 
 const cx = className.bind(styles);
 
@@ -38,7 +38,7 @@ function Profile() {
 
     const dispath = useDispatch();
     const profile = useSelector((state) => state.profile.profile);
-    const token = useSelector((state) => state.auth.token);
+    const user = useSelector((state) => state.alumusAuth.user);
     const isLoading = useSelector((state) => state.profile.profileIsLoading);
     const careers = useSelector((state) => state.career.careers);
     const experiences = useSelector((state) => state.experience.experiences);
@@ -48,7 +48,7 @@ function Profile() {
     const skillsList = useSelector((state) => state.skill.skillsId);
 
     useEffect(() => {
-        if (token) {
+        if (user) {
             dispath(getProfile());
             if (!profile) {
                 dispath(getSkillId());
@@ -60,7 +60,7 @@ function Profile() {
             }
         }
         // eslint-disable-next-line
-    }, [token]);
+    }, []);
 
     const handleOpenAvatarModal = () => {
         setShowAvatarModal(true);
@@ -119,7 +119,7 @@ function Profile() {
         <div className="container">
             {isLoading ? (
                 <Loading />
-            ) : token ? (
+            ) : user ? (
                 <div className={cx('wrapper')}>
                     {profile && typeof profile !== 'string' && (
                         <>
@@ -439,7 +439,7 @@ function Profile() {
                                                         }}
                                                     />
                                                     <Form.Select
-                                                        aria-label="Mức độ thông thạo kỹ năng"
+                                                        aria-label="Đánh giá kỹ năng"
                                                         defaultValue={data.rate}
                                                         onChange={(e) => {
                                                             const value = e.target.value;
@@ -450,7 +450,6 @@ function Profile() {
                                                                     break;
                                                                 }
                                                             }
-                                                            console.log(newList);
                                                             setSkills(newList);
                                                         }}
                                                         onBlur={(e) =>
@@ -459,11 +458,11 @@ function Profile() {
                                                                 [RULES.IS_REQUIRE],
                                                                 e.target.value,
                                                                 '.pf-error',
-                                                                'Mức độ ưu tiên kỹ năng',
+                                                                'Đánh giá kỹ năng',
                                                             )
                                                         }
                                                     >
-                                                        <option value="">Mức độ ưu tiên gợi ý cho kỹ năng này</option>
+                                                        <option value="">Đánh giá kỹ năng</option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>

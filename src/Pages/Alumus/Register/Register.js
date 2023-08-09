@@ -1,27 +1,29 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import className from 'classnames/bind';
 import { Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { FcGoogle } from 'react-icons/fc';
-import React, { useEffect, useRef, useState } from 'react';
-import styles from './Register.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FcGoogle } from 'react-icons/fc';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
-import CustomPassword from '~/components/CustomPassword';
-import { RULES, validate, validateRegisterForm } from '~/utils/Validate';
-import { useDispatch, useSelector } from 'react-redux';
-import { registerAlumus } from '~/store/reducers/authSlice';
-import CustomButton from '~/components/CustomButton/CustomButton';
+import styles from './Register.module.scss';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import CustomPassword from '~/components/common/CustomPassword';
+import CustomButton from '~/components/common/CustomButton';
+import { RULES, validate, validateRegisterForm } from '~/utils/Validate';
+import { registerAlumus } from '~/store/reducers/alumus/registerSlice';
+// import { registerAlumus } from '~/store/reducers/alumus/AuthSlice';
 
 const cx = className.bind(styles);
 
 function Register() {
     const formRef = useRef();
     const dispath = useDispatch();
-    const registerAlumusMessage = useSelector((state) => state.auth.registerAlumusMessage);
-    const registerAlumusLoading = useSelector((state) => state.auth.registerAlumusLoading);
+    const registerAlumusMessage = useSelector((state) => state.alumusRegister.message);
+    const registerAlumusLoading = useSelector((state) => state.alumusRegister.loading);
 
     useEffect(() => {
         if (registerAlumusMessage) {
@@ -37,6 +39,7 @@ function Register() {
         const validateMessage = validateRegisterForm(data, '#register-error', data.confirmPassword);
         if (validateMessage) {
             delete data.confirmPassword;
+            // dispath(registerAlumus(data));
             dispath(registerAlumus(data));
         }
     };

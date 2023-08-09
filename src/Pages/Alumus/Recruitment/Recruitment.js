@@ -1,20 +1,20 @@
 import styles from './Recruitment.module.scss';
-import './Recruitment.scss';
 import className from 'classnames/bind';
-
-import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
 import { useSelector } from 'react-redux';
-import NotLogin from '~/components/NotLogin/NotLogin';
-import AppliedJobTab from './components/AppliedJobTab/AppliedJobTab';
-import LikedJobTab from './components/LikedJobTab/LikedJobTab';
+import './Recruitment.scss';
+
+import NotLogin from '~/components/common/NotLogin';
+import AppliedJobTab from './components/AppliedJobTab';
+import LikedJobTab from './components/LikedJobTab';
 
 const cx = className.bind(styles);
 
 function Recruitment() {
-    const token = useSelector((state) => state.auth.token);
+    const user = useSelector((state) => state.alumusAuth.user);
 
-    return token ? (
+    return user ? (
         <div className={cx('wrapper', 'recruitment')}>
             <Tabs defaultActiveKey="jobApplied" transition={false} id="noanim-tab-example" className="mb-3">
                 <Tab eventKey="jobApplied" title="Công việc đã ứng tuyển">

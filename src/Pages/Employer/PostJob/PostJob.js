@@ -1,23 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import className from 'classnames/bind';
 import { Form, Modal } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 import Select from 'react-select';
-
-import CustomBreadCrumb from '~/components/CustomBreadCrumb';
-import CustomButton from '~/components/CustomButton/CustomButton';
 import styles from './PostJob.module.scss';
+import 'react-quill/dist/quill.snow.css';
 import './CustomQuill.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCareer } from '~/store/reducers/careerSlice';
-import { getSkill } from '~/store/reducers/skillSlice';
-import { getTypeWork } from '~/store/reducers/typeWorkSlice';
-import { getExperience } from '~/store/reducers/experienceSlice';
-import { getPosition } from '~/store/reducers/positionSlice';
-import { getDistrict, getProvince, getWard, resetDistrict, resetWard } from '~/store/reducers/locationSlice';
-import { createJob } from '~/store/reducers/jobSlice';
-import { getPaycycle } from '~/store/reducers/paycycleSlice';
+
+import CustomBreadCrumb from '~/components/common/CustomBreadCrumb';
+import CustomButton from '~/components/common/CustomButton';
+import { getCareer } from '~/store/reducers/common/careerSlice';
+import { getSkill } from '~/store/reducers/common/skillSlice';
+import { getTypeWork } from '~/store/reducers/common/typeWorkSlice';
+import { getExperience } from '~/store/reducers/common/experienceSlice';
+import { getPosition } from '~/store/reducers/common/positionSlice';
+import { createJob } from '~/store/reducers/common/jobSlice';
+import { getPaycycle } from '~/store/reducers/common/paycycleSlice';
+import { getDistrict, getProvince, getWard, resetDistrict, resetWard } from '~/store/reducers/common/locationSlice';
 
 const cx = className.bind(styles);
 const modules = {
@@ -62,15 +62,13 @@ function PostJob() {
     const [jobDescription, setJobDescription] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [addressDetail, setAddressDetail] = useState('');
-    // const [load, setLoad] = useState(true);
     const [skillSelected, setSkillSelected] = useState('');
     const [selectDistrict, setSelectDistrict] = useState(true);
     const [selectWard, setSelectWard] = useState(true);
     const [enterDetailAddress, SetEnterDetailAddress] = useState(true);
 
     const dispath = useDispatch();
-    const token = useSelector((state) => state.auth.token);
-    const user = useSelector((state) => state.auth.user);
+    const user = useSelector((state) => state.employerAuth.user);
     const careers = useSelector((state) => state.career.careers);
     const skills = useSelector((state) => state.skill.skills);
     const typeWorks = useSelector((state) => state.typeWork.typeWorks);
@@ -91,7 +89,6 @@ function PostJob() {
         dispath(getPosition());
         dispath(getProvince());
         dispath(getPaycycle());
-        // setLoad(false);
         // eslint-disable-next-line
     }, []);
 
@@ -120,7 +117,7 @@ function PostJob() {
             numberOfRecruitments: formRef.current['JobNum'].value,
             description: jobDescription,
         };
-        dispath(createJob({ job: jobData, token, employer: user.code }));
+        dispath(createJob({ ...jobData, employerCode: user.code }));
     };
 
     const handlePostJobLater = () => {

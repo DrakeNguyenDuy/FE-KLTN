@@ -1,94 +1,106 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './Home.module.scss';
 import className from 'classnames/bind';
 
-import Job from '~/components/JobItem';
 import EmployerCarousel from './components/EmployerCarousel';
 import WelcomeCarousel from './components/WelcomeCarousel';
-import CustomCarousel from '~/components/CustomCarousel';
+import JobItem from '~/components/common/JobItem';
+import CustomCarousel from '~/components/common/CustomCarousel';
+import { useDispatch, useSelector } from 'react-redux';
+import { getJobLastest } from '~/store/reducers/common/jobSlice';
+import { getTopEmlpyer } from '~/store/reducers/common/searchSlice';
+import { useNavigate } from 'react-router-dom';
 
 const cx = className.bind(styles);
-const items = [
-    'job1',
-    'job2',
-    'job3',
-    'job4',
-    'job5',
-    'job6',
-    'job7',
-    'job8',
-    'job9',
-    'job10',
-    'job11',
-    'job12',
-    'job13',
-    'job14',
-    'job15',
-];
-
-const mapItem = (items, numItem) => {
-    let result = [];
-    let num = Math.floor(items.length / numItem);
-    let rest = items.length % numItem;
-    let index = 0;
-    for (let i = 0; i < num; i++) {
-        const itemGet = [];
-        for (let j = 0; j < numItem; j++) {
-            itemGet.push(items[index]);
-            index++;
-        }
-        result.push(itemGet);
-    }
-    if (rest !== 0) {
-        const itemGet = [];
-        for (let i = index; i < items.length; i++) {
-            itemGet.push(items[i]);
-        }
-        result.push(itemGet);
-    }
-
-    return result;
-};
-
-const mapItemDesktop = mapItem(items, 6);
-const mapItemMobile = mapItem(items, 2);
 
 function Home() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const jobsLatest = useSelector((state) => state.job.jobLatest);
+    const topEmployers = useSelector((state) => state.search.topEmployers);
+    const jobLatestLoading = useSelector((state) => state.job.jobLatestLoading);
+    const topEmloyerIsLoading = useSelector((state) => state.search.topEmloyerIsLoading);
+    const user = useSelector((state) => state.employerAuth.user);
+
+    useEffect(() => {
+        dispatch(getJobLastest(user?.userName));
+        dispatch(getTopEmlpyer());
+        // eslint-disable-next-line
+    }, []);
+
+    const getItems = (items, numItem) => {
+        let result = [];
+        if (items) {
+            let num = Math.floor(items.length / numItem);
+            let rest = items.length % numItem;
+            let index = 0;
+            for (let i = 0; i < num; i++) {
+                const itemGet = [];
+                for (let j = 0; j < numItem; j++) {
+                    itemGet.push(items[index]);
+                    index++;
+                }
+                result.push(itemGet);
+            }
+            if (rest !== 0) {
+                const itemGet = [];
+                for (let i = index; i < items.length; i++) {
+                    itemGet.push(items[i]);
+                }
+                result.push(itemGet);
+            }
+        }
+
+        return result;
+    };
+
     return (
-        <div id="home">
+        <div id="home" className={cx('wrapper')}>
             <section>
                 <WelcomeCarousel />
             </section>
-            {/* <section>
+            <section>
                 <div className="session-title">Việc làm mới nhất</div>
-                desktop
+                {/* desktop */}
                 <CustomCarousel
-                    items={mapItemDesktop}
+                    items={getItems(jobsLatest, 4)}
                     wrapperClass={cx('desktop-carousel')}
                     render={(itemOnSlie) => (
                         <div className={cx('job-wrapper')}>
                             {itemOnSlie.map((item, index) => (
-                                <Job key={index} className={cx('job-reponsive')} />
+                                <JobItem
+                                    key={index}
+                                    user={user}
+                                    data={item}
+                                    onClick={() => navigate(`/job/${item.sku}`)}
+                                />
                             ))}
                         </div>
                     )}
+                    loading={jobLatestLoading}
                 />
-                mobile
+                {/* mobile */}
                 <CustomCarousel
-                    items={mapItemMobile}
+                    items={getItems(jobsLatest, 2)}
                     wrapperClass={cx('mobile-carousel')}
                     render={(itemOnSlie) => (
                         <div className={cx('job-wrapper')}>
                             {itemOnSlie.map((item, index) => (
-                                <Job key={index} className={cx('job-reponsive')} />
+                                <JobItem
+                                    key={index}
+                                    data={item}
+                                    user={user}
+                                    onClick={() => navigate(`/job/${item.sku}`)}
+                                />
                             ))}
                         </div>
                     )}
+                    loading={jobLatestLoading}
                 />
-            </section> */}
+            </section>
             <section>
                 <div className="session-title">Nhà tuyển dụng nổi bậc</div>
-                <EmployerCarousel />
+                <EmployerCarousel items={topEmployers} loading={topEmloyerIsLoading} />
             </section>
         </div>
     );

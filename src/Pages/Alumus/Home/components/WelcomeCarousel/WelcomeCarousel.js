@@ -1,14 +1,14 @@
+import { useEffect, useRef, useState } from 'react';
 import styles from './WelcomeCarousel.module.scss';
 import className from 'classnames/bind';
 import { Button, Form, Image } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-
-import CustomCarousel from '~/components/CustomCarousel';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useRef, useState } from 'react';
-import { getDistrict } from '~/store/reducers/locationSlice';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import CustomCarousel from '~/components/common/CustomCarousel';
+import { getDistrict } from '~/store/reducers/common/locationSlice';
 
 const cx = className.bind(styles);
 
