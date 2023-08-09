@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import request, { authHeader, authHeaderMultipart } from '~/axios/request';
-import { getToken } from './authSlice';
+import { getToken } from '~/utils/LocalStorage';
 
 const API_CV = 'v1/auth/cv';
 const API_GET_CV_NO_AUTH = 'v1/cv';

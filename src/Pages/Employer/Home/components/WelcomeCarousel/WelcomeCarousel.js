@@ -4,7 +4,7 @@ import { Button, Form, Image } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-import CustomCarousel from '~/components/CustomCarousel';
+import CustomCarousel from '~/components/common/CustomCarousel';
 
 const cx = className.bind(styles);
 

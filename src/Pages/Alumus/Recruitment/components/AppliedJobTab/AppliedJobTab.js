@@ -3,10 +3,11 @@ import styles from './AppliedJobTab.module.scss';
 import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import Loading from '~/components/Loading/Loading';
-import JobApplied from '~/components/JobAppliedItem/JobAppliedItem';
+
+import Loading from '~/components/common/Loading';
+import JobApplied from '~/components/common/JobAppliedItem';
 import { getApplyStatus } from '~/store/reducers/recruitmentSlice';
-import { getJobApplied } from '~/store/reducers/jobSlice';
+import { getJobApplied } from '~/store/reducers/common/jobSlice';
 
 const cx = classNames.bind(styles);
 

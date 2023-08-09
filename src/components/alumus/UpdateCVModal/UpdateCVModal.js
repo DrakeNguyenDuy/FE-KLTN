@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Form, Modal, Button } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './UpdateCV.module.scss';
 import className from 'classnames/bind';
 import './UpdateCV.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCareer } from '~/store/reducers/careerSlice';
-import { getSkill } from '~/store/reducers/skillSlice';
-import GroupInput from '../GroupInput/GroupInput';
+
+import GroupInput from '~/components/common/GroupInput';
 import { RULES, validate, validateUpdateCV } from '~/utils/Validate';
+import { getSkill } from '~/store/reducers/common/skillSlice';
+import { getCareer } from '~/store/reducers/common/careerSlice';
 
 const cx = className.bind(styles);
 

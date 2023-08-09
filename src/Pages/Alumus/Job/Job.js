@@ -1,30 +1,32 @@
 import React, { useState } from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
+import styles from './JobPage.module.scss';
+import className from 'classnames/bind';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import Pagination from 'react-bootstrap/Pagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Select from 'react-select';
-import styles from './JobPage.module.scss';
-import className from 'classnames/bind';
 
-import JobItem from '~/components/JobItem';
-import CustomBreadCrumb from '~/components/CustomBreadCrumb';
-import CardProfile from '~/components/CardProfile';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getJobs } from '~/store/reducers/jobSlice';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import UploadAvatarModal from '~/components/UploadAvatarModal/UploadAvatarModal';
+import CustomBreadCrumb from '~/components/common/CustomBreadCrumb';
+import JobItem from '~/components/common/JobItem';
+import UploadAvatarModal from '~/components/common/UploadAvatarModal';
+import CardProfile from '~/components/common/CardProfile';
+import Loading from '~/components/common/Loading';
+import { getJobs } from '~/store/reducers/common/jobSlice';
 import { postAvatar } from '~/store/reducers/cvSlice';
 import { BASE_URL } from '~/constant';
-import Loading from '~/components/Loading/Loading';
-import { getCareer } from '~/store/reducers/careerSlice';
-import { getExperience } from '~/store/reducers/experienceSlice';
-import { getTypeWork } from '~/store/reducers/typeWorkSlice';
-import { getDistrict } from '~/store/reducers/locationSlice';
-import { getPaycycle } from '~/store/reducers/paycycleSlice';
-import { getFilterDisplay } from '~/store/reducers/searchSlice';
+import { getCareer } from '~/store/reducers/common/careerSlice';
+import { getExperience } from '~/store/reducers/common/experienceSlice';
+import { getTypeWork } from '~/store/reducers/common/typeWorkSlice';
+import { getDistrict } from '~/store/reducers/common/locationSlice';
+import { getPaycycle } from '~/store/reducers/common/paycycleSlice';
+import { getFilterDisplay } from '~/store/reducers/common/searchSlice';
+import { getToken } from '~/utils/LocalStorage';
+import { getProfile } from '~/store/reducers/profileSlice';
 
 const cx = className.bind(styles);
 
@@ -35,8 +37,9 @@ const breadcrumbItems = [
 
 export default function Job() {
     const dispath = useDispatch();
-    const user = useSelector((state) => state.auth.user);
-    const token = useSelector((state) => state.auth.token);
+    const user = useSelector((state) => state.alumusAuth.user);
+    const token = getToken('alumus');
+    const profile = useSelector((state) => state.profile.profile);
     const jobs = useSelector((state) => state.job.jobData);
     const jobLoading = useSelector((state) => state.job.jobLoading);
 
@@ -92,6 +95,7 @@ export default function Job() {
         dispath(getDistrict(1));
         dispath(getPaycycle());
         dispath(getFilterDisplay());
+        dispath(getProfile());
         // eslint-disable-next-line
     }, []);
     useEffect(() => {
@@ -105,7 +109,7 @@ export default function Job() {
                 paycycle,
                 experience,
                 order,
-                type: 'alumus',
+                username: user?.userName,
             }),
         );
         // eslint-disable-next-line
@@ -291,6 +295,7 @@ export default function Job() {
                                             key={job.id}
                                             big={true}
                                             data={job}
+                                            user={user}
                                             onClick={() => navigate(`/job/${job.sku}`)}
                                         />
                                     ))
@@ -300,10 +305,19 @@ export default function Job() {
                             </Col>
                             <Col lg={4} className={cx('ext-job')}>
                                 <div className={cx('profile')}>
+                                    {console.log(
+                                        'jahsd',
+                                        profile,
+                                        typeof profile,
+                                        profile && typeof profile !== 'string',
+                                    )}
                                     <CardProfile
                                         name={user?.fullName}
                                         avatar={user?.avatar && BASE_URL + user?.avatar}
                                         location={user?.districts && user.districts[0].name}
+                                        token={token}
+                                        profile={profile}
+                                        handleUpdateProfile={() => navigate('/profile')}
                                         handleUpdateAvatar={handleOpenAvatarModal}
                                     />
                                 </div>

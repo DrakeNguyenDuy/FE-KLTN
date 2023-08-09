@@ -1,17 +1,16 @@
 import styles from './EmployerCarousel.module.scss';
 import className from 'classnames/bind';
 import { Button, Image } from 'react-bootstrap';
-
-import CustomCarousel from '~/components/CustomCarousel';
-import { BASE_URL } from '~/constant';
-import Loading from '~/components/Loading/Loading';
 import { useNavigate } from 'react-router-dom';
+
+import CustomCarousel from '~/components/common/CustomCarousel';
+import Loading from '~/components/common/Loading';
+import { BASE_URL } from '~/constant';
 
 const cx = className.bind(styles);
 
 function EmployerCarousel({ items, loading }) {
     const navigate = useNavigate();
-    console.log(items);
     return loading ? (
         <Loading />
     ) : (

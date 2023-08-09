@@ -15,26 +15,22 @@ import className from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { auth, logout } from '~/store/reducers/authSlice';
 
+import Loading from '~/components/common/Loading';
 import styles from './HeaderEmployer.module.scss';
 import { Link } from 'react-router-dom';
-import Avatar from '~/components/Avatar/Avatar';
+import Avatar from '~/components/common/Avatar';
 import { BASE_URL } from '~/constant';
+import { employerLogout } from '~/store/reducers/employer/employerLoginSlice';
+
 const cx = className.bind(styles);
 
 function HeaderEmployer() {
-    const token = useSelector((state) => state.auth.token);
-    const user = useSelector((state) => state.auth.user);
     const dispath = useDispatch();
-
-    // useEffect(() => {
-    //     dispath(auth('employer'));
-    //     // eslint-disable-next-line
-    // }, [token]);
+    const user = useSelector((state) => state.employerAuth.user);
 
     const handleLogout = () => {
-        dispath(logout('employer'));
+        dispath(employerLogout('alumus'));
     };
 
     return (
@@ -81,7 +77,7 @@ function HeaderEmployer() {
                                 <div className={cx('avatar')}>
                                     {user ? (
                                         <Avatar
-                                            src={BASE_URL + user.logoCompany.path}
+                                            src={user.avatar ? BASE_URL + user.avatar : null}
                                             base64={false}
                                             name={user.userName}
                                         />
@@ -90,9 +86,13 @@ function HeaderEmployer() {
                                     )}
                                 </div>
                                 <div className={cx('action-auth')}>
-                                    <Link to={'/employer/login'} className="fsc_2">
-                                        {user ? user.userName : 'Đăng nhập'}
-                                    </Link>
+                                    {user ? (
+                                        <Link className="fsc_2">{user.userName}</Link>
+                                    ) : (
+                                        <Link to={'/employer/login'} className="fsc_2">
+                                            {'Đăng nhập'}
+                                        </Link>
+                                    )}
                                     <OverlayTrigger
                                         rootClose
                                         trigger="click"

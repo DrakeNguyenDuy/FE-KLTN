@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styles from './Home.module.scss';
 import className from 'classnames/bind';
 
-import JobItem from '~/components/JobItem';
+import JobItem from '~/components/common/JobItem';
 import EmployerCarousel from './components/EmployerCarousel';
 import WelcomeCarousel from './components/WelcomeCarousel';
-import CustomCarousel from '~/components/CustomCarousel';
-import { useDispatch, useSelector } from 'react-redux';
-import { getJobLastest } from '~/store/reducers/jobSlice';
-import { getTopEmlpyer } from '~/store/reducers/searchSlice';
-import { useNavigate } from 'react-router-dom';
+import CustomCarousel from '~/components/common/CustomCarousel';
+
+import { getJobLastest } from '~/store/reducers/common/jobSlice';
+import { getTopEmlpyer } from '~/store/reducers/common/searchSlice';
 
 const cx = className.bind(styles);
 
@@ -20,13 +21,18 @@ function Home() {
     const topEmployers = useSelector((state) => state.search.topEmployers);
     const jobLatestLoading = useSelector((state) => state.job.jobLatestLoading);
     const topEmloyerIsLoading = useSelector((state) => state.search.topEmloyerIsLoading);
+    const user = useSelector((state) => state.alumusAuth.user);
 
+    // useEffect(() => {
+    //     dispatch(getJobLastest(user?.userName));
+    //     dispatch(getTopEmlpyer());
+    //     // eslint-disable-next-line
+    // }, [user]);
     useEffect(() => {
-        dispatch(getJobLastest('alumus'));
+        dispatch(getJobLastest(user?.userName));
         dispatch(getTopEmlpyer());
         // eslint-disable-next-line
     }, []);
-
     const getItems = (items, numItem) => {
         let result = [];
         if (items) {
@@ -67,7 +73,12 @@ function Home() {
                     render={(itemOnSlie) => (
                         <div className={cx('job-wrapper')}>
                             {itemOnSlie.map((item, index) => (
-                                <JobItem key={index} data={item} onClick={() => navigate(`/job/${item.sku}`)} />
+                                <JobItem
+                                    key={index}
+                                    user={user}
+                                    data={item}
+                                    onClick={() => navigate(`/job/${item.sku}`)}
+                                />
                             ))}
                         </div>
                     )}
@@ -80,7 +91,12 @@ function Home() {
                     render={(itemOnSlie) => (
                         <div className={cx('job-wrapper')}>
                             {itemOnSlie.map((item, index) => (
-                                <JobItem key={index} data={item} onClick={() => navigate(`/job/${item.sku}`)} />
+                                <JobItem
+                                    key={index}
+                                    data={item}
+                                    user={user}
+                                    onClick={() => navigate(`/job/${item.sku}`)}
+                                />
                             ))}
                         </div>
                     )}

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import request, { authHeader } from '~/axios/request';
-import { getToken } from './authSlice';
+import { getToken } from '~/utils/LocalStorage';
 import { getNotify } from './notifySlice';
 
 const API_POST_APPLY_JOB = 'v1/auth/recruitment/apply';

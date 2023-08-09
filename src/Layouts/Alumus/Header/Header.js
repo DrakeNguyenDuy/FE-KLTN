@@ -1,27 +1,25 @@
-import React from 'react';
-import { Container, Nav, Navbar, OverlayTrigger, Popover, Button, ListGroup, Offcanvas, Image } from 'react-bootstrap';
+import React, { useEffect } from 'react';
 import className from 'classnames/bind';
+import styles from './Header.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
-
-import styles from './Header.module.scss';
+import { Container, Nav, Navbar, OverlayTrigger, Popover, Button, ListGroup, Offcanvas, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '~/store/reducers/authSlice';
-import Avatar from '~/components/Avatar/Avatar';
+
+import Avatar from '~/components/common/Avatar';
+import Notify from '~/components/common/Notify';
 import { BASE_URL } from '~/constant';
-import Notify from '~/components/Notify/Notify';
-import Loading from '~/components/Loading/Loading';
+import { AlumusLogout } from '~/store/reducers/alumus/loginSlice';
+
 const cx = className.bind(styles);
 
 function Header() {
-    const token = useSelector((state) => state.auth.token);
-    const authLoading = useSelector((state) => state.auth.authLoading);
-    const user = useSelector((state) => state.auth.user);
     const dispath = useDispatch();
+    const user = useSelector((state) => state.alumusAuth.user);
 
     const handleLogout = () => {
-        dispath(logout('alumus'));
+        dispath(AlumusLogout('alumus'));
     };
     return (
         <Navbar className={cx('header', 'p-0')} expand="lg">
@@ -84,9 +82,7 @@ function Header() {
                         <div className={cx('nav-right')}>
                             <div className={cx('dropdown-cusomize', 'd-dropdown-auth')}>
                                 <div className={cx('avatar')}>
-                                    {authLoading ? (
-                                        <Loading />
-                                    ) : token && user ? (
+                                    {user ? (
                                         <Avatar
                                             src={user.avatar ? BASE_URL + user.avatar : null}
                                             base64={false}
@@ -97,18 +93,13 @@ function Header() {
                                     )}
                                 </div>
                                 <div className={cx('action-auth')}>
-                                    {authLoading ? (
-                                        <Loading />
-                                    ) : token && user ? (
+                                    {user ? (
                                         <Link className="fsc_2">{user.userName}</Link>
                                     ) : (
                                         <Link to={'/login'} className="fsc_2">
                                             {'Đăng nhập'}
                                         </Link>
                                     )}
-                                    {/* <Link to={'/login'} className="fsc_2">
-                                        {authLoading ? <Loading /> : token && user ? user.userName : 'Đăng nhập'}
-                                    </Link> */}
                                     <OverlayTrigger
                                         rootClose
                                         trigger="click"

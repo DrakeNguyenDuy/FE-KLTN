@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -8,11 +10,10 @@ import { FcGoogle } from 'react-icons/fc';
 import className from 'classnames/bind';
 import styles from './Login.module.scss';
 
-import CustomPassword from '~/components/CustomPassword';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '~/store/reducers/authSlice';
-import { useNavigate } from 'react-router-dom';
-import CustomButton from '~/components/CustomButton/CustomButton';
+import CustomPassword from '~/components/common/CustomPassword';
+import CustomButton from '~/components/common/CustomButton';
+import { alumusLogin } from '~/store/reducers/alumus/loginSlice';
+// import { login } from '~/store/reducers/alumus/AuthSlice';
 
 const cx = className.bind(styles);
 
@@ -22,9 +23,9 @@ function Login() {
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
-    const token = useSelector((state) => state.auth.token);
-    const loading = useSelector((state) => state.auth.loading);
-    const error = useSelector((state) => state.auth.error);
+    const token = useSelector((state) => state.alumusLogin.token);
+    const loading = useSelector((state) => state.alumusLogin.loading);
+    const error = useSelector((state) => state.alumusLogin.error);
 
     const dispath = useDispatch();
 
@@ -64,7 +65,8 @@ function Login() {
             username: formRef.current[0].value,
             password: formRef.current[1].value,
         };
-        dispath(login(data));
+        // dispath(login(data));
+        dispath(alumusLogin(data));
     };
 
     return (
@@ -108,9 +110,6 @@ function Login() {
                         <Form.Group className={cx('fogotpass')}>
                             <a href="forgotpass">Quên mật khẩu?</a>
                         </Form.Group>
-                        {/* <Button className={cx('confirm-button')} onClick={submit}>
-                            Đăng nhập
-                        </Button> */}
                         <CustomButton isLoading={loading} className={cx('confirm-button')} onClick={submit}>
                             Đăng nhập
                         </CustomButton>

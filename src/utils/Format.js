@@ -24,7 +24,6 @@ export const formatDateString = (templateCurrent, separatorCurrent, templateForm
             default:
                 break;
         }
-        console.log(day, month, year);
         switch (templateFormat) {
             case 'YYYY/MM/DD':
                 return year + separatorFormat + month + separatorFormat + day;

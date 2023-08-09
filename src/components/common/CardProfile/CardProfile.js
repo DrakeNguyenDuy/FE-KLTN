@@ -3,7 +3,8 @@ import styles from './CardProfile.module.scss';
 import className from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+// import { useSelector } from 'react-redux';
+// import { useEffect } from 'react';
 
 const cx = className.bind(styles);
 
@@ -12,17 +13,12 @@ function CardProfile({
     name = 'Chưa cập nhật',
     location = 'Chưa cập nhật',
     handleUpdateAvatar,
+    handleUpdateProfile,
+    token,
+    profile,
     ...props
 }) {
     const navigate = useNavigate();
-    const token = useSelector((state) => state.auth.token);
-    const profile = useSelector((state) => state.profile.profile);
-
-    useEffect(() => {
-        if (token) {
-        }
-        // eslint-disable-next-line
-    }, []);
     return (
         <div className={cx('wrapper')}>
             <div className={cx('profile')}>

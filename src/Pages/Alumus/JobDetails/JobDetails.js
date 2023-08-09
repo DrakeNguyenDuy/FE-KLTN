@@ -1,10 +1,11 @@
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './JobDetail.module.scss';
 import className from 'classnames/bind';
+import { Button, Image, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { getJobDetail, postLikeJob } from '~/store/reducers/jobSlice';
 import ReactQuill from 'react-quill';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faBriefcase,
     faChain,
@@ -18,20 +19,19 @@ import {
     faPersonHalfDress,
     faThumbsDown,
 } from '@fortawesome/free-solid-svg-icons';
-
-import './JobDetail.scss';
-import CustomBreadCrumb from '~/components/CustomBreadCrumb/CustomBreadCrumb';
-import { Button, Image, Modal } from 'react-bootstrap';
-import CustomButton from '~/components/CustomButton/CustomButton';
-import InforItem from '~/components/InfoItem/InfoItem';
-import Loading from '~/components/Loading/Loading';
-import { BASE_URL } from '~/constant';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { postApplyJob } from '~/store/reducers/recruitmentSlice';
-import RequireLogin from '~/components/RequireLogin/RequireLogin';
-import { getCVWithToken } from '~/store/reducers/cvSlice';
 import { ToastContainer, toast } from 'react-toastify';
+import './JobDetail.scss';
 import 'react-toastify/dist/ReactToastify.css';
+
+import CustomBreadCrumb from '~/components/common/CustomBreadCrumb';
+import CustomButton from '~/components/common/CustomButton';
+import InforItem from '~/components/common/InfoItem';
+import Loading from '~/components/common/Loading';
+import RequireLogin from '~/components/common/RequireLogin';
+import { getJobDetail, postLikeJob } from '~/store/reducers/common/jobSlice';
+import { postApplyJob } from '~/store/reducers/recruitmentSlice';
+import { getCVWithToken } from '~/store/reducers/cvSlice';
+import { BASE_URL } from '~/constant';
 
 const cx = className.bind(styles);
 
@@ -45,7 +45,7 @@ function JobDetails() {
     const jobDetailIsLoading = useSelector((state) => state.job.jobDetailIsLoading);
     const followStatus = useSelector((state) => state.job.follow);
     const applyStatus = useSelector((state) => state.recruitment.apply);
-    const user = useSelector((state) => state.auth.user);
+    const user = useSelector((state) => state.alumusAuth.user);
     const cv = useSelector((state) => state.cv.cv);
     const cvLoading = useSelector((state) => state.cv.isLoading);
 

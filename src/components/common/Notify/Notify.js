@@ -11,7 +11,7 @@ const cx = className.bind(styles);
 
 function Notify() {
     const dispath = useDispatch();
-    const token = useSelector((state) => state.auth.token);
+    const user = useSelector((state) => state.alumusAuth.user);
     const notifies = useSelector((state) => state.notify.notifies);
     const notifyLoading = useSelector((state) => state.notify.loading);
     const toggleNotify = useSelector((state) => state.notify.toggleNotify);
@@ -30,14 +30,14 @@ function Notify() {
             document.removeEventListener('mousedown', handleClickOutside);
         };
         // eslint-disable-next-line
-    }, [notifyIconRef, token]);
+    }, [notifyIconRef, user]);
 
     useEffect(() => {
-        if (token) {
+        if (user) {
             dispath(getNotify());
         }
         // eslint-disable-next-line
-    }, [token, toggleNotify]);
+    }, [user, toggleNotify]);
 
     const toggleNotifyIcon = () => {
         setNotifyOpen(!notifyOpen);
@@ -65,7 +65,7 @@ function Notify() {
                     <div className={cx('notify-body')}>
                         {notifyLoading ? (
                             <Loading />
-                        ) : token ? (
+                        ) : user ? (
                             notifies?.notifies.map((notify, index) => (
                                 <div className={cx('notify-item', 'new')} key={index}>
                                     <p className={cx('notify-value')}>{notify.value}</p>

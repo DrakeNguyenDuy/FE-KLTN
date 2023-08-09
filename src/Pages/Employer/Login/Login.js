@@ -1,18 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Col, Row } from 'react-bootstrap';
+import className from 'classnames/bind';
+import styles from './Login.module.scss';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { FcGoogle } from 'react-icons/fc';
-import className from 'classnames/bind';
-import styles from './Login.module.scss';
-
-import CustomPassword from '~/components/CustomPassword';
-import { useDispatch, useSelector } from 'react-redux';
-import { login, logout } from '~/store/reducers/authSlice';
 import { useNavigate } from 'react-router-dom';
-import CustomButton from '~/components/CustomButton/CustomButton';
+
+import CustomPassword from '~/components/common/CustomPassword';
+import CustomButton from '~/components/common/CustomButton';
+import { employerlogin } from '~/store/reducers/employer/employerLoginSlice';
 
 const cx = className.bind(styles);
 
@@ -22,17 +22,26 @@ function Login() {
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
-    const token = useSelector((state) => state.auth.token);
-    const loading = useSelector((state) => state.auth.loading);
-    const error = useSelector((state) => state.auth.error);
+    const token = useSelector((state) => state.employerLogin.token);
+    const loading = useSelector((state) => state.employerLogin.loading);
+    const error = useSelector((state) => state.employerLogin.error);
 
     const dispath = useDispatch();
 
     const formRef = useRef();
 
     useEffect(() => {
-        // dispath(logout('employer'));
         localStorage.removeItem('employerToken');
+        const handleEnter = (e) => {
+            if (e.key === 'Enter') {
+                submit();
+            }
+        };
+        document.addEventListener('keydown', handleEnter);
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener('keydown', handleEnter);
+        };
         // eslint-disable-next-line
     }, []);
 
@@ -54,7 +63,7 @@ function Login() {
             username: formRef.current[0].value,
             password: formRef.current[1].value,
         };
-        dispath(login(data));
+        dispath(employerlogin(data));
     };
 
     return (
@@ -98,9 +107,6 @@ function Login() {
                         <Form.Group className={cx('fogotpass')}>
                             <a href="forgotpass">Quên mật khẩu?</a>
                         </Form.Group>
-                        {/* <Button className={cx('confirm-button')} onClick={submit}>
-                            Đăng nhập
-                        </Button> */}
                         <CustomButton isLoading={loading} className={cx('confirm-button')} onClick={submit}>
                             Đăng nhập
                         </CustomButton>

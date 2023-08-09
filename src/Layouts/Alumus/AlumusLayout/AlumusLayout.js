@@ -1,11 +1,11 @@
 import React from 'react';
 import Header from '~/Layouts/Alumus/Header';
-import Footer from '~/Layouts/commonComponents/Footer';
-import Auth from '~/components/Auth/Auth';
+import Footer from '~/Layouts/common/Footer';
+import Auth from '~/components/alumus/Auth';
 
 function AlummusLayout({ children, type, auth }) {
     return auth ? (
-        <Auth type={type}>
+        <Auth>
             <Header />
             <div className="content">{children}</div>
             <Footer />

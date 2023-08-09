@@ -1,22 +1,22 @@
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styles from './JobLikedItem.module.scss';
 import className from 'classnames/bind';
 import { Button, Image, Modal } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import CustomButton from '~/components/CustomButton/CustomButton';
 import { faChain, faEye, faPaperPlane, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
-import { BASE_URL } from '~/constant';
-import { useNavigate } from 'react-router-dom';
-import { getJobDetail, postLikeJob } from '~/store/reducers/jobSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { postApplyJob } from '~/store/reducers/recruitmentSlice';
 import 'react-toastify/dist/ReactToastify.css';
-import Loading from '../Loading/Loading';
+
+import CustomButton from '~/components/common/CustomButton';
+import Loading from '~/components/common/Loading';
+import { getJobDetail, postLikeJob } from '~/store/reducers/common/jobSlice';
+import { postApplyJob } from '~/store/reducers/recruitmentSlice';
 import { getCVWithToken } from '~/store/reducers/cvSlice';
 import { formatDateString } from '~/utils/Format';
+import { BASE_URL } from '~/constant';
+
 const cx = className.bind(styles);
 
 function JobLiked({ data }) {

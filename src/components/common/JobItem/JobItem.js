@@ -10,19 +10,18 @@ import styles from './JobItem.module.scss';
 
 import { BASE_URL } from '~/constant';
 import CustomButton from '../CustomButton/CustomButton';
-import { postLikeJob } from '~/store/reducers/jobSlice';
+import { postLikeJob } from '~/store/reducers/common/jobSlice';
 import RequireLogin from '../RequireLogin/RequireLogin';
 import { formatCurrency, formatDateString } from '~/utils/Format';
 
 const cx = className.bind(styles);
-export default function JobItem({ big = true, data, ...props }) {
+export default function JobItem({ big = true, data, user, ...props }) {
     const dispath = useDispatch();
     const [show, setShow] = useState(false);
     const { applied, sku, follow } = data;
     const [isFollow, setIsFollow] = useState(follow);
 
     const followStatus = useSelector((state) => state.job.follow);
-    const user = useSelector((state) => state.auth.user);
 
     useEffect(() => {
         if (followStatus && followStatus.codeJob === sku) {

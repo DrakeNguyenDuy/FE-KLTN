@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChain, faEye } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import styles from './JobAppliedItem.module.scss';
 import className from 'classnames/bind';
 
-import CustomButton from '~/components/CustomButton/CustomButton';
-import { useNavigate } from 'react-router-dom';
+import CustomButton from '~/components/common/CustomButton';
 import { BASE_URL } from '~/constant';
 
 const cx = className.bind(styles);

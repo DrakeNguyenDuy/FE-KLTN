@@ -1,15 +1,15 @@
 import React from 'react';
 import HeaderEmployer from '~/Layouts/Employer/HeaderEmployer';
-import Footer from '~/Layouts/commonComponents/Footer';
-import Auth from '~/components/Auth/Auth';
+import Footer from '~/Layouts/common/Footer';
+import AuthEmployer from '~/components/employer/Auth';
 
-function EmployerLayout({ children, type, auth }) {
+function EmployerLayout({ children, auth }) {
     return auth ? (
-        <Auth type={type} auth={auth}>
+        <AuthEmployer>
             <HeaderEmployer />
             <div className="content">{children}</div>
             <Footer />
-        </Auth>
+        </AuthEmployer>
     ) : (
         <>
             <HeaderEmployer />

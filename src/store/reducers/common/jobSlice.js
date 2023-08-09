@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import request, { authHeader } from '~/axios/request';
-import { getAuthUsername, getToken } from './authSlice';
+import { getToken } from '~/utils/LocalStorage';
+// import { getAuthUsername, getToken } from '../alumus/AuthSlice';
 import { HttpStatusCode } from 'axios';
 
 const API_GET_JOBS = 'v2/products';
@@ -13,13 +14,12 @@ const API_JOB_LIKED = 'v1/auth/rating';
 
 export const getJobs = createAsyncThunk(
     'job/get',
-    async ({ search, career, area, typeWork, paycycle, experience, order, page, type }) => {
-        const user = await getAuthUsername(type);
+    async ({ search, career, area, typeWork, paycycle, experience, order, page, username = null }) => {
         const response = await request.get(API_GET_JOBS, {
             params: {
                 page: page === 0 ? page : page - 1,
                 count: 5,
-                username: user,
+                username,
                 search: search === '' ? null : search,
                 career: career === '' ? null : career,
                 area: area === '' ? null : area,
@@ -34,7 +34,7 @@ export const getJobs = createAsyncThunk(
 );
 
 export const postLikeJob = createAsyncThunk('like/post', async ({ codeJob, isFollow }) => {
-    const token = await getToken();
+    const token = getToken();
     const response = await request.post(
         `${API_JOB_LIKED}/${codeJob}`,
         {},
@@ -49,23 +49,24 @@ export const postLikeJob = createAsyncThunk('like/post', async ({ codeJob, isFol
 });
 
 export const getJobDetail = createAsyncThunk('jobDetail/get', async ({ id, type }) => {
-    const user = await getAuthUsername(type);
+    // const user = await getAuthUsername(type);
+    const user = null;
     const response = await request.get(API_GET_JOB_DETAILS + '/' + id, {
         params: user ? { username: user } : null,
     });
     return response.data;
 });
 
-export const getJobLastest = createAsyncThunk('jobLatest/get', async (type) => {
-    const user = await getAuthUsername(type);
+export const getJobLastest = createAsyncThunk('jobLatest/get', async (username = null) => {
+    // const user = await getAuthUsername(type);
     const response = await request.get(API_GET_JOB_LATEST, {
-        params: user ? { username: user } : null,
+        params: { username },
     });
     return response.data;
 });
 
 export const getJobApplied = createAsyncThunk('jobApplied/get', async () => {
-    const token = await getToken();
+    const token = getToken();
     const response = await request.get(API_GET_JOB_APPLIED, {
         headers: authHeader(token),
     });
@@ -81,7 +82,7 @@ export const getJobApplied = createAsyncThunk('jobApplied/get', async () => {
 });
 
 export const getJobLiked = createAsyncThunk('jobLiked/get', async () => {
-    const token = await getToken();
+    const token = getToken();
     const response = await request.get(API_JOB_LIKED, {
         headers: authHeader(token),
     });
@@ -97,44 +98,51 @@ export const getJobLiked = createAsyncThunk('jobLiked/get', async () => {
 });
 
 export const createJob = createAsyncThunk('job/post', async (data) => {
-    const mapData = {
-        descriptions: [
-            {
-                description: data.job.description,
-                friendlyUrl: 'string',
-                highlights: 'string',
-                id: 0,
-                keyWords: 'string',
-                language: 'vn',
-                metaDescription: 'string',
-                name: data.job.name,
-                title: data.job.name,
-            },
-        ],
-        categories: [
-            {
-                code: data.job.jobType,
-            },
-        ],
-        type: data.job.career,
-        manufacturer: 'string',
-        price: data.job.salary,
-        quantity: data.job.numberOfRecruitments,
-        gender: data.job.gender,
-        experence: data.job.experience,
-        positionCode: [data.job.position],
-        skillsDecription: data.job.skills.map((skill) => skill.value),
-        locationsDecription: [data.job.location],
-        idPayCycle: data.job.paycycle,
-        dateExperience: data.job.exprireDate,
-        identifier: getSkuJobName(data.job.name),
-        sku: getSkuJobName(data.job.name),
-    };
-    const response = await request.post(API_POST_JOB, mapData, {
-        headers: authHeader(data.token),
-        params: { store: data.employer },
-    });
-    return response.data;
+    const token = getToken('employer');
+    if (token) {
+        try {
+            const mapData = {
+                descriptions: [
+                    {
+                        description: data.description,
+                        friendlyUrl: 'string',
+                        highlights: 'string',
+                        id: 0,
+                        keyWords: 'string',
+                        language: 'vn',
+                        metaDescription: 'string',
+                        name: data.name,
+                        title: data.name,
+                    },
+                ],
+                categories: [
+                    {
+                        code: data.jobType,
+                    },
+                ],
+                type: data.career,
+                manufacturer: 'string',
+                price: data.salary,
+                quantity: data.numberOfRecruitments,
+                gender: data.gender,
+                experence: data.experience,
+                positionCode: [data.position],
+                skillsDecription: data.skills.map((skill) => skill.value),
+                locationsDecription: [data.location],
+                idPayCycle: data.paycycle,
+                dateExperience: data.exprireDate,
+                identifier: getSkuJobName(data.name),
+                sku: getSkuJobName(data.name),
+            };
+            const response = await request.post(API_POST_JOB, mapData, {
+                headers: authHeader(token),
+                params: { store: data.employerCode },
+            });
+            return response.data;
+        } catch (error) {
+            console.log('Could not create job with error', error);
+        }
+    } else return null;
 });
 
 const getSkuJobName = (jobName) => {

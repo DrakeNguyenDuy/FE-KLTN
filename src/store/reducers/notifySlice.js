@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import request, { authHeader } from '~/axios/request';
-import { getToken } from './authSlice';
+import { getToken } from '~/utils/LocalStorage';
 
 const API_GET_NOTIFY = 'v1/auth/notification';
 const API_PUT_NOTIFY = 'v1/auth/notification/opened';

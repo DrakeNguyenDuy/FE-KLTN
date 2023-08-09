@@ -1,10 +1,10 @@
+import { useEffect, useRef, useState } from 'react';
+import { Image } from 'react-bootstrap';
 import styles from './CVStyle1.module.scss';
 import className from 'classnames/bind';
 
-import Avatar from '~/components/Avatar/Avatar';
-import { Image } from 'react-bootstrap';
+import Avatar from '~/components/common/Avatar';
 import { BASE_URL } from '~/constant';
-import { useEffect, useRef, useState } from 'react';
 
 const cx = className.bind(styles);
 

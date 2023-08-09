@@ -1,18 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, Modal, Button } from 'react-bootstrap';
 import styles from './UpdateProfile.module.scss';
 import className from 'classnames/bind';
 import Select from 'react-select';
 import './UpdateProfile.scss';
+
+import GroupInput from '~/components/common/GroupInput';
 import { RULES, validate, validateUpdateProfile } from '~/utils/Validate';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCareer } from '~/store/reducers/careerSlice';
-import { getDistrict } from '~/store/reducers/locationSlice';
-import { getExperience } from '~/store/reducers/experienceSlice';
-import { getTypeWork } from '~/store/reducers/typeWorkSlice';
-import { getPaycycle } from '~/store/reducers/paycycleSlice';
-import GroupInput from '../GroupInput/GroupInput';
-import { getSkillId } from '~/store/reducers/skillSlice';
+import { getCareer } from '~/store/reducers/common/careerSlice';
+import { getDistrict } from '~/store/reducers/common/locationSlice';
+import { getExperience } from '~/store/reducers/common/experienceSlice';
+import { getTypeWork } from '~/store/reducers/common/typeWorkSlice';
+import { getPaycycle } from '~/store/reducers/common/paycycleSlice';
+import { getSkillId } from '~/store/reducers/common/skillSlice';
 
 const cx = className.bind(styles);
 

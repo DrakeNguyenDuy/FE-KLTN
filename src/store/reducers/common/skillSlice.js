@@ -27,11 +27,9 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getSkill.fulfilled, (state, action) => {
             state.skills = action.payload;
-            // console.log('skills', state.skills);
         });
         builder.addCase(getSkillId.fulfilled, (state, action) => {
             state.skillsId = action.payload;
-            // console.log('skills', state.skillsId);
         });
     },
 });
