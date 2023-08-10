@@ -4,16 +4,16 @@ import { getToken } from '~/utils/LocalStorage';
 
 const API_ALUMUS_CHANGE_PASS = 'v1/auth/customer/password';
 
-export const alumusChangePass = createAsyncThunk('alumusChangePass/post', async (data) => {
+export const alumusChangePass = createAsyncThunk('alumusChangePass/post', async (data, { rejectWithValue }) => {
     try {
         const token = getToken('alumus');
         const response = await request.post(API_ALUMUS_CHANGE_PASS, data, {
             headers: authHeader(token),
         });
-        return response.data.token;
+        return response.data === 'Success';
     } catch (error) {
-        console.log('Could not login with error', error);
-        return null;
+        console.log('Could not change passs with error', error);
+        return rejectWithValue(error);
     }
 });
 
@@ -31,12 +31,16 @@ const slice = createSlice({
         builder
             .addCase(alumusChangePass.pending, (state, action) => {
                 state.loading = true;
+                state.changePass = null;
+                state.error = null;
             })
             .addCase(alumusChangePass.fulfilled, (state, action) => {
                 state.changePass = action.payload;
                 state.loading = false;
+                state.error = null;
             })
             .addCase(alumusChangePass.rejected, (state, action) => {
+                state.changePass = false;
                 state.error = action.error;
                 state.loading = false;
             });

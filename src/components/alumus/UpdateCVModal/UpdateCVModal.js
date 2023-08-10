@@ -6,9 +6,10 @@ import className from 'classnames/bind';
 import './UpdateCV.module.scss';
 
 import GroupInput from '~/components/common/GroupInput';
-import { RULES, validate, validateUpdateCV } from '~/utils/Validate';
+import { RULES, validate } from '~/utils/validates/Validate';
 import { getSkill } from '~/store/reducers/common/skillSlice';
 import { getCareer } from '~/store/reducers/common/careerSlice';
+import { validateUpdateCV } from '~/utils/validates/updateCVModal';
 
 const cx = className.bind(styles);
 

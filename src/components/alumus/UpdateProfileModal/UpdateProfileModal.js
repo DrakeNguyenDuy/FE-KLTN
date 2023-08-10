@@ -7,13 +7,14 @@ import Select from 'react-select';
 import './UpdateProfile.scss';
 
 import GroupInput from '~/components/common/GroupInput';
-import { RULES, validate, validateUpdateProfile } from '~/utils/Validate';
+import { RULES, validate } from '~/utils/validates/Validate';
 import { getCareer } from '~/store/reducers/common/careerSlice';
 import { getDistrict } from '~/store/reducers/common/locationSlice';
 import { getExperience } from '~/store/reducers/common/experienceSlice';
 import { getTypeWork } from '~/store/reducers/common/typeWorkSlice';
 import { getPaycycle } from '~/store/reducers/common/paycycleSlice';
 import { getSkillId } from '~/store/reducers/common/skillSlice';
+import { validateUpdateProfile } from '~/utils/validates/updateProfileModal';
 
 const cx = className.bind(styles);
 

@@ -36,7 +36,7 @@ function HeaderEmployer() {
     return (
         <Navbar className={cx('header', 'p-0')} expand="lg">
             <Container className={cx('re-container', 'pe-0')}>
-                <Navbar.Brand href="/" className={cx('p-text')}>
+                <Navbar.Brand href="/employer" className={cx('p-text')}>
                     <img
                         alt=""
                         src="/static/imgs/logo.png"
@@ -64,9 +64,9 @@ function HeaderEmployer() {
                             <Link to={'/profile'} className="fsc_1">
                                 Hồ sơ
                             </Link>
-                            <Nav.Link href="/employer/post-job" className="fsc_1">
+                            <Link to={'/employer/post-job'} className="fsc_1">
                                 Đăng tin tuyển dụng
-                            </Nav.Link>
+                            </Link>
                             <NavDropdown className="fsc_1" title="Thông báo" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#action/3.1">Option 1</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">Option 2</NavDropdown.Item>
