@@ -4,18 +4,17 @@ import LocalStorage from '~/utils/LocalStorage';
 
 const API_ALUMUS_LOGIN = 'v1/customer/login';
 
-export const alumusLogin = createAsyncThunk('alumusLogin/post', async (data) => {
+export const alumusLogin = createAsyncThunk('alumusLogin/post', async (data, { rejectWithValue }) => {
     try {
         const response = await request.post(API_ALUMUS_LOGIN, {
             username: data.username,
             password: data.password,
         });
-        console.log(response.data);
         LocalStorage.set('alumusToken', response.data.token);
         return response.data.token;
     } catch (error) {
         console.log('Could not login with error', error);
-        return null;
+        return rejectWithValue(error);
     }
 });
 

@@ -9,18 +9,20 @@ import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { FcGoogle } from 'react-icons/fc';
 import className from 'classnames/bind';
 import styles from './Login.module.scss';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import CustomPassword from '~/components/common/CustomPassword';
 import CustomButton from '~/components/common/CustomButton';
 import { alumusLogin } from '~/store/reducers/alumus/loginSlice';
-// import { login } from '~/store/reducers/alumus/AuthSlice';
+import { RULES, validate } from '~/utils/validates/Validate';
+import { validateLogin } from '~/utils/validates/login';
 
 const cx = className.bind(styles);
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
     const token = useSelector((state) => state.alumusLogin.token);
@@ -51,11 +53,8 @@ function Login() {
         if (token) {
             navigate('/');
         }
-        if (error) {
-            setErrorMessage('Sai tài khoản hoặc mật khẩu.');
-        } else {
-            setErrorMessage('');
-        }
+        error && notify('Sai tài khoản hoặc mật khẩu.');
+
         // eslint-disable-next-line
     }, [error, token]);
 
@@ -65,12 +64,18 @@ function Login() {
             username: formRef.current[0].value,
             password: formRef.current[1].value,
         };
-        // dispath(login(data));
-        dispath(alumusLogin(data));
+        const validateMessage = validateLogin({
+            data,
+            callback: (message) => notify(message),
+        });
+        validateMessage && dispath(alumusLogin(data));
     };
+
+    const notify = (message) => toast(message);
 
     return (
         <Row className={cx('wrapper')}>
+            <ToastContainer />
             <Col lg={7}>
                 <div className={cx('page-content')}>
                     <h1>Đăng nhập ngay</h1>
@@ -95,7 +100,11 @@ function Login() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="Nhập email"
+                                onBlur={(e) =>
+                                    validate(e.target, [RULES.IS_REQUIRE], e.target.value, '.lg-error', 'Email')
+                                }
                             />
+                            <p className={cx('lg-error', 'form-error', 'input-error')}></p>
                         </Form.Group>
                         <CustomPassword
                             controlId={'formBasicPassword'}
@@ -103,10 +112,10 @@ function Login() {
                             onChange={(e) => setPassword(e.target.value)}
                             labelName={'Mật khẩu'}
                             placeholder={'Nhập mật khẩu'}
+                            onBlur={(e) =>
+                                validate(e.target, [RULES.IS_REQUIRE], e.target.value, '.cv-error', 'Mật khẩu')
+                            }
                         />
-                        <Form.Group className={cx('form-error')}>
-                            <p>{errorMessage}</p>
-                        </Form.Group>
                         <Form.Group className={cx('fogotpass')}>
                             <a href="forgotpass">Quên mật khẩu?</a>
                         </Form.Group>

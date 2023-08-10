@@ -158,7 +158,7 @@ function PostJob() {
         }
     };
 
-    return (
+    return user ? (
         <div className={cx('wrapper')}>
             <Modal show={showModal} onHide={() => setShowModal(false)}>
                 <Modal.Header closeButton>
@@ -341,6 +341,8 @@ function PostJob() {
                 </CustomButton>
             </Form>
         </div>
+    ) : (
+        <></>
     );
 }
 

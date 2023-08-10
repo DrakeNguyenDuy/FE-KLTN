@@ -4,7 +4,7 @@ import LocalStorage from '~/utils/LocalStorage';
 
 const API_EMPLOYER_LOGIN = 'v1/private/login';
 
-export const employerlogin = createAsyncThunk('employerLogin/post', async (data) => {
+export const employerlogin = createAsyncThunk('employerLogin/post', async (data, { rejectWithValue }) => {
     try {
         const response = await request.post(API_EMPLOYER_LOGIN, {
             username: data.username,
@@ -15,7 +15,7 @@ export const employerlogin = createAsyncThunk('employerLogin/post', async (data)
         return response.data.token;
     } catch (error) {
         console.log('Could not login with error', error);
-        return null;
+        return rejectWithValue(error);
     }
 });
 

@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import styles from './JobLikedItem.module.scss';
 import className from 'classnames/bind';
 import { Button, Image, Modal } from 'react-bootstrap';
-import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChain, faEye, faPaperPlane, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import CustomButton from '~/components/common/CustomButton';

@@ -13,8 +13,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import CustomPassword from '~/components/common/CustomPassword';
 import CustomButton from '~/components/common/CustomButton';
-import { RULES, validate, validateRegisterForm } from '~/utils/Validate';
+import { RULES, validate } from '~/utils/validates/Validate';
 import { registerAlumus } from '~/store/reducers/alumus/registerSlice';
+import { validateRegisterForm } from '~/utils/validates/registerForm';
 // import { registerAlumus } from '~/store/reducers/alumus/AuthSlice';
 
 const cx = className.bind(styles);
@@ -39,7 +40,6 @@ function Register() {
         const validateMessage = validateRegisterForm(data, '#register-error', data.confirmPassword);
         if (validateMessage) {
             delete data.confirmPassword;
-            // dispath(registerAlumus(data));
             dispath(registerAlumus(data));
         }
     };

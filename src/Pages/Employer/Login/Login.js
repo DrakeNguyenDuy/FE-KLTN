@@ -9,10 +9,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import CustomPassword from '~/components/common/CustomPassword';
 import CustomButton from '~/components/common/CustomButton';
 import { employerlogin } from '~/store/reducers/employer/employerLoginSlice';
+import { validateLogin } from '~/utils/validates/login';
 
 const cx = className.bind(styles);
 
@@ -49,11 +52,7 @@ function Login() {
         if (token) {
             navigate('/employer');
         }
-        if (error) {
-            setErrorMessage('Sai tài khoản hoặc mật khẩu.');
-        } else {
-            setErrorMessage('');
-        }
+        error && notify('Sai tài khoản hoặc mật khẩu.');
         // eslint-disable-next-line
     }, [error, token]);
 
@@ -63,11 +62,18 @@ function Login() {
             username: formRef.current[0].value,
             password: formRef.current[1].value,
         };
-        dispath(employerlogin(data));
+        const validateMessage = validateLogin({
+            data,
+            callback: (message) => notify(message),
+        });
+        validateMessage && dispath(employerlogin(data));
     };
+
+    const notify = (message) => toast(message);
 
     return (
         <Row className={cx('wrapper')}>
+            <ToastContainer />
             <Col lg={7}>
                 <div className={cx('page-content')}>
                     <h1>Đăng nhập ngay</h1>
