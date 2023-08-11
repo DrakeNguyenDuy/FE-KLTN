@@ -61,7 +61,7 @@ function HeaderEmployer() {
                             <Link to={'/employer/manage-job'} className="fsc_1">
                                 Quản lý tuyển dụng
                             </Link>
-                            <Link to={'/profile'} className="fsc_1">
+                            <Link to={'/employer/profile'} className="fsc_1">
                                 Hồ sơ
                             </Link>
                             <Link to={'/employer/post-job'} className="fsc_1">
@@ -102,19 +102,39 @@ function HeaderEmployer() {
                                             <Popover show={false} id={`popover-positioned-bottom`}>
                                                 <Popover.Body>
                                                     <ListGroup>
-                                                        {user ? null : (
+                                                        {user && (
                                                             <ListGroup.Item>
-                                                                {' '}
-                                                                <Link className="fsc_2" to="/register">
+                                                                <Link className="fsc_2" to="/employer/manage-job">
+                                                                    Tuyển dụng
+                                                                </Link>
+                                                            </ListGroup.Item>
+                                                        )}
+                                                        {user && (
+                                                            <ListGroup.Item>
+                                                                <Link className="fsc_2" to="/employer/post-job">
+                                                                    Đăng tuyển
+                                                                </Link>
+                                                            </ListGroup.Item>
+                                                        )}
+                                                        {user && (
+                                                            <ListGroup.Item>
+                                                                <Link className="fsc_2" to="/employer/change-password">
+                                                                    Đổi mật khẩu
+                                                                </Link>
+                                                            </ListGroup.Item>
+                                                        )}
+                                                        {!user && (
+                                                            <ListGroup.Item>
+                                                                <Link className="fsc_2" to="/employer/register">
                                                                     Đăng ký
                                                                 </Link>
                                                             </ListGroup.Item>
                                                         )}
-                                                        {user ? (
+                                                        {user && (
                                                             <ListGroup.Item onClick={handleLogout}>
                                                                 <Link className="fsc_2">Đăng xuất</Link>
                                                             </ListGroup.Item>
-                                                        ) : null}
+                                                        )}
                                                     </ListGroup>
                                                 </Popover.Body>
                                             </Popover>
@@ -131,13 +151,13 @@ function HeaderEmployer() {
                                 </div>
                             </div>
                             <div className={cx('wrapper-link-soft')}>
-                                <Link to={'/login'} className="fsc_2 mt-2 mb-2">
+                                <Link to={'/employer/login'} className="fsc_2 mt-2 mb-2">
                                     Đăng nhập
                                 </Link>
-                                <Link to={'/register'} className="fsc_2 mt-2 mb-2">
+                                <Link to={'/employer/register'} className="fsc_2 mt-2 mb-2">
                                     Đăng ký
                                 </Link>
-                                <Link to={'/logout'} className="fsc_2 mt-2 mb-2">
+                                <Link to={'/employer/logout'} className="fsc_2 mt-2 mb-2">
                                     Đăng xuất
                                 </Link>
                             </div>

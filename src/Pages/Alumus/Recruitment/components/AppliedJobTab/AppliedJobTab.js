@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Loading from '~/components/common/Loading';
 import JobApplied from '~/components/common/JobAppliedItem';
-import { getApplyStatus } from '~/store/reducers/recruitmentSlice';
+import { getApplyStatus } from '~/store/reducers/alumus/recruitmentSlice';
 import { getJobApplied } from '~/store/reducers/common/jobSlice';
 
 const cx = classNames.bind(styles);

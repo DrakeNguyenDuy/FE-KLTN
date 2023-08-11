@@ -17,7 +17,7 @@ import UploadAvatarModal from '~/components/common/UploadAvatarModal';
 import CardProfile from '~/components/common/CardProfile';
 import Loading from '~/components/common/Loading';
 import { getJobs } from '~/store/reducers/common/jobSlice';
-import { postAvatar } from '~/store/reducers/cvSlice';
+import { postAvatar } from '~/store/reducers/alumus/cvSlice';
 import { BASE_URL } from '~/constant';
 import { getCareer } from '~/store/reducers/common/careerSlice';
 import { getExperience } from '~/store/reducers/common/experienceSlice';
@@ -26,7 +26,7 @@ import { getDistrict } from '~/store/reducers/common/locationSlice';
 import { getPaycycle } from '~/store/reducers/common/paycycleSlice';
 import { getFilterDisplay } from '~/store/reducers/common/searchSlice';
 import { getToken } from '~/utils/LocalStorage';
-import { getProfile } from '~/store/reducers/profileSlice';
+import { getProfile } from '~/store/reducers/alumus/profileSlice';
 
 const cx = className.bind(styles);
 

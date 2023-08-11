@@ -17,7 +17,7 @@ import { robotoNormal } from './fonts/robotoNormal';
 import { robotoItalic } from './fonts/robotoItalic';
 import { robotoBold } from './fonts/robotoBold';
 import { robotoBoldItalic } from './fonts/robotoBoldItalic';
-import { createCV, getCVWithId, getCVWithToken, postAvatar, putUpdateCV } from '~/store/reducers/cvSlice';
+import { createCV, getCVWithId, getCVWithToken, postAvatar, putUpdateCV } from '~/store/reducers/alumus/cvSlice';
 
 const cx = className.bind(styles);
 

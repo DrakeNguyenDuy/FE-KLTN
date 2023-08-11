@@ -18,14 +18,14 @@ import Loading from '~/components/common/Loading';
 import NotLogin from '~/components/common/NotLogin';
 import { BASE_URL } from '~/constant';
 import { RULES, validate } from '~/utils/validates/Validate';
-import { postAvatar } from '~/store/reducers/cvSlice';
+import { postAvatar } from '~/store/reducers/alumus/cvSlice';
 import { getSkillId } from '~/store/reducers/common/skillSlice';
 import { getCareer } from '~/store/reducers/common/careerSlice';
 import { getExperience } from '~/store/reducers/common/experienceSlice';
 import { getTypeWork } from '~/store/reducers/common/typeWorkSlice';
 import { getDistrict } from '~/store/reducers/common/locationSlice';
 import { getPaycycle } from '~/store/reducers/common/paycycleSlice';
-import { createProfile, getProfile, putUpdateProfile } from '~/store/reducers/profileSlice';
+import { createProfile, getProfile, putUpdateProfile } from '~/store/reducers/alumus/profileSlice';
 import { validateCreateProfile } from '~/utils/validates/createProfileModal';
 
 const cx = className.bind(styles);

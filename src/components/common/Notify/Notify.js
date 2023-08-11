@@ -5,7 +5,7 @@ import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './Notify.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { getNotify, putNotify } from '~/store/reducers/notifySlice';
+import { getNotify, putNotify } from '~/store/reducers/common/notifySlice';
 import Loading from '../Loading/Loading';
 const cx = className.bind(styles);
 

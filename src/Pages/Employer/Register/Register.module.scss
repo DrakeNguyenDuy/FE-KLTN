@@ -1,5 +1,15 @@
 .wrapper {
     padding-bottom: 10px;
+    transform: translateY(-100%);
+    animation: slide-in 0.8s forwards;
+    form {
+        width: 100%;
+    }
+}
+@keyframes slide-in {
+    100% {
+        transform: translateY(0%);
+    }
 }
 .page-content {
     position: relative;
@@ -43,6 +53,13 @@
         }
     }
 }
+.form-error {
+    margin-top: 5px;
+    margin-left: 4px;
+    color: red;
+    font-size: 14px;
+}
+
 .page-form {
     padding-top: 3rem;
     width: 65%;
@@ -68,6 +85,17 @@
         font-size: 20px;
         &:hover {
             opacity: 0.8;
+        }
+    }
+    .go-back {
+        cursor: pointer;
+        padding: 16px 0;
+        span {
+            margin-left: 8px;
+        }
+        &:hover {
+            opacity: 0.8;
+            color: var(--primary-color);
         }
     }
     .login-social {
