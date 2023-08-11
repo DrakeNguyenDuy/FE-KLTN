@@ -45,7 +45,7 @@ function CustomCarousel({
                         onSelect={goToIndex}
                         controls={showControl}
                         indicators={showIndicator}
-                        interval={3000}
+                        interval={10000000}
                         {...props}
                     >
                         {items.map((item, index) => (

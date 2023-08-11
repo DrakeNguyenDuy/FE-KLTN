@@ -79,6 +79,11 @@ export const validateObj = {
         message: 'không trùng khớp',
         test: (value, targetPassWorldValue) => value === targetPassWorldValue,
     },
+    isNumber: {
+        message: 'phải là số',
+        pattern: /^\d+$/,
+        test: (value, pattern) => pattern.test(value),
+    },
 };
 
 export const RULES = {
@@ -88,6 +93,7 @@ export const RULES = {
     IS_PHONE_NUMBER: 'isPhoneNumber',
     IS_PASSWORD: 'isPassword',
     IS_CONFIRM_PASSWORD: 'isConfirmPassword',
+    IS_NUMBER: 'isNumber',
 };
 
 export const getErrorEmelent = (currentElement, selector) => {

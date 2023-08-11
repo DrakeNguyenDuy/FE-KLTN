@@ -17,6 +17,8 @@ import UpdateProfileModal from '~/components/alumus/UpdateProfileModal/UpdatePro
 import { postAvatar } from '~/store/reducers/alumus/cvSlice';
 import { putUpdateProfile } from '~/store/reducers/alumus/profileSlice';
 import Loading from '~/components/common/Loading/Loading';
+import { postAvatarEmployer, updateProfileEmployer } from '~/store/reducers/employer/employerProfileSlice';
+import UpdateProfileEmployerModal from '~/components/employer/UploadProfileEmployerModal/UpdateProfileEmployerModal';
 
 const cx = className.bind(styles);
 
@@ -36,7 +38,7 @@ function Profile() {
         { name: employerDetails?.name, href: '/' },
     ];
     useEffect(() => {
-        dispatch(getEmployerDetail(user?.code));
+        user && dispatch(getEmployerDetail(user?.code));
         // eslint-disable-next-line
     }, []);
 
@@ -49,7 +51,7 @@ function Profile() {
     };
 
     const handleSubmitAvatar = (data) => {
-        dispatch(postAvatar({ data }));
+        dispatch(postAvatarEmployer({ code: user?.code, data }));
     };
 
     const handleOpenUpdateModal = () => {
@@ -61,7 +63,7 @@ function Profile() {
     };
 
     const handleSubmitUpdate = (data) => {
-        dispatch(putUpdateProfile(data));
+        dispatch(updateProfileEmployer({ code: user?.code, data }));
     };
 
     return isLoading ? (
@@ -75,8 +77,8 @@ function Profile() {
                     handleSubmit={handleSubmitAvatar}
                 />
 
-                <UpdateProfileModal
-                    // data={profile}
+                <UpdateProfileEmployerModal
+                    data={employerDetails}
                     show={showUpdateModal}
                     handleClose={handleCloseUpdateModal}
                     handleSubmit={handleSubmitUpdate}

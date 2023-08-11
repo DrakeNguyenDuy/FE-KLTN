@@ -19,12 +19,25 @@ function EmployerCarousel({ items, loading }) {
                 items={items}
                 render={(item, index) => (
                     <div className={cx('banner-bg')}>
-                        <Image fluid className="d-block w-100" src={BASE_URL + item.background} alt={item.name} />
+                        <Image
+                            fluid
+                            className={cx('d-block', 'w-100', 'bg-image')}
+                            src={
+                                item.background
+                                    ? BASE_URL + item.background
+                                    : 'https://phaleplastics.com.vn/wp-content/uploads/2023/02/tuyen-dung.png'
+                            }
+                            alt={item.name}
+                        />
                         <div className={cx('banner-content')}>
                             <Image
                                 fluid
                                 className={cx('banner-logo')}
-                                src={BASE_URL + item.logo}
+                                src={
+                                    item.logo
+                                        ? BASE_URL + item.logo
+                                        : 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png'
+                                }
                                 // src={'static/imgs/logo-banner.png'}
                                 width={200}
                                 height={200}
