@@ -98,13 +98,13 @@
         }
     }
     .form-error {
+        margin-top: 5px;
         color: red;
         font-size: 1rem;
+        font-size: 14px;
     }
     .input-error {
-        margin-top: 8px;
         margin-left: 5px;
-        font-size: 14px;
     }
     @media (min-width: 0) {
         width: 80%;

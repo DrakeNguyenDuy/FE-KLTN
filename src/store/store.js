@@ -7,11 +7,11 @@ import experienceSlice from './reducers/common/experienceSlice';
 import positionSlice from './reducers/common/positionSlice';
 import locationSlice from './reducers/common/locationSlice';
 import paycycleSlice from './reducers/common/paycycleSlice';
-import cvSlice from './reducers/cvSlice';
-import profileSlice from './reducers/profileSlice';
+import cvSlice from './reducers/alumus/cvSlice';
+import profileSlice from './reducers/alumus/profileSlice';
 import searchSlice from './reducers/common/searchSlice';
-import recruitmentSlice from './reducers/recruitmentSlice';
-import notifySlice from './reducers/notifySlice';
+import recruitmentSlice from './reducers/alumus/recruitmentSlice';
+import notifySlice from './reducers/common/notifySlice';
 import employerSlice from './reducers/common/employerSlice';
 import AlumusLoginSlice from './reducers/alumus/loginSlice';
 import AlumusAuthSlice from './reducers/alumus/authSlice';
@@ -19,6 +19,8 @@ import AlumusRegisterSlice from './reducers/alumus/registerSlice';
 import employerAuthSlice from './reducers/employer/employerAuthSlice';
 import employerLoginSlice from './reducers/employer/employerLoginSlice';
 import alumusChangePasswordSlice from './reducers/alumus/changePasswordSlice';
+import employerRegisterSlice from './reducers/employer/employerRegisterSlice';
+import employerProfileSlice from './reducers/employer/employerProfileSlice';
 
 const store = configureStore({
     reducer: {
@@ -28,7 +30,8 @@ const store = configureStore({
         alumusRegister: AlumusRegisterSlice,
         employerLogin: employerLoginSlice,
         employerAuth: employerAuthSlice,
-        // employerRegister:
+        employerRegister: employerRegisterSlice,
+        employerProfile: employerProfileSlice,
         career: careerSlice,
         job: jobSlice,
         skill: skillSlice,

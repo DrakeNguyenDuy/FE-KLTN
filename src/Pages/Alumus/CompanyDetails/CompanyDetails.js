@@ -74,7 +74,7 @@ function CompanyDetails() {
                             </div>
                         </div>
                         <div className={cx('content-block')}>
-                            <h2 className={cx('block-title')}>Việc làm</h2>
+                            <h2 className={cx('block-title')}>Danh sách công việc</h2>
                             <div className={cx('jobs')}>
                                 {employerDetails?.jobs && employerDetails?.jobs.length !== 0 ? (
                                     employerDetails?.jobs.map((job) => (

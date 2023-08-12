@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
+import { validate, RULES } from '~/utils/validates/Validate';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -50,6 +51,7 @@ function Login() {
 
     useEffect(() => {
         if (token) {
+            console.log(token);
             navigate('/employer');
         }
         error && notify('Sai tài khoản hoặc mật khẩu.');
@@ -81,7 +83,7 @@ function Login() {
                     <p>
                         Nêu bạn chưa có tài khoản <br />
                         <span>
-                            Đăng ký <a href="/register">Tại đây!</a>
+                            Đăng ký <a href="/employer/register">Tại đây!</a>
                         </span>
                     </p>
                     <img src="/assets/imgs/Saly-14.png" alt="Saly-14" />
@@ -98,7 +100,11 @@ function Login() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="Nhập email"
+                                onBlur={(e) =>
+                                    validate(e.target, [RULES.IS_REQUIRE], e.target.value, '.lg-error', 'Email')
+                                }
                             />
+                            <p className={cx('lg-error', 'form-error', 'input-error')}></p>
                         </Form.Group>
                         <CustomPassword
                             controlId={'formBasicPassword'}
@@ -106,10 +112,10 @@ function Login() {
                             onChange={(e) => setPassword(e.target.value)}
                             labelName={'Mật khẩu'}
                             placeholder={'Nhập mật khẩu'}
+                            onBlur={(e) =>
+                                validate(e.target, [RULES.IS_REQUIRE], e.target.value, '.cv-error', 'Mật khẩu')
+                            }
                         />
-                        <Form.Group className={cx('form-error')}>
-                            <p>{errorMessage}</p>
-                        </Form.Group>
                         <Form.Group className={cx('fogotpass')}>
                             <a href="forgotpass">Quên mật khẩu?</a>
                         </Form.Group>

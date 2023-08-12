@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export const formatCurrency = (value) => {
     return value ? value.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }) : null;
 };
@@ -33,4 +35,15 @@ export const formatDateString = (templateCurrent, separatorCurrent, templateForm
                 return 'null';
         }
     } else return null;
+};
+
+export const formatDashName = (name) => {
+    let convertedName = name
+        .normalize('NFD') // Chuyển đổi sang Unicode tổ hợp
+        .replace(/[\u0300-\u036f]/g, '') // Loại bỏ các dấu thanh và dấu huyền
+        .toLowerCase() // Chuyển đổi thành chữ thường
+        .replace(/\s+/g, '-'); // Thay thế khoảng trắng bằng dấu gạch ngang
+    //thêm uuid
+    convertedName = convertedName + '-' + uuidv4();
+    return convertedName;
 };

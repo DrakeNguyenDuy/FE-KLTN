@@ -71,13 +71,18 @@ export const validateObj = {
         test: (value, pattern) => pattern.test(value),
     },
     isPassword: {
-        message: 'tối thiểu tám ký tự, ít nhất một chữ cái và một số',
-        pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+        message: 'từ 6 đến 12 kí tự bao gồm ít nhất một chữ hoa, một chữ thường và một chữ số',
+        pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,12}$/,
         test: (value, pattern) => pattern.test(value),
     },
     isConfirmPassword: {
         message: 'không trùng khớp',
         test: (value, targetPassWorldValue) => value === targetPassWorldValue,
+    },
+    isNumber: {
+        message: 'phải là số',
+        pattern: /^\d+$/,
+        test: (value, pattern) => pattern.test(value),
     },
 };
 
@@ -88,6 +93,7 @@ export const RULES = {
     IS_PHONE_NUMBER: 'isPhoneNumber',
     IS_PASSWORD: 'isPassword',
     IS_CONFIRM_PASSWORD: 'isConfirmPassword',
+    IS_NUMBER: 'isNumber',
 };
 
 export const getErrorEmelent = (currentElement, selector) => {

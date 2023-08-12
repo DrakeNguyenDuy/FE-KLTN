@@ -4,6 +4,7 @@ import request, { authHeader } from '~/axios/request';
 import { getToken } from '~/utils/LocalStorage';
 // import { getAuthUsername, getToken } from '../alumus/AuthSlice';
 import { HttpStatusCode } from 'axios';
+import { formatDashName } from '~/utils/Format';
 
 const API_GET_JOBS = 'v2/products';
 const API_GET_JOB_DETAILS = 'v2/product';
@@ -131,8 +132,8 @@ export const createJob = createAsyncThunk('job/post', async (data) => {
                 locationsDecription: [data.location],
                 idPayCycle: data.paycycle,
                 dateExperience: data.exprireDate,
-                identifier: getSkuJobName(data.name),
-                sku: getSkuJobName(data.name),
+                identifier: formatDashName(data.name),
+                sku: formatDashName(data.name),
             };
             const response = await request.post(API_POST_JOB, mapData, {
                 headers: authHeader(token),
@@ -144,17 +145,6 @@ export const createJob = createAsyncThunk('job/post', async (data) => {
         }
     } else return null;
 });
-
-const getSkuJobName = (jobName) => {
-    let convertedName = jobName
-        .normalize('NFD') // Chuyển đổi sang Unicode tổ hợp
-        .replace(/[\u0300-\u036f]/g, '') // Loại bỏ các dấu thanh và dấu huyền
-        .toLowerCase() // Chuyển đổi thành chữ thường
-        .replace(/\s+/g, '-'); // Thay thế khoảng trắng bằng dấu gạch ngang
-    //thêm uuid
-    convertedName = convertedName + '-' + uuidv4();
-    return convertedName;
-};
 
 const initialState = {
     jobData: null,

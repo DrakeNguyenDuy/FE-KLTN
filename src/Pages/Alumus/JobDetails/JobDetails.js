@@ -29,8 +29,8 @@ import InforItem from '~/components/common/InfoItem';
 import Loading from '~/components/common/Loading';
 import RequireLogin from '~/components/common/RequireLogin';
 import { getJobDetail, postLikeJob } from '~/store/reducers/common/jobSlice';
-import { postApplyJob } from '~/store/reducers/recruitmentSlice';
-import { getCVWithToken } from '~/store/reducers/cvSlice';
+import { postApplyJob } from '~/store/reducers/alumus/recruitmentSlice';
+import { getCVWithToken } from '~/store/reducers/alumus/cvSlice';
 import { BASE_URL } from '~/constant';
 
 const cx = className.bind(styles);
