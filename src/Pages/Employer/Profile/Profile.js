@@ -13,12 +13,14 @@ import { faCamera, faPen } from '@fortawesome/free-solid-svg-icons';
 import CustomButton from '~/components/common/CustomButton/CustomButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import UploadAvatarModal from '~/components/common/UploadAvatarModal/UploadAvatarModal';
-import UpdateProfileModal from '~/components/alumus/UpdateProfileModal/UpdateProfileModal';
-import { postAvatar } from '~/store/reducers/alumus/cvSlice';
-import { putUpdateProfile } from '~/store/reducers/alumus/profileSlice';
 import Loading from '~/components/common/Loading/Loading';
-import { postAvatarEmployer, updateProfileEmployer } from '~/store/reducers/employer/employerProfileSlice';
+import {
+    postAvatarEmployer,
+    postBackgroundEmployer,
+    updateProfileEmployer,
+} from '~/store/reducers/employer/employerProfileSlice';
 import UpdateProfileEmployerModal from '~/components/employer/UploadProfileEmployerModal/UpdateProfileEmployerModal';
+import UploadBackgroundEmployer from '~/components/employer/UploadBackgroundEmployer/UploadBackgroundEmployer';
 
 const cx = className.bind(styles);
 
@@ -27,10 +29,12 @@ function Profile() {
     const navigate = useNavigate();
 
     const [showAvatarModal, setShowAvatarModal] = useState(false);
+    const [showBackgroundModal, setShowBackgroundModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
 
     const user = useSelector((state) => state.employerAuth.user);
     const isLoading = useSelector((state) => state.employer.isLoading);
+    const uploadBgIsLoading = useSelector((state) => state.employerProfile.uploadBgLoading);
     const employerDetails = useSelector((state) => state.employer.employerDetails);
 
     const breadcrumbItems = [
@@ -46,12 +50,24 @@ function Profile() {
         setShowAvatarModal(true);
     };
 
+    const handleOpenBackgroundModal = () => {
+        setShowBackgroundModal(true);
+    };
+
     const handleCloseAvatarModal = () => {
         setShowAvatarModal(false);
     };
 
+    const handleCloseBackgroundModal = () => {
+        setShowBackgroundModal(false);
+    };
+
     const handleSubmitAvatar = (data) => {
         dispatch(postAvatarEmployer({ code: user?.code, data }));
+    };
+
+    const handleSubmitBackground = (data) => {
+        dispatch(postBackgroundEmployer({ code: user?.code, data }));
     };
 
     const handleOpenUpdateModal = () => {
@@ -66,7 +82,7 @@ function Profile() {
         dispatch(updateProfileEmployer({ code: user?.code, data }));
     };
 
-    return isLoading ? (
+    return isLoading || uploadBgIsLoading ? (
         <Loading />
     ) : (
         <div className="container">
@@ -76,7 +92,12 @@ function Profile() {
                     handleClose={handleCloseAvatarModal}
                     handleSubmit={handleSubmitAvatar}
                 />
-
+                <UploadBackgroundEmployer
+                    show={showBackgroundModal}
+                    data={employerDetails}
+                    handleClose={handleCloseBackgroundModal}
+                    handleSubmit={handleSubmitBackground}
+                />
                 <UpdateProfileEmployerModal
                     data={employerDetails}
                     show={showUpdateModal}
@@ -117,7 +138,7 @@ function Profile() {
                                     </CustomButton>
                                     <CustomButton
                                         wrapperStyle={cx('btn-update-avatar')}
-                                        onClick={handleOpenAvatarModal}
+                                        onClick={handleOpenBackgroundModal}
                                     >
                                         <FontAwesomeIcon icon={faCamera} />
                                         Cập nhật ảnh nền công ty

@@ -3,6 +3,7 @@ import request, { authHeader } from '~/axios/request';
 import { getToken } from '~/utils/LocalStorage';
 
 const API_AUTH_EMPLOYER = 'v1/private/store';
+const API_GET_AVT = 'v1/store';
 const API_GET_EMPLOYER = 'v1/private/user/profile';
 
 const getUser = async (token) => {
@@ -18,6 +19,7 @@ const getUser = async (token) => {
         id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
+        avatar: '/api/' + API_GET_AVT + '/' + user.merchant + '/marketing/logo',
         email: user.emailAddress,
         userName: user.userName,
         active: user.active,

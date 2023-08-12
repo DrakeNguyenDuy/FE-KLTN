@@ -51,6 +51,7 @@ function Login() {
 
     useEffect(() => {
         if (token) {
+            console.log(token);
             navigate('/employer');
         }
         error && notify('Sai tài khoản hoặc mật khẩu.');

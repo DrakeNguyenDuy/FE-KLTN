@@ -65,6 +65,10 @@ function Home() {
                 <WelcomeCarousel />
             </section>
             <section>
+                <div className="session-title">Nhà tuyển dụng nổi bậc</div>
+                <EmployerCarousel items={topEmployers} loading={topEmloyerIsLoading} />
+            </section>
+            <section>
                 <div className="session-title">Việc làm mới nhất</div>
                 {/* desktop */}
                 <CustomCarousel
@@ -102,10 +106,6 @@ function Home() {
                     )}
                     loading={jobLatestLoading}
                 />
-            </section>
-            <section>
-                <div className="session-title">Nhà tuyển dụng nổi bậc</div>
-                <EmployerCarousel items={topEmployers} loading={topEmloyerIsLoading} />
             </section>
         </div>
     );
