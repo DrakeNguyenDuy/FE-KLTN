@@ -39,6 +39,8 @@ export const updateProfileEmployer = createAsyncThunk('employerProfile/update', 
 
 const initialState = {
     uploadBgLoading: false,
+    uploadAvtLoading: false,
+    uploadProfileLoading: false,
 };
 
 const slice = createSlice({
@@ -46,10 +48,6 @@ const slice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(postAvatarEmployer.fulfilled, (state, action) => {
-            // console.log('res', action.payload);
-            window.location.reload();
-        });
         builder.addCase(postBackgroundEmployer.pending, (state, action) => {
             state.uploadBgLoading = true;
         });
@@ -60,14 +58,27 @@ const slice = createSlice({
         builder.addCase(postBackgroundEmployer.rejected, (state, action) => {
             state.uploadBgLoading = false;
         });
+        builder.addCase(postAvatarEmployer.pending, (state, action) => {
+            state.uploadAvtLoading = true;
+        });
+        builder.addCase(postAvatarEmployer.fulfilled, (state, action) => {
+            state.uploadAvtLoading = false;
+            window.location.reload();
+        });
         builder.addCase(postAvatarEmployer.rejected, (state, action) => {
-            // console.log('err');
+            state.uploadAvtLoading = false;
+        });
+        builder.addCase(updateProfileEmployer.pending, (state, action) => {
+            // console.log('res', action.payload);
+            state.uploadProfileLoading = true;
+            window.location.reload();
         });
         builder.addCase(updateProfileEmployer.fulfilled, (state, action) => {
-            // console.log('res', action.payload);
+            state.uploadProfileLoading = false;
             window.location.reload();
         });
         builder.addCase(updateProfileEmployer.rejected, (state, action) => {
+            state.uploadProfileLoading = false;
             // console.log('err');
         });
     },

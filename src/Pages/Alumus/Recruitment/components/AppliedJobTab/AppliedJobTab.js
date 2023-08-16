@@ -12,7 +12,7 @@ import { getJobApplied } from '~/store/reducers/common/jobSlice';
 const cx = classNames.bind(styles);
 
 function AppliedJobTab() {
-    const dispath = useDispatch();
+    const dispatch = useDispatch();
     const jobApplied = useSelector((state) => state.job.jobApplied);
     const applyStatus = useSelector((state) => state.recruitment.status);
     const isLoading = useSelector((state) => state.job.jobAppliedLoading);
@@ -20,8 +20,8 @@ function AppliedJobTab() {
     const [jobApplyFilter, setJobApplyFilter] = useState([]);
 
     useEffect(() => {
-        dispath(getApplyStatus());
-        dispath(getJobApplied());
+        dispatch(getApplyStatus());
+        dispatch(getJobApplied());
         // eslint-disable-next-line
     }, []);
 
@@ -57,7 +57,7 @@ function AppliedJobTab() {
                     {jobApplyFilter && jobApplyFilter.length !== 0 ? (
                         jobApplyFilter.map((item) => <JobApplied key={item.id} data={item} />)
                     ) : (
-                        <div className={cx('not-found')}>Chưa có công việc đã thích</div>
+                        <div className={cx('not-found')}>Chưa có công việc đã ứng tuyển</div>
                     )}
                 </div>
             )}

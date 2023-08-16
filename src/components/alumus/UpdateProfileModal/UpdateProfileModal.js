@@ -167,13 +167,11 @@ function UpdateProfileModal({ data, show, handleClose, handleSubmit }) {
                             }
                         >
                             <option value="">Chọn ngành nghề</option>
-                            {careers
-                                .filter((career, index) => index !== 0)
-                                .map((career) => (
-                                    <option key={career.code} value={career.code}>
-                                        {career.name}
-                                    </option>
-                                ))}
+                            {careers.map((career) => (
+                                <option key={career.code} value={career.code}>
+                                    {career.name}
+                                </option>
+                            ))}
                         </Form.Select>
                         <p className={cx('form-error', 'pf-error', 'my-form-hidden')}></p>
                     </Form.Group>

@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faMars, faPen, faVenus } from '@fortawesome/free-solid-svg-icons';
 import { Form, Image } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import './Profile.scss';
 
 import UploadAvatarModal from '~/components/common/UploadAvatarModal';
 import UpdateProfileModal from '~/components/alumus/UpdateProfileModal';
@@ -277,13 +276,11 @@ function Profile() {
                                                 }
                                             >
                                                 <option value="">Chọn ngành nghề</option>
-                                                {careers
-                                                    .filter((career, index) => index !== 0)
-                                                    .map((career) => (
-                                                        <option key={career.code} value={career.code}>
-                                                            {career.name}
-                                                        </option>
-                                                    ))}
+                                                {careers.map((career) => (
+                                                    <option key={career.code} value={career.code}>
+                                                        {career.name}
+                                                    </option>
+                                                ))}
                                             </Form.Select>
                                             <p className={cx('form-error', 'pf-error', 'my-form-hidden')}></p>
                                         </Form.Group>

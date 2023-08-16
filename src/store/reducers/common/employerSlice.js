@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { v4 } from 'uuid';
 import request from '~/axios/request';
+import { BASE_URL } from '~/constant';
 
 const API_GET_EMPLOYER_DETAILS = 'v1/employer-detail';
 

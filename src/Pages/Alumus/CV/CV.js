@@ -101,7 +101,7 @@ function CV() {
         } else return null;
     };
     const mapCV = (data) => {
-        if (data) {
+        if (data && data !== -1) {
             return {
                 id: data.id,
                 firstName: data.firstName,
@@ -197,21 +197,21 @@ function CV() {
     ) : (
         <div className={cx('wrapper')}>
             <ToastContainer />
-            {cv !== -1 && (
-                <>
-                    <UploadAvatarModal
-                        show={showAvatarModal}
-                        handleClose={handleCloseAvatarModal}
-                        handleSubmit={handleSubmitAvatar}
-                    />
-                    <UpdateCVModal
-                        data={mapCV(cv)}
-                        show={showUpdateModal}
-                        handleClose={handleCloseUpdateModal}
-                        handleSubmit={handleSubmitUpdate}
-                    />
-                </>
-            )}
+            {/* {cv !== -1 && ( */}
+            <>
+                <UploadAvatarModal
+                    show={showAvatarModal}
+                    handleClose={handleCloseAvatarModal}
+                    handleSubmit={handleSubmitAvatar}
+                />
+                <UpdateCVModal
+                    data={mapCV(cv)}
+                    show={showUpdateModal}
+                    handleClose={handleCloseUpdateModal}
+                    handleSubmit={handleSubmitUpdate}
+                />
+            </>
+            {/* )} */}
             <div className="container">
                 <div className={cx('background-cv')}>
                     {id ? (

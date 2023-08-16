@@ -7,7 +7,7 @@ const API_POST_APPLY_JOB = 'v1/auth/recruitment/apply';
 const API_GET_STATUS_PROCESS = 'v1/status-process';
 
 export const postApplyJob = createAsyncThunk('apply/post', async (codeJob, { dispatch }) => {
-    const token = await getToken();
+    const token = getToken();
     const response = await request.post(
         `${API_POST_APPLY_JOB}/${codeJob}`,
         {},
@@ -27,6 +27,7 @@ export const getApplyStatus = createAsyncThunk('applyStatus/get', async () => {
 const initialState = {
     apply: null,
     status: [],
+    applyLoading: false,
     statusLoading: false,
 };
 
@@ -35,11 +36,17 @@ const slice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(postApplyJob.rejected, (state, action) => {
+        builder.addCase(postApplyJob.pending, (state, action) => {
             state.apply = action.payload;
+            state.applyLoading = true;
         });
         builder.addCase(postApplyJob.fulfilled, (state, action) => {
             state.apply = action.payload;
+            state.applyLoading = false;
+        });
+        builder.addCase(postApplyJob.rejected, (state, action) => {
+            state.apply = action.payload;
+            state.applyLoading = false;
         });
         builder.addCase(getApplyStatus.pending, (state, action) => {
             state.statusLoading = true;
@@ -49,7 +56,7 @@ const slice = createSlice({
             state.statusLoading = false;
         });
         builder.addCase(getApplyStatus.rejected, (state, action) => {
-            state.statusLoading = true;
+            state.statusLoading = false;
         });
     },
 });
