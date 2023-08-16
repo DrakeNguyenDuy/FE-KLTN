@@ -31,6 +31,12 @@ const initialState = {
     provinces: [],
     districts: [],
     wards: [],
+    provinceLoading: false,
+    districtLoading: false,
+    wardLoading: false,
+    provinceError: null,
+    districtError: null,
+    wardError: null,
 };
 
 const slice = createSlice({
@@ -47,12 +53,36 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getProvince.fulfilled, (state, action) => {
             state.provinces = action.payload;
+            state.provinceLoading = false;
         });
         builder.addCase(getDistrict.fulfilled, (state, action) => {
             state.districts = action.payload;
+            state.districtLoading = false;
         });
         builder.addCase(getWard.fulfilled, (state, action) => {
             state.wards = action.payload;
+            state.wardLoading = false;
+        });
+        builder.addCase(getProvince.pending, (state, action) => {
+            state.provinceLoading = true;
+        });
+        builder.addCase(getDistrict.pending, (state, action) => {
+            state.districtLoading = true;
+        });
+        builder.addCase(getWard.pending, (state, action) => {
+            state.wardLoading = true;
+        });
+        builder.addCase(getProvince.rejected, (state, action) => {
+            state.provinceError = action.error;
+            state.provinceLoading = false;
+        });
+        builder.addCase(getDistrict.rejected, (state, action) => {
+            state.districtError = action.error;
+            state.provinceLoading = false;
+        });
+        builder.addCase(getWard.rejected, (state, action) => {
+            state.wardError = action.error;
+            state.wardLoading = false;
         });
     },
 });

@@ -62,6 +62,33 @@ function App() {
                             />
                         );
                     })}
+
+                    {routes.admin.map((route, index) => {
+                        let Layout = DefaultLayout;
+                        if (route.layout) {
+                            Layout = route.layout;
+                        } else if (route.layout === null) {
+                            Layout = Fragment;
+                        }
+                        const Page = route.component;
+                        return (
+                            <Route
+                                key={index}
+                                path={route.path}
+                                element={
+                                    route.layout ? (
+                                        <Layout type="admin" auth={route.auth}>
+                                            <Page />
+                                        </Layout>
+                                    ) : (
+                                        <Layout>
+                                            <Page />
+                                        </Layout>
+                                    )
+                                }
+                            />
+                        );
+                    })}
                 </Routes>
             </div>
         </Router>

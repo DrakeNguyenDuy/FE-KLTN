@@ -15,11 +15,14 @@ const getUser = async (token) => {
     const res = await request.get(API_AUTH_EMPLOYER + '/' + user.merchant, {
         headers: authHeader(token),
     });
+    const resAvt = await request.get(API_GET_AVT + '/' + user.merchant + '/marketing/logo', {
+        headers: authHeader(token),
+    });
     user = {
         id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
-        avatar: '/api/' + API_GET_AVT + '/' + user.merchant + '/marketing/logo',
+        avatar: resAvt.data ? '/api/' + API_GET_AVT + '/' + user.merchant + '/marketing/logo' : null,
         email: user.emailAddress,
         userName: user.userName,
         active: user.active,

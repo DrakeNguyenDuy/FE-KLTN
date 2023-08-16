@@ -49,11 +49,9 @@ export const postLikeJob = createAsyncThunk('like/post', async ({ codeJob, isFol
     };
 });
 
-export const getJobDetail = createAsyncThunk('jobDetail/get', async ({ id, type }) => {
-    // const user = await getAuthUsername(type);
-    const user = null;
+export const getJobDetail = createAsyncThunk('jobDetail/get', async ({ id, username }) => {
     const response = await request.get(API_GET_JOB_DETAILS + '/' + id, {
-        params: user ? { username: user } : null,
+        params: username ? { username } : null,
     });
     return response.data;
 });
@@ -98,7 +96,7 @@ export const getJobLiked = createAsyncThunk('jobLiked/get', async () => {
     return result;
 });
 
-export const createJob = createAsyncThunk('job/post', async (data) => {
+export const createJob = createAsyncThunk('job/post', async (data, { rejectWithValue }) => {
     const token = getToken('employer');
     if (token) {
         try {
@@ -132,8 +130,7 @@ export const createJob = createAsyncThunk('job/post', async (data) => {
                 locationsDecription: [data.location],
                 idPayCycle: data.paycycle,
                 dateExperience: data.exprireDate,
-                identifier: formatDashName(data.name),
-                sku: formatDashName(data.name),
+                status: data.status,
             };
             const response = await request.post(API_POST_JOB, mapData, {
                 headers: authHeader(token),
@@ -142,6 +139,56 @@ export const createJob = createAsyncThunk('job/post', async (data) => {
             return response.data;
         } catch (error) {
             console.log('Could not create job with error', error);
+            return rejectWithValue(error);
+        }
+    } else return null;
+});
+
+export const updateJob = createAsyncThunk('updateJob/put', async ({ id, code, data }, { rejectWithValue }) => {
+    const token = getToken('employer');
+    if (token) {
+        try {
+            const mapData = {
+                descriptions: [
+                    {
+                        description: data.description,
+                        friendlyUrl: 'string',
+                        highlights: 'string',
+                        id: 0,
+                        keyWords: 'string',
+                        language: 'vn',
+                        metaDescription: 'string',
+                        name: data.name,
+                        title: data.name,
+                    },
+                ],
+                categories: [
+                    {
+                        code: data.jobType,
+                    },
+                ],
+                type: data.career,
+                manufacturer: 'string',
+                price: data.salary,
+                quantity: data.numberOfRecruitments,
+                gender: data.gender,
+                experence: data.experience,
+                positionCode: [data.position],
+                skillsDecription: data.skills.map((skill) => skill.value),
+                locationsDecription: [data.location],
+                idPayCycle: data.paycycle,
+                dateExperience: data.exprireDate,
+                identifier: data.sku,
+                sku: data.sku,
+            };
+            const response = await request.put(API_POST_JOB + '/' + id, mapData, {
+                headers: authHeader(token),
+                params: { store: code, lang: 'vn' },
+            });
+            return response.data;
+        } catch (error) {
+            console.log('Could not create job with error', error);
+            return rejectWithValue(error);
         }
     } else return null;
 });
@@ -150,14 +197,21 @@ const initialState = {
     jobData: null,
     jobDetails: null,
     jobLatest: null,
-    jobLatestLoading: false,
     jobLoading: false,
-    jobDetailIsLoading: false,
     jobApplied: null,
-    jobAppliedLoading: false,
     jobLiked: null,
-    jobLikedLoading: false,
     follow: null,
+    followLoading: false,
+    jobDetailIsLoading: false,
+    jobAppliedLoading: false,
+    jobLikedLoading: false,
+    jobLatestLoading: false,
+    createJobStatus: null,
+    createJobStatusLoading: false,
+    createJobStatusError: null,
+    updateJobStatus: null,
+    updateJobStatusLoading: false,
+    updateJobStatusError: null,
 };
 
 const slice = createSlice({
@@ -221,11 +275,47 @@ const slice = createSlice({
         builder.addCase(getJobLiked.rejected, (state, action) => {
             state.jobLikedLoading = false;
         });
+        //post job like
+        builder.addCase(postLikeJob.pending, (state, action) => {
+            state.follow = action.payload;
+            state.followLoading = true;
+        });
         builder.addCase(postLikeJob.rejected, (state, action) => {
             state.follow = action.payload;
+            state.followLoading = false;
         });
         builder.addCase(postLikeJob.fulfilled, (state, action) => {
             state.follow = action.payload;
+            state.followLoading = false;
+        });
+        //createJob
+        builder.addCase(createJob.pending, (state, action) => {
+            state.createJobStatusLoading = true;
+        });
+        builder.addCase(createJob.fulfilled, (state, action) => {
+            state.createJobStatus = action.payload;
+            state.createJobStatusError = null;
+            console.log(state.createJobStatus);
+            state.createJobStatusLoading = false;
+        });
+        builder.addCase(createJob.rejected, (state, action) => {
+            state.createJobStatusError = action.payload;
+            state.createJobStatus = null;
+            state.createJobStatusLoading = false;
+        });
+        //update job
+        builder.addCase(updateJob.pending, (state, action) => {
+            state.updateJobStatusLoading = true;
+        });
+        builder.addCase(updateJob.fulfilled, (state, action) => {
+            state.updateJobStatus = action.payload;
+            state.updateJobStatusError = null;
+            state.updateJobStatusLoading = false;
+        });
+        builder.addCase(updateJob.rejected, (state, action) => {
+            state.updateJobStatusError = action.payload;
+            state.updateJobStatus = null;
+            state.updateJobStatusLoading = false;
         });
     },
 });

@@ -20,6 +20,11 @@ export const put = async (path, data, options = {}) => {
     return response.data;
 };
 
+export const deleteR = async (path, options = {}) => {
+    const response = await request.delete(path, options);
+    return response.data;
+};
+
 export const authHeader = (token) => ({
     Authorization: `Bearer ${token}`,
     'Content-Type': 'application/json',

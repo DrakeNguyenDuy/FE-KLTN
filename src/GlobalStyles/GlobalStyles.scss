@@ -11,7 +11,9 @@
     --form-background-color: #f0efff;
     --gray-ligth-color: rgb(234, 234, 234, 0.5);
     --boder-radius: 10px;
+    --danger-color: #e65b65;
     --success-color: #008563;
+    --warning-color: ;
     --gray-color: #faf9f9;
     --box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
@@ -135,4 +137,57 @@ section {
 }
 .my-form-hidden {
     display: none;
+}
+
+// custom select
+// select
+.css-13cymwt-control {
+    background-color: var(--form-background-color) !important;
+    color: var(--form-primary-color) !important;
+    border-top-left-radius: var(--boder-radius) !important;
+    border-top-right-radius: var(--boder-radius) !important;
+    border-bottom-left-radius: var(--boder-radius) !important;
+    border-bottom-right-radius: var(--boder-radius) !important;
+    border: none !important;
+}
+.css-qbdosj-Input {
+    padding: 0.45rem !important;
+}
+.css-t3ipsp-control:hover {
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    outline: none !important;
+    border: none !important;
+}
+.css-t3ipsp-control {
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    outline: none !important;
+    border: none !important;
+}
+.css-1jqq78o-placeholder {
+    color: var(--form-primary-color) !important;
+}
+
+// custom quill
+.ql-toolbar.ql-snow {
+    background-color: var(--form-background-color);
+    color: var(--form-primary-color);
+    border-top-left-radius: var(--boder-radius);
+    border-top-right-radius: var(--boder-radius);
+}
+
+.ql-toolbar.ql-snow + .ql-container.ql-snow {
+    border-bottom-left-radius: var(--boder-radius);
+    border-bottom-right-radius: var(--boder-radius);
+    min-height: 100px;
+}
+.ql-snow .ql-color-picker .ql-picker-options {
+    min-width: 152px;
+}
+.ql-editor .ql-video {
+    width: 60%;
+    height: 300px;
 }

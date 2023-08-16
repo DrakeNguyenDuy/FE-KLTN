@@ -58,15 +58,15 @@ function HeaderEmployer() {
                     </Offcanvas.Header>
                     <Offcanvas.Body>
                         <Nav className={cx('wrap-offcanvas-body', 'w-100', 'justify-content-between')}>
-                            <Link to={'/employer/manage-job'} className="fsc_1">
+                            <Link to={'/employer/manage-job/post-job'} className="fsc_1">
                                 Quản lý tuyển dụng
                             </Link>
                             <Link to={'/employer/profile'} className="fsc_1">
                                 Hồ sơ
                             </Link>
-                            <Link to={'/employer/post-job'} className="fsc_1">
+                            {/* <Link to={'/employer/post-job'} className="fsc_1">
                                 Đăng tin tuyển dụng
-                            </Link>
+                            </Link> */}
                             <NavDropdown className="fsc_1" title="Thông báo" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#action/3.1">Option 1</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">Option 2</NavDropdown.Item>
@@ -75,6 +75,7 @@ function HeaderEmployer() {
                             </NavDropdown>
                             <div className={cx('dropdown-cusomize', 'd-dropdown-auth')}>
                                 <div className={cx('avatar')}>
+                                    {/* {console.log(user.avatar)} */}
                                     {user ? (
                                         <Avatar
                                             src={user.avatar ? BASE_URL + user.avatar : null}
@@ -111,7 +112,10 @@ function HeaderEmployer() {
                                                         )}
                                                         {user && (
                                                             <ListGroup.Item>
-                                                                <Link className="fsc_2" to="/employer/post-job">
+                                                                <Link
+                                                                    className="fsc_2"
+                                                                    to="/employer/manage-job/post-job"
+                                                                >
                                                                     Đăng tuyển
                                                                 </Link>
                                                             </ListGroup.Item>

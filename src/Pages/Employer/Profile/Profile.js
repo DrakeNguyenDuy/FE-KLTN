@@ -34,7 +34,9 @@ function Profile() {
 
     const user = useSelector((state) => state.employerAuth.user);
     const isLoading = useSelector((state) => state.employer.isLoading);
+    const uploadAvtIsLoading = useSelector((state) => state.employerProfile.uploadAvtLoading);
     const uploadBgIsLoading = useSelector((state) => state.employerProfile.uploadBgLoading);
+    const uploadProfileLoading = useSelector((state) => state.employerProfile.uploadProfileLoading);
     const employerDetails = useSelector((state) => state.employer.employerDetails);
 
     const breadcrumbItems = [
@@ -82,7 +84,7 @@ function Profile() {
         dispatch(updateProfileEmployer({ code: user?.code, data }));
     };
 
-    return isLoading || uploadBgIsLoading ? (
+    return isLoading || uploadBgIsLoading || uploadProfileLoading || uploadAvtIsLoading ? (
         <Loading />
     ) : (
         <div className="container">

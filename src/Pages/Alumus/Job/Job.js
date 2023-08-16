@@ -88,6 +88,7 @@ export default function Job() {
     const [payCircleSelected, setPayCircleSelected] = useState(paycycle ? paycycle : '');
     const [orderSelected, setOrderSelected] = useState(order ? order : '');
 
+    console.log(jobs);
     useEffect(() => {
         dispath(getCareer());
         dispath(getExperience());
@@ -305,12 +306,6 @@ export default function Job() {
                             </Col>
                             <Col lg={4} className={cx('ext-job')}>
                                 <div className={cx('profile')}>
-                                    {console.log(
-                                        'jahsd',
-                                        profile,
-                                        typeof profile,
-                                        profile && typeof profile !== 'string',
-                                    )}
                                     <CardProfile
                                         name={user?.fullName}
                                         avatar={user?.avatar && BASE_URL + user?.avatar}
