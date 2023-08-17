@@ -19,8 +19,10 @@ import EmployerPostJob from '~/Pages/Employer/PostJob';
 import EmployerProfile from '~/Pages/Employer/Profile';
 
 import AdminLayout from '~/Layouts/Admin/AdminLayout/AdminLayout';
-import AdminDasboard from '~/Pages/Admin/DashBoard';
 import AdminLogin from '~/Pages/Admin/Login';
+import AdminDasboard from '~/Pages/Admin/DashBoard';
+import AdminEmployers from '~/Pages/Admin/Employers';
+import AdminAlumnus from '~/Pages/Admin/Alumnus';
 
 const routes = {
     alumus: [
@@ -45,8 +47,10 @@ const routes = {
         { path: '/employer/manage-job/:tab', component: EmployerManageJob, layout: EmployerLayout, auth: true },
     ],
     admin: [
-        { path: '/admin/:id', component: AdminDasboard, layout: AdminLayout, auth: false },
-        { path: '/admin/login', component: AdminLogin, layout: AdminLayout, auth: false },
+        { path: '/admin', component: AdminDasboard, layout: AdminLayout, auth: true, name: 'dashboard' },
+        { path: '/admin/login', component: AdminLogin, layout: AdminLayout, auth: false, name: 'login' },
+        { path: '/admin/employers', component: AdminEmployers, layout: AdminLayout, auth: true, name: 'employers' },
+        { path: '/admin/cadidates', component: AdminAlumnus, layout: AdminLayout, auth: true, name: 'cadidates' },
     ],
 };
 export default routes;

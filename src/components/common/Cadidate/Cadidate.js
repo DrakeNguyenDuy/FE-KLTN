@@ -8,6 +8,7 @@ import { getApplyStatus } from '~/store/reducers/alumus/recruitmentSlice';
 import Loading from '../Loading/Loading';
 
 const cx = className.bind(styles);
+
 function Cadidate({ code }) {
     const dispatch = useDispatch();
     const applyStatus = useSelector((state) => state.recruitment.status);

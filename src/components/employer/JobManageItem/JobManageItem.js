@@ -65,7 +65,7 @@ function JobManageItem({ data, userCode }) {
         dispath(deleteJob({ id: data.id, code: userCode }));
     };
     const handleCopy = () => {
-        // navigate('/employer/manage-job/post-job', { state: data });
+        navigate('/employer/manage-job/post-job?copy=' + data.sku);
     };
     return (
         <>
@@ -109,7 +109,7 @@ function JobManageItem({ data, userCode }) {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <PostJobWrapper id={data.sku} />
+                    <PostJobWrapper id={data.sku} updateCallBack={handleCloseUpdateJob} />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseUpdateJob}>

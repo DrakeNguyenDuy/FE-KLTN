@@ -185,7 +185,7 @@ export const updateJob = createAsyncThunk('updateJob/put', async ({ id, code, da
                 headers: authHeader(token),
                 params: { store: code, lang: 'vn' },
             });
-            return response.data;
+            return { sku: data.sku, data: response.data };
         } catch (error) {
             console.log('Could not create job with error', error);
             return rejectWithValue(error);
@@ -217,7 +217,16 @@ const initialState = {
 const slice = createSlice({
     name: 'job',
     initialState,
-    reducers: {},
+    reducers: {
+        resetCreateStatus: (state) => {
+            state.createJobStatus = null;
+            state.createJobStatusError = null;
+        },
+        resetUpdateStatus: (state) => {
+            state.updateJobStatus = null;
+            state.updateJobStatusError = null;
+        },
+    },
     extraReducers: (builder) => {
         // get list job
         builder.addCase(getJobs.pending, (state, action) => {
@@ -295,7 +304,6 @@ const slice = createSlice({
         builder.addCase(createJob.fulfilled, (state, action) => {
             state.createJobStatus = action.payload;
             state.createJobStatusError = null;
-            console.log(state.createJobStatus);
             state.createJobStatusLoading = false;
         });
         builder.addCase(createJob.rejected, (state, action) => {
@@ -320,4 +328,5 @@ const slice = createSlice({
     },
 });
 
+export const { resetCreateStatus, resetUpdateStatus } = slice.actions;
 export default slice.reducer;

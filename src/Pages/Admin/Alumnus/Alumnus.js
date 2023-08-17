@@ -1,14 +1,20 @@
 import className from 'classnames/bind';
-import styles from './ListJob.module.scss';
+import styles from './Alumnus.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { employerGetProducts } from '~/store/reducers/employer/employerManageJobSlice';
 import { useEffect, useState } from 'react';
 import Loading from '~/components/common/Loading/Loading';
 import JobManageItem from '~/components/employer/JobManageItem';
-import { Button, Form, Pagination } from 'react-bootstrap';
+import { Button, Form, Modal, Pagination } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import CadidateItem from '~/components/common/CadidateItem/CadidateItem';
+import { employerGetListAlumnus } from '~/store/reducers/employer/employerManageCadidateSlice';
+import { getApplyStatus } from '~/store/reducers/alumus/recruitmentSlice';
+import { getListAlumnus } from '~/store/reducers/admin/adminListAlumnusSlice';
+import AlumnusItem from '~/components/admin/AlumnusItem/AlumnusItem';
+import CustomButton from '~/components/common/CustomButton/CustomButton';
 
 const cx = className.bind(styles);
 
@@ -17,33 +23,49 @@ const listStatus = [
     { code: 'INACTIVE', name: 'Chờ đăng tuyển' },
     { code: 'OUTOFDATE', name: 'Đã hết hạn' },
 ];
-function ListJob({ active }) {
+
+const statusAlumnus = {
+    APPLIED: 'Ứng viên nộp CV',
+    CHECKING: 'Kiểm tra CV',
+    INTERVIEW: 'Phỏng vấn',
+    DEAL: 'Thương lượng lương',
+    PASS: 'Đã nhận',
+    FAIL: 'Từ chối',
+};
+
+function Alumnus() {
     const [searchParams, setSearchParams] = useSearchParams();
     const page = +searchParams.get('page');
     const search = searchParams.get('search');
     const status = searchParams.get('status');
 
+    const [showModalAdd, setShowModalAdd] = useState(false);
+
     const dispatch = useDispatch();
     const user = useSelector((state) => state.employerAuth.user);
-    const loading = useSelector((state) => state.employerManageJob.loading);
-    const products = useSelector((state) => state.employerManageJob.products);
-    const deleteStatus = useSelector((state) => state.employerManageJob.deleteStatus);
+    const loading = useSelector((state) => state.adminManageAlumnus.listAlumnusLoading);
+    const listAlumnus = useSelector((state) => state.adminManageAlumnus.listAlumnus);
+
+    // const deleteStatus = useSelector((state) => state.employerManageCadidate.deleteStatus);
     const [statusSelected, setStatusSelected] = useState(status ? status : '');
     const [searchValue, setSearchValue] = useState(search ? search : '');
+    const applyStatus = useSelector((state) => state.recruitment.status);
 
     useEffect(() => {
-        active === 'list-job' &&
-            user &&
+        user &&
             dispatch(
-                employerGetProducts({
-                    code: user?.code,
+                getListAlumnus({
                     page,
                     search,
                     status,
                 }),
             );
         // eslint-disable-next-line
-    }, [page, searchParams, deleteStatus, active]);
+    }, [page, searchParams]);
+
+    useEffect(() => {
+        dispatch(getApplyStatus());
+    }, []);
 
     const handleSearch = () => {
         setSearchParams(getSearchParams());
@@ -95,16 +117,40 @@ function ListJob({ active }) {
         return result;
     };
 
+    const handleShowAdd = () => {
+        setShowModalAdd(true);
+    };
+    const handleCloseAdd = () => {
+        setShowModalAdd(false);
+    };
+
     return loading ? (
         <Loading />
     ) : (
-        <>
+        <div className={cx('alumnusWrapper')}>
+            {/* Modal Thêm tk*/}
+            <Modal show={showModalAdd} onHide={handleCloseAdd} className="manage-detail-job">
+                <Modal.Header closeButton>
+                    <Modal.Title>
+                        <h2>Chi tiết công việc</h2>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>chi tiết</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseAdd}>
+                        Đóng
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             <div className={cx('find-job-apply')}>
+                <CustomButton wrapperStyle={cx('add-btn')} onClick={handleShowAdd}>
+                    <FontAwesomeIcon icon={faPlus} /> Thêm tài khoản
+                </CustomButton>
                 <Form.Select aria-label="Trạng thái ứng tuyển" value={statusSelected} onChange={handleChangeStatus}>
-                    <option value="">Trạng thái ứng tuyển</option>
-                    {listStatus.map((status) => (
+                    <option value="">Trạng thái tài khoản</option>
+                    {applyStatus.map((status) => (
                         <option key={status.code} value={status.code}>
-                            {status.name}
+                            {statusAlumnus[status.code]}
                         </option>
                     ))}
                 </Form.Select>
@@ -121,9 +167,9 @@ function ListJob({ active }) {
                 </Button>
             </div>
             <div className={cx('warapper')}>
-                {products?.products && products.products.length !== 0 ? (
-                    products.products.map((item, index) => (
-                        <JobManageItem key={index} data={item} userCode={user?.code} />
+                {listAlumnus?.customers && listAlumnus.customers.length !== 0 ? (
+                    listAlumnus.customers.map((item, index) => (
+                        <AlumnusItem key={index} data={item} statusList={applyStatus} />
                     ))
                 ) : (
                     <div className={cx('not-found')}>Chưa có công việc</div>
@@ -139,10 +185,10 @@ function ListJob({ active }) {
                             }}
                         />
                     )}
-                    {products
-                        ? renderPaging(products.totalPages, page === 0 ? page : page - 1).map((paging) => paging)
+                    {listAlumnus
+                        ? renderPaging(listAlumnus.totalPages, page === 0 ? page : page - 1).map((paging) => paging)
                         : null}
-                    {products && products.totalPages !== 1 && page < products.totalPages && (
+                    {listAlumnus && listAlumnus.totalPages !== 1 && page < listAlumnus.totalPages && (
                         <Pagination.Next
                             onClick={(e) => {
                                 e.preventDefault();
@@ -152,8 +198,8 @@ function ListJob({ active }) {
                     )}
                 </Pagination>
             </div>
-        </>
+        </div>
     );
 }
 
-export default ListJob;
+export default Alumnus;

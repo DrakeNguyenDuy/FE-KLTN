@@ -1,5 +1,5 @@
-function AdminLogin() {
-    return <>sssss</>;
+function DashBoard() {
+    return <>admin</>;
 }
 
-export default AdminLogin;
+export default DashBoard;
