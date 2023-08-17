@@ -5,22 +5,40 @@ import { Tab, Tabs } from 'react-bootstrap';
 import PostJob from '../PostJob/PostJob';
 import ListJob from './components/ListJob/ListJob';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import ListAlumnus from './components/ListAlumus/ListAlumnus';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetUpdateStatus } from '~/store/reducers/common/jobSlice';
+import PostJobWrapper from '../PostJob/PostJobWrapper';
 
 const cx = className.bind(styles);
 
 function ManageJob() {
     const { tab } = useParams();
     const navigate = useNavigate();
-
+    const dispath = useDispatch();
+    const [searchParam] = useSearchParams();
+    const copy = searchParam.get('copy');
     const [activeTab, setActiveTab] = useState(tab);
+
+    const updateJobStatus = useSelector((state) => state.job.updateJobStatus);
+    const updateJobStatusLoading = useSelector((state) => state.job.updateJobStatusLoading);
+    const updateJobStatusError = useSelector((state) => state.job.updateJobStatusError);
+
+    useEffect(() => {
+        updateJobStatus && toast('Đã cập nhật công việc thành công!');
+        updateJobStatusError && toast('Đã cập nhật công việc thất bại hãy điền đủ thông tin!');
+        dispath(resetUpdateStatus());
+    }, [updateJobStatus, updateJobStatusError]);
 
     useEffect(() => {
         setActiveTab(tab);
     }, [tab]);
     return (
         <div className={cx('wrapper', 'manageJob')}>
+            <ToastContainer />
             <Tabs
                 activeKey={activeTab}
                 transition={true}
@@ -32,13 +50,13 @@ function ManageJob() {
                 }}
             >
                 <Tab eventKey="post-job" title="Đăng tuyển">
-                    <PostJob />
+                    <PostJobWrapper id={copy ? copy : null} update={false} active={activeTab} />
                 </Tab>
                 <Tab eventKey="list-job" title="Danh sách công việc">
-                    <ListJob />
+                    <ListJob active={activeTab} />
                 </Tab>
                 <Tab eventKey="list-cadidate" title="Danh sách ứng viên">
-                    <ListAlumnus />
+                    <ListAlumnus active={activeTab} />
                 </Tab>
             </Tabs>
         </div>

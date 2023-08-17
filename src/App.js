@@ -77,7 +77,7 @@ function App() {
                                 path={route.path}
                                 element={
                                     route.layout ? (
-                                        <Layout type="admin" auth={route.auth}>
+                                        <Layout name={route.name} auth={route.auth}>
                                             <Page />
                                         </Layout>
                                     ) : (

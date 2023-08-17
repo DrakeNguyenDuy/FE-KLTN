@@ -16,11 +16,18 @@ import { getSkill } from '~/store/reducers/common/skillSlice';
 import { getTypeWork } from '~/store/reducers/common/typeWorkSlice';
 import { getExperience } from '~/store/reducers/common/experienceSlice';
 import { getPosition } from '~/store/reducers/common/positionSlice';
-import { createJob, getJobDetail, updateJob } from '~/store/reducers/common/jobSlice';
+import {
+    createJob,
+    getJobDetail,
+    resetCreateStatus,
+    resetUpdateStatus,
+    updateJob,
+} from '~/store/reducers/common/jobSlice';
 import { getPaycycle } from '~/store/reducers/common/paycycleSlice';
 import { getDistrict, getProvince, getWard, resetDistrict, resetWard } from '~/store/reducers/common/locationSlice';
-import { useLocation } from 'react-router-dom';
 import Loading from '~/components/common/Loading/Loading';
+import { RULES, validate } from '~/utils/validates/Validate';
+import { validateCreateJob } from '~/utils/validates/CreateJob';
 
 const cx = className.bind(styles);
 const modules = {
@@ -61,14 +68,14 @@ const breadcrumbItems = [
     { name: 'Đăng việc', href: '/employer/post-job' },
 ];
 
-function PostJob({ data }) {
+function PostJob({ data, updateCallback, update }) {
     const [showModal, setShowModal] = useState(false);
 
     const jobDetails = useSelector((state) => state.job.jobDetails);
 
     const [jobDescription, setJobDescription] = useState(data ? data.description : '');
     const [skillSelected, setSkillSelected] = useState(data ? data.skills : []);
-    const [addressDetail, setAddressDetail] = useState(data ? data.addressDetail : '');
+    const [addressDetail, setAddressDetail] = useState(data && data.addressDetail ? data.addressDetail : '');
     const [selectDistrict, setSelectDistrict] = useState(!data);
     const [selectWard, setSelectWard] = useState(!data);
     const [enterDetailAddress, SetEnterDetailAddress] = useState(!data);
@@ -89,10 +96,6 @@ function PostJob({ data }) {
     const createJobStatusLoading = useSelector((state) => state.job.createJobStatusLoading);
     const createJobStatusError = useSelector((state) => state.job.createJobStatusError);
 
-    const updateJobStatus = useSelector((state) => state.job.updateJobStatus);
-    const updateJobStatusLoading = useSelector((state) => state.job.updateJobStatusLoading);
-    const updateJobStatusError = useSelector((state) => state.job.updateJobStatusError);
-
     const formRef = useRef();
 
     useEffect(() => {
@@ -109,12 +112,8 @@ function PostJob({ data }) {
     useEffect(() => {
         createJobStatus && toast('Đã tạo công việc thành công!');
         createJobStatusError && toast('Đã tạo công việc thất bại hãy điền đủ thông tin!');
+        dispath(resetCreateStatus());
     }, [createJobStatus, createJobStatusError]);
-
-    useEffect(() => {
-        updateJobStatus && toast('Đã cập nhật công việc thành công!');
-        updateJobStatusError && toast('Đã cập nhật công việc thất bại hãy điền đủ thông tin!');
-    }, [updateJobStatus, updateJobStatusError]);
 
     const handleSaveJob = () => {
         setShowModal(true);
@@ -122,23 +121,46 @@ function PostJob({ data }) {
 
     const handlePostJobNow = () => {
         const jobData = getFormData();
-        dispath(createJob({ ...jobData, employerCode: user.code }));
-        setShowModal(false);
+        const validateMessage = validateCreateJob({
+            data: jobData,
+            callback: (message) => notify(message),
+        });
+        if (validateMessage) {
+            dispath(createJob({ ...jobData, employerCode: user.code }));
+            setShowModal(false);
+        }
     };
 
     const handlePostJobLater = () => {
         const jobData = getFormData();
         jobData.status = 'INACTIVE';
-        dispath(createJob({ ...jobData, employerCode: user.code }));
-        setShowModal(false);
+        const validateMessage = validateCreateJob({
+            data: jobData,
+            callback: (message) => notify(message),
+        });
+        if (validateMessage) {
+            dispath(createJob({ ...jobData, employerCode: user.code }));
+            setShowModal(false);
+        }
     };
 
     const handleUpdateJob = () => {
         const jobData = getFormData();
         jobData['identifier'] = data.sku;
         jobData['sku'] = data.sku;
-        dispath(updateJob({ data: jobData, code: user.code, id: data?.id }));
+        jobData.location['idLocation'] = data.idLocation;
+
+        const validateMessage = validateCreateJob({
+            data: jobData,
+            callback: (message) => notify(message),
+        });
+        if (validateMessage) {
+            dispath(updateJob({ data: jobData, code: user.code, id: data?.id }));
+            update && updateCallback();
+        }
     };
+
+    const notify = (message) => toast(message);
 
     const getFormData = () => ({
         name: formRef.current['jobName'].value,
@@ -195,11 +217,11 @@ function PostJob({ data }) {
         }
     };
 
-    return createJobStatusLoading || updateJobStatusLoading ? (
+    return createJobStatusLoading ? (
         <Loading />
     ) : user ? (
         <div className={cx('wrapper', 'post-job')}>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
             <Modal show={showModal} onHide={() => setShowModal(false)}>
                 <Modal.Header closeButton>
                     <Modal.Title>Chọn hình thức đăng việc</Modal.Title>
@@ -215,19 +237,34 @@ function PostJob({ data }) {
             <Form ref={formRef}>
                 <Form.Group className="mb-3" controlId="jobName">
                     <Form.Label>Tên công việc </Form.Label>
-                    <Form.Control type="text" placeholder="Nhập tên công việc" defaultValue={data ? data.name : ''} />
+                    <Form.Control
+                        type="text"
+                        placeholder="Nhập tên công việc"
+                        defaultValue={data ? data.name : ''}
+                        onBlur={(e) =>
+                            validate(e.target, [RULES.IS_REQUIRE], e.target.value, '.cv-error', 'Tên công việc')
+                        }
+                    />
+                    <p className={cx('form-error', 'cv-error', 'my-form-hidden')}></p>
                 </Form.Group>
                 <div className={cx('two-cols')}>
                     <Form.Group className="mb-3" controlId="jobCareer">
                         <Form.Label>Chọn ngành nghề</Form.Label>
-                        <Form.Select aria-label="Chọn ngành nghề" defaultValue={data ? data.career : ''}>
-                            <option>Chọn ngành nghề</option>
+                        <Form.Select
+                            aria-label="Chọn ngành nghề"
+                            defaultValue={data ? data.career : ''}
+                            onBlur={(e) =>
+                                validate(e.target, [RULES.IS_REQUIRE], e.target.value, '.cv-error', 'Ngành nghề')
+                            }
+                        >
+                            <option value="">Chọn ngành nghề</option>
                             {careers.map((career) => (
                                 <option key={career.code} value={career.code}>
                                     {career.name}
                                 </option>
                             ))}
                         </Form.Select>
+                        <p className={cx('form-error', 'cv-error', 'my-form-hidden')}></p>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Chọn kỹ năng</Form.Label>
@@ -245,35 +282,62 @@ function PostJob({ data }) {
                 <div className={cx('two-cols')}>
                     <Form.Group className="mb-3" controlId="JobPosition">
                         <Form.Label>Chọn vị trí tuyển dụng</Form.Label>
-                        <Form.Select aria-label="Chọn vị trí tuyển dụng" defaultValue={data ? data.position : ''}>
-                            <option>Chọn vị trí tuyển dụng</option>
+                        <Form.Select
+                            aria-label="Chọn vị trí tuyển dụng"
+                            defaultValue={data ? data.position : ''}
+                            onBlur={(e) =>
+                                validate(e.target, [RULES.IS_REQUIRE], e.target.value, '.cv-error', 'Vị trí tuyển dụng')
+                            }
+                        >
+                            <option value="">Chọn vị trí tuyển dụng</option>
                             {positions.map((position) => (
                                 <option key={position.id} value={position.code}>
                                     {position.name}
                                 </option>
                             ))}
                         </Form.Select>
+                        <p className={cx('form-error', 'cv-error', 'my-form-hidden')}></p>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="JobExperience">
                         <Form.Label>Chọn kinh nghiệm làm việc</Form.Label>
-                        <Form.Select aria-label="Chọn kinh nghiệm làm việc" defaultValue={data ? data.experience : ''}>
-                            <option>Chọn kinh nghiệm làm việc</option>
+                        <Form.Select
+                            aria-label="Chọn kinh nghiệm làm việc"
+                            defaultValue={data ? data.experience : ''}
+                            onBlur={(e) =>
+                                validate(
+                                    e.target,
+                                    [RULES.IS_REQUIRE],
+                                    e.target.value,
+                                    '.cv-error',
+                                    'Kinh nghiệm làm việc',
+                                )
+                            }
+                        >
+                            <option value="">Chọn kinh nghiệm làm việc</option>
                             {experiences.map((experience) => (
                                 <option key={experience.id} value={experience.code}>
                                     {experience.name}
                                 </option>
                             ))}
                         </Form.Select>
+                        <p className={cx('form-error', 'cv-error', 'my-form-hidden')}></p>
                     </Form.Group>
                 </div>
                 <div className={cx('two-cols')}>
                     <Form.Group className="mb-3" controlId="JobGender">
                         <Form.Label>Chọn giới tính</Form.Label>
-                        <Form.Select aria-label="Chọn giới tính" defaultValue={data ? data.gender : ''}>
-                            <option>Chọn giới tính</option>
+                        <Form.Select
+                            aria-label="Chọn giới tính"
+                            defaultValue={data ? data.gender : ''}
+                            onBlur={(e) =>
+                                validate(e.target, [RULES.IS_REQUIRE], e.target.value, '.cv-error', 'Giới tính')
+                            }
+                        >
+                            <option value="">Chọn giới tính</option>
                             <option value="M">Nam</option>
                             <option value="FM">Nữ</option>
                         </Form.Select>
+                        <p className={cx('form-error', 'cv-error', 'my-form-hidden')}></p>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="JobNum">
                         <Form.Label>Nhập số lượng tuyển dụng</Form.Label>
@@ -281,7 +345,17 @@ function PostJob({ data }) {
                             type="text"
                             placeholder="Nhập số lượng tuyển dụng"
                             defaultValue={data ? data.quantity : ''}
+                            onBlur={(e) =>
+                                validate(
+                                    e.target,
+                                    [RULES.IS_REQUIRE, RULES.IS_NUMBER],
+                                    e.target.value,
+                                    '.cv-error',
+                                    'Số lượng tuyển',
+                                )
+                            }
                         />
+                        <p className={cx('form-error', 'cv-error', 'my-form-hidden')}></p>
                     </Form.Group>
                 </div>
                 <Form.Group className="mb-3">
@@ -292,8 +366,9 @@ function PostJob({ data }) {
                             id="province"
                             onChange={(e) => handleChangeProvince(e.target.value)}
                             defaultValue={data ? data.province : ''}
+                            onBlur={(e) => validate(e.target, [RULES.IS_REQUIRE], e.target.value, '.cv-error', 'Tỉnh')}
                         >
-                            <option value={0}>Chọn tỉnh</option>
+                            <option value={''}>Chọn tỉnh</option>
                             {provinces.map((province) => (
                                 <option key={province.id} value={province.id}>
                                     {province.name}
@@ -306,8 +381,11 @@ function PostJob({ data }) {
                             disabled={selectDistrict}
                             onChange={(e) => handleChangeDistrict(e.target.value)}
                             defaultValue={data ? data.district : ''}
+                            onBlur={(e) =>
+                                validate(e.target, [RULES.IS_REQUIRE], e.target.value, '.cv-error', 'Quận/huyện')
+                            }
                         >
-                            <option value={0}>Chọn quận/huyện</option>
+                            <option value={''}>Chọn quận/huyện</option>
                             {districts.map((district) => (
                                 <option key={district.id} value={district.id}>
                                     {district.name}
@@ -320,8 +398,11 @@ function PostJob({ data }) {
                             disabled={selectWard}
                             onChange={(e) => handleChangeWard(e.target.value)}
                             defaultValue={data ? data.ward : ''}
+                            onBlur={(e) =>
+                                validate(e.target, [RULES.IS_REQUIRE], e.target.value, '.cv-error', 'Phường/xã')
+                            }
                         >
-                            <option value={0}>Chọn phường/xã</option>
+                            <option value={''}>Chọn phường/xã</option>
                             {wards.map((ward) => (
                                 <option key={ward.id} value={ward.id}>
                                     {ward.name}
@@ -337,6 +418,7 @@ function PostJob({ data }) {
                         onChange={(e) => setAddressDetail(e.target.value)}
                         disabled={enterDetailAddress}
                     />
+                    <p className={cx('form-error', 'cv-error', 'my-form-hidden')}></p>
                 </Form.Group>
                 <div className={cx('o2t-two-cols')}>
                     <Form.Group className="mb-3">
@@ -347,13 +429,31 @@ function PostJob({ data }) {
                                 placeholder="Nhập mức lương"
                                 id="salary"
                                 defaultValue={data ? data.salary : ''}
+                                onBlur={(e) =>
+                                    validate(
+                                        e.target,
+                                        [RULES.IS_REQUIRE, RULES.IS_NUMBER],
+                                        e.target.value,
+                                        '.cv-error',
+                                        'Mức lương',
+                                    )
+                                }
                             />
                             <Form.Select
                                 aria-label="Hình thức trả lương"
                                 id="paycycle"
                                 defaultValue={data ? data.payCircle : ''}
+                                onBlur={(e) =>
+                                    validate(
+                                        e.target,
+                                        [RULES.IS_REQUIRE],
+                                        e.target.value,
+                                        '.cv-error',
+                                        'Hình thức trả lương',
+                                    )
+                                }
                             >
-                                <option value={0}>Chọn hình thức trả lương</option>
+                                <option value={''}>Chọn hình thức trả lương</option>
                                 {paycycles.map((paycycle) => (
                                     <option key={paycycle.code} value={paycycle.code}>
                                         {paycycle.name}
@@ -361,11 +461,18 @@ function PostJob({ data }) {
                                 ))}
                             </Form.Select>
                         </div>
+                        <p className={cx('form-error', 'cv-error', 'my-form-hidden')}></p>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="JobWorkType">
                         <Form.Label>Chọn hình thức làm việc</Form.Label>
-                        <Form.Select aria-label="Chọn hình thức làm việc" defaultValue={data ? data.typeWork : ''}>
-                            <option>Chọn hình thức làm việc</option>
+                        <Form.Select
+                            aria-label="Chọn hình thức làm việc"
+                            defaultValue={data ? data.typeWork : ''}
+                            onBlur={(e) =>
+                                validate(e.target, [RULES.IS_REQUIRE], e.target.value, '.cv-error', 'Tên công việc')
+                            }
+                        >
+                            <option value="">Chọn hình thức làm việc</option>
                             {typeWorks.map((typeWork) => (
                                 <option key={typeWork.code} value={typeWork.code}>
                                     {typeWork.name}
@@ -380,7 +487,11 @@ function PostJob({ data }) {
                         type="date"
                         placeholder="Chọn hạn nộp hồ sơ"
                         defaultValue={data ? data.dateExpire : ''}
+                        onBlur={(e) =>
+                            validate(e.target, [RULES.IS_REQUIRE], e.target.value, '.cv-error', 'Hạn nộp hồ sơ')
+                        }
                     />
+                    <p className={cx('form-error', 'cv-error', 'my-form-hidden')}></p>
                 </Form.Group>
                 <Form.Group className="mb-3 post-job-quill">
                     <Form.Label>Mô tả công việc </Form.Label>
@@ -393,7 +504,7 @@ function PostJob({ data }) {
                         placeholder="Nhập mô tả công việc"
                     />
                 </Form.Group>
-                {data ? (
+                {update ? (
                     <CustomButton
                         wrapperStyle={cx('wrapper-button')}
                         className={cx('confirm-button')}

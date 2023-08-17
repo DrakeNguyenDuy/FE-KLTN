@@ -1,0 +1,113 @@
+.wrapper {
+    padding-bottom: 8rem;
+    transform: translateY(-100%);
+    animation: slide-in 0.8s forwards;
+}
+@keyframes slide-in {
+    100% {
+        transform: translateY(0%);
+    }
+}
+.page-content {
+    position: relative;
+    h1 {
+        font-size: 3.5rem;
+        font-weight: 600;
+    }
+
+    h2 {
+        margin-top: 16px;
+        font-size: 2.5rem;
+    }
+
+    p {
+        margin-top: 2rem;
+        font-weight: bold;
+    }
+    img {
+        display: none;
+        position: absolute;
+        right: 5rem;
+        top: 10rem;
+    }
+
+    @media (min-width: 0) {
+        padding: 16px;
+        text-align: center;
+    }
+
+    @media (min-width: 992px) {
+        padding-left: 6rem;
+        padding-top: 3rem;
+        text-align: left;
+        img {
+            display: block;
+            right: 0;
+        }
+    }
+    @media (min-width: 1200px) {
+        img {
+            display: block;
+        }
+    }
+}
+.page-form {
+    padding-top: 3rem;
+    width: 65%;
+    h2 {
+        text-align: center;
+    }
+    form {
+        margin-top: 32px;
+    }
+    .fogotpass {
+        text-align: right;
+        a {
+            color: var(--form-secondary-color);
+            text-decoration: none;
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
+    .confirm-button {
+        margin-top: 16px;
+        padding: 14px;
+        width: 100%;
+        background-color: var(--primary-color);
+        border-radius: var(--boder-radius);
+        font-size: 20px;
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+    .login-with {
+        text-align: center;
+        margin-top: 16px;
+        color: var(--form-secondary-color);
+    }
+    .login-social {
+        text-align: center;
+        button {
+            background-color: transparent;
+            border: none;
+            &:hover {
+                background-color: transparent;
+                opacity: 0.8;
+            }
+            &:active {
+                background-color: transparent !important;
+            }
+        }
+    }
+    .form-error {
+        margin-top: 5px;
+        color: red;
+        font-size: 14px;
+    }
+    @media (min-width: 0) {
+        width: 80%;
+        justify-content: center;
+        margin: auto;
+    }
+}

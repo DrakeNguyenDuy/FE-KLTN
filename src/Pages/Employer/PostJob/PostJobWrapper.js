@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import className from 'classnames/bind';
 import styles from './PostJob.module.scss';
 import 'react-quill/dist/quill.snow.css';
-import 'react-toastify/dist/ReactToastify.css';
 
-import { getJobDetail } from '~/store/reducers/common/jobSlice';
+import { getJobDetail, resetUpdateStatus } from '~/store/reducers/common/jobSlice';
 import { getDistrict, getProvince, getWard } from '~/store/reducers/common/locationSlice';
 import Loading from '~/components/common/Loading/Loading';
 import PostJob from './PostJob';
 
-function PostJobWrapper({ id }) {
+function PostJobWrapper({ id, updateCallBack, update = true, active }) {
     const dispath = useDispatch();
 
     const jobDetailIsLoading = useSelector((state) => state.job.jobDetailIsLoading);
@@ -18,16 +18,19 @@ function PostJobWrapper({ id }) {
 
     const districtLoading = useSelector((state) => state.location.districtLoading);
     const wardLoading = useSelector((state) => state.location.wardLoading);
-
     useEffect(() => {
         // eslint-disable-next-line
-        dispath(getJobDetail({ id }));
-    }, []);
+        update ? id && dispath(getJobDetail({ id })) : active === 'post-job' && id && dispath(getJobDetail({ id }));
+    }, [id, active]);
 
     useEffect(() => {
-        jobDetails && dispath(getDistrict(jobDetails?.locations[0].idProvince));
-        jobDetails && dispath(getWard(jobDetails?.locations[0].idDistinct));
-    }, [jobDetails]);
+        update
+            ? jobDetails && dispath(getDistrict(jobDetails?.locations[0].idProvince))
+            : active === 'post-job' && jobDetails && dispath(getDistrict(jobDetails?.locations[0].idProvince));
+        update
+            ? jobDetails && dispath(getWard(jobDetails?.locations[0].idDistinct))
+            : active === 'post-job' && jobDetails && dispath(getWard(jobDetails?.locations[0].idDistinct));
+    }, [jobDetails, active]);
 
     const getValue = () => {
         return {
@@ -41,6 +44,7 @@ function PostJobWrapper({ id }) {
             gender: jobDetails?.codeGender,
             quantity: jobDetails?.quantity,
             province: jobDetails?.locations[0].idProvince,
+            idLocation: jobDetails?.locations[0].locationID,
             district: jobDetails?.locations[0].idDistinct,
             ward: jobDetails?.locations[0].idWard,
             addressDetail: jobDetails?.locations[0].detailAddress,
@@ -51,7 +55,13 @@ function PostJobWrapper({ id }) {
             description: jobDetails?.description,
         };
     };
-    return jobDetailIsLoading || districtLoading || wardLoading ? <Loading /> : <PostJob data={getValue()} />;
+    return jobDetailIsLoading || districtLoading || wardLoading ? (
+        <Loading />
+    ) : (
+        <>
+            <PostJob data={id ? getValue() : null} updateCallback={updateCallBack} update={update} />
+        </>
+    );
 }
 
 export default PostJobWrapper;

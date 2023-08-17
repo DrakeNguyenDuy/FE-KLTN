@@ -23,6 +23,8 @@ import employerRegisterSlice from './reducers/employer/employerRegisterSlice';
 import employerProfileSlice from './reducers/employer/employerProfileSlice';
 import employerManageJobSlice from './reducers/employer/employerManageJobSlice';
 import employerManageCadidateSlice from './reducers/employer/employerManageCadidateSlice';
+import adminLoginSlice from './reducers/admin/adminLoginSlice';
+import adminListAlumnusSlice from './reducers/admin/adminListAlumnusSlice';
 
 const store = configureStore({
     reducer: {
@@ -36,6 +38,8 @@ const store = configureStore({
         employerProfile: employerProfileSlice,
         employerManageJob: employerManageJobSlice,
         employerManageCadidate: employerManageCadidateSlice,
+        adminLogin: adminLoginSlice,
+        adminManageAlumnus: adminListAlumnusSlice,
         career: careerSlice,
         job: jobSlice,
         skill: skillSlice,

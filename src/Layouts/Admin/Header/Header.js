@@ -69,7 +69,7 @@ function Header() {
                                     {user ? (
                                         <Link className="fsc_2">{user.userName}</Link>
                                     ) : (
-                                        <Link to={'/login'} className="fsc_2">
+                                        <Link to={'/admin/login'} className="fsc_2">
                                             {'Đăng nhập'}
                                         </Link>
                                     )}

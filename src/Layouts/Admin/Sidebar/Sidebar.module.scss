@@ -1,5 +1,5 @@
 .wrapper {
-    height: calc(100vh - 80px);
+    min-height: calc(100vh - 80px);
     box-shadow: var(--box-shadow);
     padding-right: 0;
     position: relative;
@@ -39,7 +39,7 @@
         &:hover {
             opacity: 0.8;
         }
-        &:last-child {
+        &.logout {
             margin: 0 8px;
             background-color: var(--form-secondary-color);
             bottom: 20px;

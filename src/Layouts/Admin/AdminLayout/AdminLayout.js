@@ -4,18 +4,23 @@ import Auth from '~/components/admin/Auth';
 import SideBar from '../Sidebar/Sidebar';
 import { Row } from 'react-bootstrap';
 
-function AdminLayout({ children, type, auth }) {
+function AdminLayout({ children, name, auth }) {
     return auth ? (
         <Auth>
             <Header />
-            <div className="content">{children}</div>
+            <div className="wrapper container">
+                <Row>
+                    <SideBar className={'col-md-3'} name={name} />
+                    <div className="content col-md-9">{children}</div>
+                </Row>
+            </div>
         </Auth>
     ) : (
         <>
             <Header />
             <div className="wrapper container">
                 <Row>
-                    <SideBar className={'col-md-3'} />
+                    <SideBar className={'col-md-3'} name={name} />
                     <div className="content col-md-9">{children}</div>
                 </Row>
             </div>

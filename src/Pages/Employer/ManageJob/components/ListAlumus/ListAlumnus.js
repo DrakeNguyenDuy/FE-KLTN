@@ -20,7 +20,17 @@ const listStatus = [
     { code: 'INACTIVE', name: 'Chờ đăng tuyển' },
     { code: 'OUTOFDATE', name: 'Đã hết hạn' },
 ];
-function ListAlumnus() {
+
+const statusAlumnus = {
+    APPLIED: 'Ứng viên nộp CV',
+    CHECKING: 'Kiểm tra CV',
+    INTERVIEW: 'Phỏng vấn',
+    DEAL: 'Thương lượng lương',
+    PASS: 'Đã nhận',
+    FAIL: 'Từ chối',
+};
+
+function ListAlumnus({ active }) {
     const [searchParams, setSearchParams] = useSearchParams();
     const page = +searchParams.get('page');
     const search = searchParams.get('search');
@@ -36,7 +46,8 @@ function ListAlumnus() {
     const applyStatus = useSelector((state) => state.recruitment.status);
 
     useEffect(() => {
-        user &&
+        active === 'list-cadidate' &&
+            user &&
             dispatch(
                 employerGetListCadidate({
                     page,
@@ -45,7 +56,7 @@ function ListAlumnus() {
                 }),
             );
         // eslint-disable-next-line
-    }, [page, searchParams, deleteStatus]);
+    }, [page, searchParams, deleteStatus, active]);
 
     useEffect(() => {
         dispatch(getApplyStatus());
@@ -108,14 +119,14 @@ function ListAlumnus() {
             <div className={cx('find-job-apply')}>
                 <Form.Select aria-label="Trạng thái ứng tuyển" value={statusSelected} onChange={handleChangeStatus}>
                     <option value="">Trạng thái ứng tuyển</option>
-                    {listStatus.map((status) => (
+                    {applyStatus.map((status) => (
                         <option key={status.code} value={status.code}>
-                            {status.name}
+                            {statusAlumnus[status.code]}
                         </option>
                     ))}
                 </Form.Select>
             </div>
-            <div className={cx('search-input')}>
+            {/* <div className={cx('search-input')}>
                 <Form.Control
                     type="text"
                     placeholder="Tìm kiếm việc làm"
@@ -125,7 +136,7 @@ function ListAlumnus() {
                 <Button onClick={handleSearch}>
                     <FontAwesomeIcon icon={faSearch} /> Tìm kiếm
                 </Button>
-            </div>
+            </div> */}
             <div className={cx('warapper')}>
                 {listCadidate?.recruitments && listCadidate.recruitments.length !== 0 ? (
                     listCadidate.recruitments.map((item, index) => (
