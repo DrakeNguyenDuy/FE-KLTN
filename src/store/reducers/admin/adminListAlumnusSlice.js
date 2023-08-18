@@ -5,7 +5,7 @@ import { getToken } from '~/utils/LocalStorage';
 const API_ALUMNUS_LIST = 'v1/private/alumnus';
 
 export const getListAlumnus = createAsyncThunk('adminListAlumnus/get', async ({ code, page, search, status }) => {
-    const token = getToken('employer');
+    const token = getToken('admin');
     if (token) {
         const response = await request.get(API_ALUMNUS_LIST, {
             headers: authHeader(token),

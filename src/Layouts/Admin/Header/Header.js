@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import className from 'classnames/bind';
 import styles from './Header.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,18 +8,17 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Avatar from '~/components/common/Avatar';
-import Notify from '~/components/common/Notify';
 import { BASE_URL } from '~/constant';
-import { AlumusLogout } from '~/store/reducers/alumus/loginSlice';
+import { adminLogout } from '~/store/reducers/admin/adminLoginSlice';
 
 const cx = className.bind(styles);
 
 function Header() {
     const dispath = useDispatch();
-    const user = useSelector((state) => state.alumusAuth.user);
+    const user = useSelector((state) => state.adminAuth.user);
 
     const handleLogout = () => {
-        dispath(AlumusLogout('alumus'));
+        dispath(adminLogout('alumus'));
     };
     return (
         <Navbar className={cx('header', 'p-0')} expand="lg">

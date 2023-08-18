@@ -15,6 +15,8 @@ import { getApplyStatus } from '~/store/reducers/alumus/recruitmentSlice';
 import { getListAlumnus } from '~/store/reducers/admin/adminListAlumnusSlice';
 import AlumnusItem from '~/components/admin/AlumnusItem/AlumnusItem';
 import CustomButton from '~/components/common/CustomButton/CustomButton';
+import AddAlumnus from './components/AddAlumnus/AddAlumnus';
+import './Alumnus.scss';
 
 const cx = className.bind(styles);
 
@@ -42,7 +44,7 @@ function Alumnus() {
     const [showModalAdd, setShowModalAdd] = useState(false);
 
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.employerAuth.user);
+    const user = useSelector((state) => state.adminAuth.user);
     const loading = useSelector((state) => state.adminManageAlumnus.listAlumnusLoading);
     const listAlumnus = useSelector((state) => state.adminManageAlumnus.listAlumnus);
 
@@ -129,17 +131,20 @@ function Alumnus() {
     ) : (
         <div className={cx('alumnusWrapper')}>
             {/* Modal Thêm tk*/}
-            <Modal show={showModalAdd} onHide={handleCloseAdd} className="manage-detail-job">
+            <Modal show={showModalAdd} onHide={handleCloseAdd} className="manage-cadidate">
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        <h2>Chi tiết công việc</h2>
+                        <h2>Thêm ứng viên</h2>
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>chi tiết</Modal.Body>
+                <Modal.Body>
+                    <AddAlumnus />
+                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseAdd}>
                         Đóng
                     </Button>
+                    <Button variant="primary">Thêm</Button>
                 </Modal.Footer>
             </Modal>
             <div className={cx('find-job-apply')}>
@@ -172,7 +177,7 @@ function Alumnus() {
                         <AlumnusItem key={index} data={item} statusList={applyStatus} />
                     ))
                 ) : (
-                    <div className={cx('not-found')}>Chưa có công việc</div>
+                    <div className={cx('not-found')}>Chưa có ứng viên ứng tuyển</div>
                 )}
             </div>
             <div className={cx('paging')}>

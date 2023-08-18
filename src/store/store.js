@@ -25,21 +25,11 @@ import employerManageJobSlice from './reducers/employer/employerManageJobSlice';
 import employerManageCadidateSlice from './reducers/employer/employerManageCadidateSlice';
 import adminLoginSlice from './reducers/admin/adminLoginSlice';
 import adminListAlumnusSlice from './reducers/admin/adminListAlumnusSlice';
+import adminAuthSlice from './reducers/admin/adminAuthSlice';
+import employerNotifySlice from './reducers/employer/employerNotifySlice';
 
 const store = configureStore({
     reducer: {
-        alumusLogin: AlumusLoginSlice,
-        alumusAuth: AlumusAuthSlice,
-        alumusChangePassword: alumusChangePasswordSlice,
-        alumusRegister: AlumusRegisterSlice,
-        employerLogin: employerLoginSlice,
-        employerAuth: employerAuthSlice,
-        employerRegister: employerRegisterSlice,
-        employerProfile: employerProfileSlice,
-        employerManageJob: employerManageJobSlice,
-        employerManageCadidate: employerManageCadidateSlice,
-        adminLogin: adminLoginSlice,
-        adminManageAlumnus: adminListAlumnusSlice,
         career: careerSlice,
         job: jobSlice,
         skill: skillSlice,
@@ -54,6 +44,22 @@ const store = configureStore({
         recruitment: recruitmentSlice,
         notify: notifySlice,
         employer: employerSlice,
+        alumusLogin: AlumusLoginSlice,
+        alumusAuth: AlumusAuthSlice,
+        alumusChangePassword: alumusChangePasswordSlice,
+        alumusRegister: AlumusRegisterSlice,
+
+        employerLogin: employerLoginSlice,
+        employerAuth: employerAuthSlice,
+        employerRegister: employerRegisterSlice,
+        employerProfile: employerProfileSlice,
+        employerManageJob: employerManageJobSlice,
+        employerManageCadidate: employerManageCadidateSlice,
+        employerNotify: employerNotifySlice,
+
+        adminLogin: adminLoginSlice,
+        adminManageAlumnus: adminListAlumnusSlice,
+        adminAuth: adminAuthSlice,
     },
 });
 

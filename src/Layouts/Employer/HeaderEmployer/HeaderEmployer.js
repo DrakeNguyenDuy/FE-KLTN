@@ -22,6 +22,8 @@ import { Link } from 'react-router-dom';
 import Avatar from '~/components/common/Avatar';
 import { BASE_URL } from '~/constant';
 import { employerLogout } from '~/store/reducers/employer/employerLoginSlice';
+import Notify from '~/components/common/Notify/Notify';
+import NotifyEmployer from '~/components/common/Notify/NotifyEmployer';
 
 const cx = className.bind(styles);
 
@@ -67,12 +69,8 @@ function HeaderEmployer() {
                             {/* <Link to={'/employer/post-job'} className="fsc_1">
                                 Đăng tin tuyển dụng
                             </Link> */}
-                            <NavDropdown className="fsc_1" title="Thông báo" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">Option 1</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">Option 2</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">OPtion 3</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.4">Option 4</NavDropdown.Item>
-                            </NavDropdown>
+                            <NotifyEmployer />
+
                             <div className={cx('dropdown-cusomize', 'd-dropdown-auth')}>
                                 <div className={cx('avatar')}>
                                     {/* {console.log(user.avatar)} */}

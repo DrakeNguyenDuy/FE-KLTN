@@ -1,18 +1,35 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import request from '~/axios/request';
+import request, { authHeader } from '~/axios/request';
 import LocalStorage from '~/utils/LocalStorage';
 
 const API_EMPLOYER_LOGIN = 'v1/private/login';
+const API_GET_EMPLOYER = 'v1/private/user/profile';
 
-export const adminLogin = createAsyncThunk('adminLogin/post', async (data, { rejectWithValue }) => {
+export const adminLogin = createAsyncThunk('adminLogin/post', async ({ data, notify }, { rejectWithValue }) => {
     try {
         console.log(data);
         const response = await request.post(API_EMPLOYER_LOGIN, {
             username: data.username,
             password: data.password,
         });
-        LocalStorage.set('employerToken', response.data.token);
-        return response.data.token;
+        const res = await request.get(API_GET_EMPLOYER, {
+            headers: authHeader(response.data.token),
+        });
+        const user = res.data;
+        let accessAdmin = false;
+        for (let i = 0; i < user.permissions.length; i++) {
+            if (user.permissions[i].name === 'SUPERADMIN') {
+                accessAdmin = true;
+                break;
+            }
+        }
+        if (accessAdmin) {
+            LocalStorage.set('adminToken', response.data.token);
+            return response.data.token;
+        } else {
+            notify('Không có quyền vui lòng đăng nhập tài khoản admin');
+            return null;
+        }
     } catch (error) {
         console.log('Could not login with error', error);
         return rejectWithValue(error);
@@ -20,7 +37,7 @@ export const adminLogin = createAsyncThunk('adminLogin/post', async (data, { rej
 });
 
 export const adminLogout = createAsyncThunk('adminLogout/logout', async () => {
-    LocalStorage.remove('employerToken');
+    LocalStorage.remove('adminToken');
     return null;
 });
 

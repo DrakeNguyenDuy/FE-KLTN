@@ -56,7 +56,15 @@ function CadidateItem({ data, statusList, ...props }) {
     return (
         <div className={cx('job-apply-item')} {...props}>
             <div className={cx('job-apply-avt')}>
-                <Avatar src={BASE_URL + data?.avartarAlumnus} alt={data?.nameAlumnus} base64={false} />
+                <Avatar
+                    src={
+                        data?.avartarAlumnus
+                            ? BASE_URL + data?.avartarAlumnus
+                            : '/static/imgs/profile-default-avatar.jpg'
+                    }
+                    alt={data?.nameAlumnus}
+                    base64={false}
+                />
             </div>
             <div className={cx('job-apply-infor')}>
                 <p>

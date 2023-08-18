@@ -4,6 +4,7 @@ import { Fragment } from 'react';
 import React from 'react';
 import DefaultLayout from '~/Layouts/Alumus/AlumusLayout';
 import routes from './routes/Route';
+import NotFound from './components/common/NotFound/NotFound';
 
 function App() {
     return (
@@ -89,6 +90,7 @@ function App() {
                             />
                         );
                     })}
+                    <Route path="*" Component={NotFound} />
                 </Routes>
             </div>
         </Router>

@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetUpdateStatus } from '~/store/reducers/common/jobSlice';
 import PostJobWrapper from '../PostJob/PostJobWrapper';
+import NotLogin from '~/components/common/NotLogin/NotLogin';
 
 const cx = className.bind(styles);
 
@@ -22,6 +23,7 @@ function ManageJob() {
     const [searchParam] = useSearchParams();
     const copy = searchParam.get('copy');
     const [activeTab, setActiveTab] = useState(tab);
+    const user = useSelector((state) => state.employerAuth.user);
 
     const updateJobStatus = useSelector((state) => state.job.updateJobStatus);
     const updateJobStatusLoading = useSelector((state) => state.job.updateJobStatusLoading);
@@ -36,7 +38,7 @@ function ManageJob() {
     useEffect(() => {
         setActiveTab(tab);
     }, [tab]);
-    return (
+    return user ? (
         <div className={cx('wrapper', 'manageJob')}>
             <ToastContainer />
             <Tabs
@@ -60,6 +62,8 @@ function ManageJob() {
                 </Tab>
             </Tabs>
         </div>
+    ) : (
+        <NotLogin nagivateLink={'/employer/login'} />
     );
 }
 

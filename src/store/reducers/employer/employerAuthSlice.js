@@ -18,8 +18,16 @@ const getUser = async (token) => {
     const resAvt = await request.get(API_GET_AVT + '/' + user.merchant + '/marketing/logo', {
         headers: authHeader(token),
     });
+    let accessAdmin = false;
+    for (let i = 0; i < user.permissions.length; i++) {
+        if (user.permissions[i].name === 'SUPERADMIN') {
+            accessAdmin = true;
+            break;
+        }
+    }
     user = {
         id: user.id,
+        accessAdmin,
         firstName: user.firstName,
         lastName: user.lastName,
         avatar: resAvt.data ? '/api/' + API_GET_AVT + '/' + user.merchant + '/marketing/logo' : null,

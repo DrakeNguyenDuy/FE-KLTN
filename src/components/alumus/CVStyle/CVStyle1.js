@@ -37,7 +37,11 @@ function CVStyle1({ data, ...props }) {
             <div className={cx('top-group-header')}></div>
             <div className={cx('group-header')}>
                 <div className={cx('avatar-wrapper')}>
-                    <Avatar src={BASE_URL + data?.avatar} base64={false} alt="avatart" />
+                    <Avatar
+                        src={data?.avatar ? BASE_URL + data?.avatar : '/static/imgs/profile-default-avatar.jpg'}
+                        base64={false}
+                        alt="avatart"
+                    />
                 </div>
                 <div className={cx('short-profile-info')}>
                     <h2 className={cx('name')}>

@@ -5,11 +5,7 @@ const handleValidateUpdateProfileEmployer = (data) => {
     const checkCompanyName = validateValue(data.name, [RULES.IS_REQUIRE], 'Tên công ty');
     if (!checkCompanyName.isValidate) return checkCompanyName.message;
     // check num of employee valid
-    const checkNumEmployee = validateValue(
-        data.numOfEmployee,
-        [RULES.IS_REQUIRE, RULES.IS_NUMBER],
-        'Số lượng nhân viên',
-    );
+    const checkNumEmployee = validateValue(data.numOfEmployee, [RULES.IS_NUMBER], 'Số lượng nhân viên');
     if (!checkNumEmployee.isValidate) return checkNumEmployee.message;
     // check phone number valid
     const checkPhoneNumber = validateValue(data.phoneNumber, [RULES.IS_PHONE_NUMBER], 'Số điện thoại');
