@@ -55,7 +55,7 @@ function PostJobWrapper({ id, updateCallBack, update = true, active }) {
             description: jobDetails?.description,
         };
     };
-    return jobDetailIsLoading || districtLoading || wardLoading ? (
+    return update && (jobDetailIsLoading || districtLoading || wardLoading) ? (
         <Loading />
     ) : (
         <>

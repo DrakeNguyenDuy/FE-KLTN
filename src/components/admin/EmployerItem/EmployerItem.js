@@ -12,7 +12,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faEye, faLock, faLockOpen, faPen } from '@fortawesome/free-solid-svg-icons';
 import { Button, Modal } from 'react-bootstrap';
-import styles from './AlumnusItem.module.scss';
+import styles from './EmployerItem.module.scss';
 import className from 'classnames/bind';
 
 import CustomButton from '~/components/common/CustomButton';
@@ -21,25 +21,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import Avatar from '~/components/common/Avatar/Avatar';
 import ButtonPopper from '~/components/common/ButtonPopper/ButtonPopper';
-import AlumnusDetails from '~/Pages/Admin/Alumnus/components/AlumnusDetails/AlumnusDetails';
 import UpdateAlumnus from '~/Pages/Admin/Alumnus/components/UpdateAlumnus/UpdateAlumnus';
-import { putchangeStatusAlumnus } from '~/store/reducers/admin/adminListAlumnusSlice';
+import { putchangeStatusEmployer } from '~/store/reducers/admin/adminListEmployerSlice';
+import EmployerDetails from '~/Pages/Admin/Employer/components/EmployerDetails/EmployerDetails';
+import UpdateEmployer from '~/Pages/Admin/Employer/components/UpdateEmployer/UpdateEmployer';
 
 const cx = className.bind(styles);
 
-// const statusMap = {
-//     APPLIED: 'Ứng viên nộp CV',
-//     CHECKING: 'Kiểm tra CV',
-//     INTERVIEW: 'Phỏng vấn',
-//     DEAL: 'Thương lượng lương',
-//     PASS: 'Đã nhận',
-//     FAIL: 'Từ chối',
-// };
-
-function AlumnusItem({ data, toast, ...props }) {
+function EmployerItem({ data, toast, ...props }) {
     const dispatch = useDispatch();
     const [status, setStatus] = useState(data?.active);
-    const updateStatus = useSelector((state) => state.adminManageAlumnus.updateStatus);
+    const updateStatus = useSelector((state) => state.adminManageEmployer.updateStatus);
 
     const [showModalDetails, setShowModalDetails] = useState(false);
     const [showModalUpdate, setShowModalUpdate] = useState(false);
@@ -55,7 +47,7 @@ function AlumnusItem({ data, toast, ...props }) {
     console.log(data);
 
     const handleChangeStatus = (status) => {
-        dispatch(putchangeStatusAlumnus({ code: data.userName, status, id: data.id }));
+        dispatch(putchangeStatusEmployer({ code: data?.readableAudit?.user, status, id: data.id }));
     };
 
     const handleShowDetail = () => {
@@ -82,7 +74,7 @@ function AlumnusItem({ data, toast, ...props }) {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AlumnusDetails data={data} />
+                    <EmployerDetails data={data} />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseDetail}>
@@ -99,7 +91,7 @@ function AlumnusItem({ data, toast, ...props }) {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <UpdateAlumnus data={data} toast={toast} />
+                    <UpdateEmployer data={data} toast={toast} />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseUpdate}>
@@ -110,14 +102,14 @@ function AlumnusItem({ data, toast, ...props }) {
             <div className={cx('job-apply-item')} {...props}>
                 <div className={cx('job-apply-avt')}>
                     <Avatar
-                        src={data?.avartar ? BASE_URL + data?.avartar : '/static/imgs/profile-default-avatar.jpg'}
-                        alt={data?.userName}
+                        src={data.logo ? BASE_URL + data.logo.path : '/static/imgs/profile-default-avatar.jpg'}
+                        alt={data.name}
                         base64={false}
                     />
                 </div>
                 <div className={cx('job-apply-infor')}>
                     <p>
-                        username: <span>{data?.userName}</span>
+                        username: <span>{data.readableAudit ? data.readableAudit.user : data.name}</span>
                     </p>
                     <p>
                         Trạng thái:{' '}
@@ -169,4 +161,4 @@ function AlumnusItem({ data, toast, ...props }) {
     );
 }
 
-export default AlumnusItem;
+export default EmployerItem;

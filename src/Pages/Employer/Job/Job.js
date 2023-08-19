@@ -34,7 +34,6 @@ export default function Job() {
                 rating: product.rating,
                 ratingCount: product.ratingCount,
             }));
-            console.log(jobs);
         };
         getProduct();
     }, []);

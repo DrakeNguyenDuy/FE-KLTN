@@ -12,7 +12,6 @@ export const alumusChangePass = createAsyncThunk('alumusChangePass/post', async 
         });
         return response.data === 'Success';
     } catch (error) {
-        console.log('Could not change passs with error', error);
         return rejectWithValue(error);
     }
 });

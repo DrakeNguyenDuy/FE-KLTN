@@ -5,7 +5,6 @@ import className from 'classnames/bind';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Avatar from '~/components/common/Avatar';
-import CustomBreadCrumb from '~/components/common/CustomBreadCrumb/CustomBreadCrumb';
 import JobItem from '~/components/common/JobItem/JobItem';
 import { BASE_URL } from '~/constant';
 import { getEmployerDetail } from '~/store/reducers/common/employerSlice';
@@ -40,10 +39,6 @@ function Profile() {
     const uploadProfileLoading = useSelector((state) => state.employerProfile.uploadProfileLoading);
     const employerDetails = useSelector((state) => state.employer.employerDetails);
 
-    const breadcrumbItems = [
-        { name: 'Trang chủ', href: '/' },
-        { name: employerDetails?.name, href: '/' },
-    ];
     useEffect(() => {
         user && dispatch(getEmployerDetail(user?.code));
         // eslint-disable-next-line
@@ -160,14 +155,34 @@ function Profile() {
                                 <h2 className={cx('full-name')}>{employerDetails?.name}</h2>
                                 <p className={cx('slogan')}>{employerDetails?.sologan}</p>
                                 <p className={cx('infor')}>
-                                    Quy mô: <span>{employerDetails?.numOfEmployee} nhân viên</span>
+                                    Quy mô:{' '}
+                                    {employerDetails?.numOfEmployee ? (
+                                        <span>{employerDetails?.numOfEmployee} nhân viên</span>
+                                    ) : (
+                                        <span>Chưa cập nhật</span>
+                                    )}
                                     <br />
-                                    Địa chỉ: <span>{employerDetails?.address}</span>
+                                    Địa chỉ:{' '}
+                                    {employerDetails?.address ? (
+                                        <span>{employerDetails?.address}</span>
+                                    ) : (
+                                        <span>Chưa cập nhật</span>
+                                    )}
                                     <br />
-                                    Liên hệ: <span>SĐT: {employerDetails?.phoneNumber}</span>
+                                    Liên hệ:{' '}
+                                    {employerDetails?.phoneNumber ? (
+                                        <span>SĐT: {employerDetails?.phoneNumber}</span>
+                                    ) : (
+                                        <span>Chưa cập nhật</span>
+                                    )}
                                 </p>
                                 <p className={cx('introduce')}>
-                                    Giới thiệu về công ty: <span>{employerDetails?.description}</span>
+                                    Giới thiệu về công ty:{' '}
+                                    {employerDetails?.description ? (
+                                        <span>{employerDetails?.description}</span>
+                                    ) : (
+                                        <span>Chưa cập nhật</span>
+                                    )}
                                 </p>
                             </div>
                         </div>
@@ -184,7 +199,7 @@ function Profile() {
                                         />
                                     ))
                                 ) : (
-                                    <div className={cx('job-not-found')}>Không tìm thấy</div>
+                                    <div className={cx('not-found')}>Chưa có công việc</div>
                                 )}
                             </div>
                         </div>

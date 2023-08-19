@@ -10,11 +10,9 @@ export const employerlogin = createAsyncThunk('employerLogin/post', async (data,
             username: data.username,
             password: data.password,
         });
-        console.log(response.data);
         LocalStorage.set('employerToken', response.data.token);
         return response.data.token;
     } catch (error) {
-        console.log('Could not login with error', error);
         return rejectWithValue(error);
     }
 });

@@ -7,7 +7,6 @@ const API_PROFILE_EMPLOYER = 'v1/private/store';
 
 export const postAvatarEmployer = createAsyncThunk('employerProfile/postAvatar', async ({ code, data }) => {
     const token = getToken('employer');
-    console.log('code', code);
     const blobData = dataURItoBlob(data);
     const formData = new FormData();
     formData.append('file', blobData, code + '-logo.png');
@@ -19,7 +18,6 @@ export const postAvatarEmployer = createAsyncThunk('employerProfile/postAvatar',
 
 export const postBackgroundEmployer = createAsyncThunk('employerProfile/postBackground', async ({ code, data }) => {
     const token = getToken('employer');
-    console.log('code', code);
     const blobData = dataURItoBlob(data);
     const formData = new FormData();
     formData.append('file', blobData, code + '-background.png');

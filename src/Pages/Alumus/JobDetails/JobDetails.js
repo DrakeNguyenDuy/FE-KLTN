@@ -333,7 +333,6 @@ function JobDetails() {
 
     const { id } = useParams();
 
-    console.log(jobDetails);
     useEffect(() => {
         dispath(getCVWithToken());
         // eslint-disable-next-line
@@ -343,13 +342,6 @@ function JobDetails() {
         dispath(getJobDetail({ id, username: user?.userName }));
         // eslint-disable-next-line
     }, [followStatus, applyStatus]);
-
-    const convertFormatDate = (dateString) => {
-        if (dateString && dateString.includes('-')) {
-            const parts = dateString.split('-');
-            return `${parts[2]}/${parts[1]}/${parts[0]}`;
-        } else return dateString;
-    };
 
     const handleOpenModal = () => {
         if (cv && cv !== -1) {

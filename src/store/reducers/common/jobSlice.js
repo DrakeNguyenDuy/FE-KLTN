@@ -1,10 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
 import request, { authHeader } from '~/axios/request';
 import { getToken } from '~/utils/LocalStorage';
 // import { getAuthUsername, getToken } from '../alumus/AuthSlice';
 import { HttpStatusCode } from 'axios';
-import { formatDashName } from '~/utils/Format';
 
 const API_GET_JOBS = 'v2/products';
 const API_GET_JOB_DETAILS = 'v2/product';
@@ -138,7 +136,6 @@ export const createJob = createAsyncThunk('job/post', async (data, { rejectWithV
             });
             return response.data;
         } catch (error) {
-            console.log('Could not create job with error', error);
             return rejectWithValue(error);
         }
     } else return null;
@@ -187,7 +184,6 @@ export const updateJob = createAsyncThunk('updateJob/put', async ({ id, code, da
             });
             return { sku: data.sku, data: response.data };
         } catch (error) {
-            console.log('Could not create job with error', error);
             return rejectWithValue(error);
         }
     } else return null;

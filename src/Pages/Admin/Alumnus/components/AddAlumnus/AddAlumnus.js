@@ -1,14 +1,60 @@
 import styles from './AddAlumnus.module.scss';
 import className from 'classnames/bind';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Form } from 'react-bootstrap';
 import CustomPassword from '~/components/common/CustomPassword/CustomPassword';
 import { RULES, validate } from '~/utils/validates/Validate';
+import { validateAddAlumnus } from '~/utils/validates/addAlumnus';
+import CustomButton from '~/components/common/CustomButton/CustomButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { getListAlumnus } from '~/store/reducers/admin/adminListAlumnusSlice';
 
 const cx = className.bind(styles);
 
-function AddAlumnus({ data }) {
+function AddAlumnus({ data, onAdd = () => null, toast, page, search, active }) {
     const formRef = useRef();
+    const addAlumnusLoading = useSelector((state) => state.adminManageAlumnus.addAlumnusLoading);
+
+    const dispatch = useDispatch();
+    const addAlumnusStatus = useSelector((state) => state.adminManageAlumnus.addAlumnusStatus);
+    const addAlumnusError = useSelector((state) => state.adminManageAlumnus.addAlumnusError);
+
+    useEffect(() => {
+        if (addAlumnusStatus) {
+            // toast('Đã thêm ứng viên thành công!');
+            dispatch(
+                getListAlumnus({
+                    page,
+                    search,
+                    active,
+                }),
+            );
+        }
+        addAlumnusError && toast('Đã thêm ứng viên thất bại, email đã tồn tại!');
+        // eslint-disable-next-line
+    }, [addAlumnusStatus, addAlumnusError]);
+
+    const handleAdd = () => {
+        const alumnusData = getFormData();
+        const validateMessage = validateAddAlumnus({
+            data: alumnusData,
+            callback: (message) => notify(message),
+        });
+        if (validateMessage) {
+            onAdd(alumnusData);
+        }
+    };
+
+    const getFormData = () => ({
+        firstName: formRef.current['firstName'].value,
+        lastName: formRef.current['lastName'].value,
+        gender: formRef.current['gender'].value,
+        email: formRef.current['email'].value,
+        password: formRef.current['password'].value,
+    });
+
+    const notify = (message) => toast(message);
+
     return (
         <>
             <Form ref={formRef}>
@@ -64,6 +110,15 @@ function AddAlumnus({ data }) {
                     placeholder={'Nhập mật khẩu'}
                     onBlur={(e) => validate(e.target, [RULES.IS_REQUIRE], e.target.value, '.cv-error', 'Mật khẩu')}
                 />
+
+                <CustomButton
+                    wrapperStyle={cx('wrapper-button')}
+                    className={cx('confirm-button')}
+                    onClick={handleAdd}
+                    isLoading={addAlumnusLoading}
+                >
+                    Thêm
+                </CustomButton>
             </Form>
         </>
     );

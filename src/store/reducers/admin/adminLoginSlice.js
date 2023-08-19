@@ -7,7 +7,6 @@ const API_GET_EMPLOYER = 'v1/private/user/profile';
 
 export const adminLogin = createAsyncThunk('adminLogin/post', async ({ data, notify }, { rejectWithValue }) => {
     try {
-        console.log(data);
         const response = await request.post(API_EMPLOYER_LOGIN, {
             username: data.username,
             password: data.password,
@@ -31,7 +30,6 @@ export const adminLogin = createAsyncThunk('adminLogin/post', async ({ data, not
             return null;
         }
     } catch (error) {
-        console.log('Could not login with error', error);
         return rejectWithValue(error);
     }
 });

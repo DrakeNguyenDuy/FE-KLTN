@@ -23,7 +23,6 @@ const cx = className.bind(styles);
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
     const token = useSelector((state) => state.employerLogin.token);
@@ -51,7 +50,6 @@ function Login() {
 
     useEffect(() => {
         if (token) {
-            console.log(token);
             navigate('/employer');
         }
         error && notify('Sai tài khoản hoặc mật khẩu.');

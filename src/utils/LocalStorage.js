@@ -8,7 +8,7 @@ const get = (key) => {
 
         return value;
     } catch (error) {
-        console.log('Could not save data: ' + key, error);
+        // console.log('Could not save data: ' + key, error);
     }
 };
 
@@ -16,7 +16,7 @@ const set = (key, value) => {
     try {
         return localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
-        console.log('Could not set data: ' + key, error);
+        // console.log('Could not set data: ' + key, error);
     }
 };
 
@@ -24,7 +24,7 @@ const remove = (key) => {
     try {
         return localStorage.removeItem(key);
     } catch (error) {
-        console.log('Could not remove data: ' + key, error);
+        // console.log('Could not remove data: ' + key, error);
     }
 };
 

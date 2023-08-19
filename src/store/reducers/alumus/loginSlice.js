@@ -13,7 +13,6 @@ export const alumusLogin = createAsyncThunk('alumusLogin/post', async (data, { r
         LocalStorage.set('alumusToken', response.data.token);
         return response.data.token;
     } catch (error) {
-        console.log('Could not login with error', error);
         return rejectWithValue(error);
     }
 });

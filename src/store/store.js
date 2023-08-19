@@ -27,6 +27,7 @@ import adminLoginSlice from './reducers/admin/adminLoginSlice';
 import adminListAlumnusSlice from './reducers/admin/adminListAlumnusSlice';
 import adminAuthSlice from './reducers/admin/adminAuthSlice';
 import employerNotifySlice from './reducers/employer/employerNotifySlice';
+import adminListEmployerSlice from './reducers/admin/adminListEmployerSlice';
 
 const store = configureStore({
     reducer: {
@@ -59,6 +60,7 @@ const store = configureStore({
 
         adminLogin: adminLoginSlice,
         adminManageAlumnus: adminListAlumnusSlice,
+        adminManageEmployer: adminListEmployerSlice,
         adminAuth: adminAuthSlice,
     },
 });

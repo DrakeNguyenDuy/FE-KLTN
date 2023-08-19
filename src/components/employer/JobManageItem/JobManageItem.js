@@ -32,8 +32,8 @@ function JobManageItem({ data, userCode }) {
     useEffect(() => {
         updateStatus &&
             updateStatus?.status === true &&
-            updateStatus.codeJob === data.sku &&
-            setStatus(status === 'Đang ứng tuyển' ? 'Tạm dừng ứng tuyển' : 'Đang ứng tuyển');
+            updateStatus?.codeJob === data.sku &&
+            setStatus(updateStatus?.changeStatus);
         // eslint-disable-next-line
     }, [updateStatus]);
 
