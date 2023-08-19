@@ -25,7 +25,6 @@ const handleValidateCreateProfile = (data) => {
     let checkSkillMessage = '';
     for (let i = 0; i < data.skills.length; i++) {
         const skill = data.skills[i];
-        console.log(skill);
         const checkIdSkill = data.idSkill !== 0;
         if (!checkIdSkill) {
             checkSkills = false;

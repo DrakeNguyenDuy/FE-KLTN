@@ -10,7 +10,11 @@ function AlumnusDetails({ data }) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('job-apply-avt')}>
-                <Avatar src={BASE_URL + data.avartar} alt={data?.userName} base64={false} />
+                <Avatar
+                    src={data?.avartar ? BASE_URL + data.avartar : '/static/imgs/profile-default-avatar.jpg'}
+                    alt={data?.userName}
+                    base64={false}
+                />
             </div>
             <div>
                 <Form>

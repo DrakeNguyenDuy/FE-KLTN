@@ -15,7 +15,6 @@ const getUser = async (token) => {
         headers: authHeader(token),
     });
     user = { ...user, ...res.data };
-    console.log('get user');
     return user;
 };
 
@@ -25,7 +24,6 @@ export const auth = createAsyncThunk('AlumusAuth/get', async () => {
         try {
             return await getUser(token);
         } catch (error) {
-            console.log('Could not auth with error', error);
             return null;
         }
     } else return null;
@@ -42,7 +40,6 @@ const slice = createSlice({
     initialState,
     reducers: {
         clearUser: (state, action) => {
-            console.log('clear user');
             state.user = null;
         },
     },

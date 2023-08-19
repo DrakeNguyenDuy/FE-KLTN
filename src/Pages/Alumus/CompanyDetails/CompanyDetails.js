@@ -62,14 +62,34 @@ function CompanyDetails() {
                                 <h2 className={cx('full-name')}>{employerDetails?.name}</h2>
                                 <p className={cx('slogan')}>{employerDetails?.sologan}</p>
                                 <p className={cx('infor')}>
-                                    Quy mô: <span>{employerDetails?.numOfEmployee} nhân viên</span>
+                                    Quy mô:{' '}
+                                    {employerDetails?.numOfEmployee ? (
+                                        <span>{employerDetails?.numOfEmployee} nhân viên</span>
+                                    ) : (
+                                        <span>Chưa cập nhật</span>
+                                    )}
                                     <br />
-                                    Địa chỉ: <span>{employerDetails?.address}</span>
+                                    Địa chỉ:{' '}
+                                    {employerDetails?.address ? (
+                                        <span>{employerDetails?.address}</span>
+                                    ) : (
+                                        <span>Chưa cập nhật</span>
+                                    )}
                                     <br />
-                                    Liên hệ: <span>SĐT: {employerDetails?.phoneNumber}</span>
+                                    Liên hệ: SĐT:{' '}
+                                    {employerDetails?.phoneNumber ? (
+                                        <span>{employerDetails?.phoneNumber}</span>
+                                    ) : (
+                                        <span>Chưa cập nhật</span>
+                                    )}
                                 </p>
                                 <p className={cx('introduce')}>
-                                    Giới thiệu về công ty: <span>{employerDetails?.description}</span>
+                                    Giới thiệu về công ty:{' '}
+                                    {employerDetails?.description ? (
+                                        <span>{employerDetails?.description}</span>
+                                    ) : (
+                                        <span>Chưa cập nhật</span>
+                                    )}
                                 </p>
                             </div>
                         </div>
@@ -86,7 +106,7 @@ function CompanyDetails() {
                                         />
                                     ))
                                 ) : (
-                                    <div className={cx('job-not-found')}>Không tìm thấy</div>
+                                    <div className={cx('not-found')}>Chưa có công việc</div>
                                 )}
                             </div>
                         </div>

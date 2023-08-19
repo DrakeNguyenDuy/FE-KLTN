@@ -6,7 +6,6 @@ const API_REGISTER_EMPLOYER = 'v1/store/signup';
 
 export const registerEmployer = createAsyncThunk('employerRegister/post', async (data) => {
     data.code = formatDashName(data.code);
-    console.log(data);
     const response = await request.post(API_REGISTER_EMPLOYER, data);
     return response.data;
 });

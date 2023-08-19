@@ -80,7 +80,6 @@ const handleValidateUpdateCV = (data) => {
                     checkEducationMessage = checkStartDate.message;
                     break;
                 } else {
-                    console.log(education.isGraduated === 'true');
                     if (education.isGraduated === 'true') {
                         const checkEndDate = validateValue(education.endDate, [RULES.IS_REQUIRE], 'Ngày kết thúc học');
                         if (!checkEndDate.isValidate) {

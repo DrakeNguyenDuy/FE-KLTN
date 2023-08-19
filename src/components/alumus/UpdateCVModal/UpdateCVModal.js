@@ -65,7 +65,6 @@ function UpdateCVModal({ data, show, handleClose, handleSubmit }) {
                 endDate: experience.isCurrent === 'true' ? null : convertFormatDate(experience.endDate),
                 description: experience.description,
             }));
-            console.log('update', data);
             handleSubmit(data);
         }
     };

@@ -51,7 +51,6 @@ export const adminAuth = createAsyncThunk('adminAuth/get', async (type) => {
         try {
             return await getUser(token, type);
         } catch (error) {
-            console.log('Could not auth with error', error);
             return null;
         }
     } else return null;
@@ -68,7 +67,6 @@ const slice = createSlice({
     initialState,
     reducers: {
         clearUser: (state, action) => {
-            console.log('clear user');
             state.user = null;
         },
     },

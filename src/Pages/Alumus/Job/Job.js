@@ -88,7 +88,6 @@ export default function Job() {
     const [payCircleSelected, setPayCircleSelected] = useState(paycycle ? paycycle : '');
     const [orderSelected, setOrderSelected] = useState(order ? order : '');
 
-    console.log(jobs);
     useEffect(() => {
         dispath(getCareer());
         dispath(getExperience());
@@ -301,7 +300,7 @@ export default function Job() {
                                         />
                                     ))
                                 ) : (
-                                    <div className={cx('job-not-found')}>Không tìm thấy</div>
+                                    <div className={cx('not-found')}>Không tìm thấy</div>
                                 )}
                             </Col>
                             <Col lg={4} className={cx('ext-job')}>

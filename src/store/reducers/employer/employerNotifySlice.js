@@ -12,7 +12,6 @@ export const getNotifyEmployer = createAsyncThunk('notifyEmployer/get', async ()
     });
     let countNotifies = 0;
     const notifies = response.data.reverse();
-    console.log(notifies);
     for (let i = 0; i < notifies.length; i++) {
         if (!notifies[i].opened) {
             countNotifies++;
@@ -29,6 +28,7 @@ export const putNotifyEmployer = createAsyncThunk('notifyEmployer/put', async ()
     const response = await request.put(API_PUT_NOTIFY_EMPLOYER, null, {
         headers: authHeader(token),
     });
+    return response.data;
 });
 
 const initialState = {

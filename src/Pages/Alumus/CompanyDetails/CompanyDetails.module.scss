@@ -76,3 +76,12 @@
     max-height: 450px;
     overflow: auto;
 }
+.not-found {
+    margin: 16px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--form-primary-color);
+    padding-bottom: 16px;
+}

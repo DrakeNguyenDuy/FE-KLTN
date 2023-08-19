@@ -15,13 +15,12 @@ import EmployerHome from '~/Pages/Employer/Home';
 import EmployerLogin from '~/Pages/Employer/Login';
 import EmployerRegister from '~/Pages/Employer/Register';
 import EmployerManageJob from '~/Pages/Employer/ManageJob';
-import EmployerPostJob from '~/Pages/Employer/PostJob';
 import EmployerProfile from '~/Pages/Employer/Profile';
 
 import AdminLayout from '~/Layouts/Admin/AdminLayout/AdminLayout';
 import AdminLogin from '~/Pages/Admin/Login';
 import AdminDasboard from '~/Pages/Admin/DashBoard';
-import AdminEmployers from '~/Pages/Admin/Employers';
+import AdminEmployers from '~/Pages/Admin/Employer';
 import AdminAlumnus from '~/Pages/Admin/Alumnus';
 
 const routes = {

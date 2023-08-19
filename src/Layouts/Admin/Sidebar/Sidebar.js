@@ -1,23 +1,16 @@
 import className from 'classnames/bind';
 import styles from './Sidebar.module.scss';
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { adminLogout } from '~/store/reducers/admin/adminLoginSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const cx = className.bind(styles);
 
 function SideBar({ name, ...props }) {
-    const dispath = useDispatch();
     const user = useSelector((state) => state.adminAuth.user);
     // const authLoading = useSelector((state) => state.alumusAuth.loading);
 
-    console.log(user);
     const navigate = useNavigate();
 
-    const handleLogout = () => {
-        dispath(adminLogout('alumus'));
-    };
     return (
         <div className={cx('wrapper', props.className)}>
             {user ? (

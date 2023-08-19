@@ -217,9 +217,7 @@ function PostJob({ data, updateCallback, update }) {
         }
     };
 
-    return createJobStatusLoading ? (
-        <Loading />
-    ) : user ? (
+    return user ? (
         <div className={cx('wrapper', 'post-job')}>
             {/* <ToastContainer /> */}
             <Modal show={showModal} onHide={() => setShowModal(false)}>

@@ -29,7 +29,12 @@ export const putchangeStatusJob = createAsyncThunk('employerChangeStatusJob/put'
         headers: authHeader(token),
         params: { status },
     });
-    return { codeJob: code, status: response.data === 'Update sucess' };
+    console.log(status === 'Đang ứng tuyển' ? 'Tạm dừng ứng tuyển' : 'Đang ứng tuyển');
+    return {
+        codeJob: code,
+        status: response.data === 'Update sucess',
+        changeStatus: status === 'ACTIVE' ? 'Đang ứng tuyển' : 'Tạm dừng ứng tuyển',
+    };
 });
 
 export const deleteJob = createAsyncThunk('employerDeleteJob/delete', async ({ id, code }) => {

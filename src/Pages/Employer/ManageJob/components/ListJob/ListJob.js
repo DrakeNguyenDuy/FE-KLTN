@@ -28,6 +28,9 @@ function ListJob({ active }) {
     const loading = useSelector((state) => state.employerManageJob.loading);
     const products = useSelector((state) => state.employerManageJob.products);
     const deleteStatus = useSelector((state) => state.employerManageJob.deleteStatus);
+    const createJobStatus = useSelector((state) => state.job.createJobStatus);
+    const updateJobStatus = useSelector((state) => state.job.updateJobStatus);
+
     const [statusSelected, setStatusSelected] = useState(status ? status : '');
     const [searchValue, setSearchValue] = useState(search ? search : '');
 
@@ -43,7 +46,8 @@ function ListJob({ active }) {
                 }),
             );
         // eslint-disable-next-line
-    }, [page, searchParams, deleteStatus, active]);
+    }, [page, searchParams, deleteStatus, active, createJobStatus, updateJobStatus]);
+    console.log(products);
 
     const handleSearch = () => {
         setSearchParams(getSearchParams());
@@ -95,9 +99,7 @@ function ListJob({ active }) {
         return result;
     };
 
-    return loading ? (
-        <Loading />
-    ) : (
+    return (
         <>
             <div className={cx('find-job-apply')}>
                 <Form.Select aria-label="Trạng thái ứng tuyển" value={statusSelected} onChange={handleChangeStatus}>
@@ -120,38 +122,46 @@ function ListJob({ active }) {
                     <FontAwesomeIcon icon={faSearch} /> Tìm kiếm
                 </Button>
             </div>
-            <div className={cx('warapper')}>
-                {products?.products && products.products.length !== 0 ? (
-                    products.products.map((item, index) => (
-                        <JobManageItem key={index} data={item} userCode={user?.code} />
-                    ))
-                ) : (
-                    <div className={cx('not-found')}>Chưa có công việc</div>
-                )}
-            </div>
-            <div className={cx('paging')}>
-                <Pagination className={cx('pagination', 'justify-content-center mt-3')}>
-                    {page > 1 && (
-                        <Pagination.Prev
-                            onClick={(e) => {
-                                e.preventDefault();
-                                setSearchParams(getNavigateValue(page - 1));
-                            }}
-                        />
-                    )}
-                    {products
-                        ? renderPaging(products.totalPages, page === 0 ? page : page - 1).map((paging) => paging)
-                        : null}
-                    {products && products.totalPages !== 1 && page < products.totalPages && (
-                        <Pagination.Next
-                            onClick={(e) => {
-                                e.preventDefault();
-                                setSearchParams(getNavigateValue(page + 1));
-                            }}
-                        />
-                    )}
-                </Pagination>
-            </div>
+            {loading ? (
+                <Loading />
+            ) : (
+                <>
+                    <div className={cx('warapper')}>
+                        {products?.products && products.products.length !== 0 ? (
+                            products.products.map((item, index) => (
+                                <JobManageItem key={index} data={item} userCode={user?.code} />
+                            ))
+                        ) : (
+                            <div className={cx('not-found')}>Chưa có công việc</div>
+                        )}
+                    </div>
+                    <div className={cx('paging')}>
+                        <Pagination className={cx('pagination', 'justify-content-center mt-3')}>
+                            {page > 1 && (
+                                <Pagination.Prev
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setSearchParams(getNavigateValue(page - 1));
+                                    }}
+                                />
+                            )}
+                            {products
+                                ? renderPaging(products.totalPages, page === 0 ? page : page - 1).map(
+                                      (paging) => paging,
+                                  )
+                                : null}
+                            {products && products.totalPages !== 1 && page < products.totalPages && (
+                                <Pagination.Next
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setSearchParams(getNavigateValue(page + 1));
+                                    }}
+                                />
+                            )}
+                        </Pagination>
+                    </div>
+                </>
+            )}
         </>
     );
 }
