@@ -516,7 +516,7 @@ function Profile() {
                     </div>
                 </div>
             ) : (
-                <NotLogin />
+                <NotLogin nagivateLink={'/login'} />
             )}
         </div>
     );

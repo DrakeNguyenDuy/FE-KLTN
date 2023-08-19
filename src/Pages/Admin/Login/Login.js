@@ -18,6 +18,7 @@ import CustomButton from '~/components/common/CustomButton';
 import { employerlogin } from '~/store/reducers/employer/employerLoginSlice';
 import { validateLogin } from '~/utils/validates/login';
 import { adminLogin } from '~/store/reducers/admin/adminLoginSlice';
+import { employerAuth } from '~/store/reducers/employer/employerAuthSlice';
 
 const cx = className.bind(styles);
 
@@ -51,10 +52,8 @@ function Login() {
     }, []);
 
     useEffect(() => {
-        if (token) {
-            console.log(token);
-            navigate('/admin');
-        }
+        token && token !== -1 && navigate('/admin');
+        // token && token === -1 && notify('Không có quyền vui lòng đăng nhập tài khoản admin');
         error && notify('Sai tài khoản hoặc mật khẩu.');
         // eslint-disable-next-line
     }, [error, token]);
@@ -68,7 +67,7 @@ function Login() {
             data,
             callback: (message) => notify(message),
         });
-        validateMessage && dispath(adminLogin(data));
+        validateMessage && dispath(adminLogin({ data, notify }));
     };
 
     const notify = (message) => toast(message);

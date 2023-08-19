@@ -26,7 +26,7 @@ function Recruitment() {
             </Tabs>
         </div>
     ) : (
-        <NotLogin />
+        <NotLogin nagivateLink={'/login'} />
     );
 }
 

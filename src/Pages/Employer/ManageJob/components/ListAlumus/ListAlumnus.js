@@ -143,7 +143,7 @@ function ListAlumnus({ active }) {
                         <CadidateItem key={index} data={item} statusList={applyStatus} />
                     ))
                 ) : (
-                    <div className={cx('not-found')}>Chưa có công việc</div>
+                    <div className={cx('not-found')}>Chưa có ứng viên</div>
                 )}
             </div>
             <div className={cx('paging')}>

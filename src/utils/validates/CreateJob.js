@@ -17,7 +17,7 @@ const handleValidateCreateJob = (data) => {
     const checkWard = data.location.ward !== 0;
     if (!checkWard) return 'Phường xã';
     // check phone valid
-    const checkSalary = validateValue(data.salary, [RULES.IS_REQUIRE, RULES.IS_NUMBER], 'Mức lương');
+    const checkSalary = validateValue(data.salary, [RULES.IS_NUMBER], 'Mức lương');
     if (!checkSalary.isValidate) return checkSalary.message;
     // check gender valid
     const checkPaycycle = validateValue(data.paycycle, [RULES.IS_REQUIRE], 'Chu kỳ trả lương');
@@ -37,11 +37,7 @@ const handleValidateCreateJob = (data) => {
     // check career valid
     const checkPosition = validateValue(data.position, [RULES.IS_REQUIRE], 'Vị trí ứng tuyển');
     if (!checkPosition.isValidate) return checkPosition.message;
-    const checkNumberOfRecruitments = validateValue(
-        data.numberOfRecruitments,
-        [RULES.IS_REQUIRE, RULES.IS_NUMBER],
-        'Số lượng tuyển',
-    );
+    const checkNumberOfRecruitments = validateValue(data.numberOfRecruitments, [RULES.IS_NUMBER], 'Số lượng tuyển');
     if (!checkNumberOfRecruitments.isValidate) return checkNumberOfRecruitments.message;
     return null;
 };

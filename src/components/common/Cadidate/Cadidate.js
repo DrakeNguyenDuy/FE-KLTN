@@ -23,9 +23,11 @@ function Cadidate({ code }) {
         <Loading />
     ) : (
         <div className={cx('wrapper')}>
-            {cadidates.map((item, index) => (
-                <CadidateItem key={index} data={item} statusList={applyStatus} />
-            ))}
+            {cadidates.length !== 0 ? (
+                cadidates.map((item, index) => <CadidateItem key={index} data={item} statusList={applyStatus} />)
+            ) : (
+                <div className={cx('not-found')}>Chưa có ứng viên ứng tuyển</div>
+            )}
         </div>
     );
 }

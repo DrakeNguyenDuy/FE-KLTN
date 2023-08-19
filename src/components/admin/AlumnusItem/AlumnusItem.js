@@ -33,6 +33,8 @@ import { useEffect, useState } from 'react';
 import { postChangeStatusCadidate } from '~/store/reducers/employer/employerManageCadidateSlice';
 import Avatar from '~/components/common/Avatar/Avatar';
 import ButtonPopper from '~/components/common/ButtonPopper/ButtonPopper';
+import AlumnusDetails from '~/Pages/Admin/Alumnus/components/AlumnusDetails/AlumnusDetails';
+import UpdateAlumnus from '~/Pages/Admin/Alumnus/components/UpdateAlumnus/UpdateAlumnus';
 
 const cx = className.bind(styles);
 
@@ -84,13 +86,15 @@ function AlumnusItem({ data, statusList, ...props }) {
     return (
         <>
             {/* Modal chi tiết*/}
-            <Modal show={showModalDetails} onHide={handleCloseDetail} className="manage-detail-job">
+            <Modal show={showModalDetails} onHide={handleCloseDetail} className="manage-cadidate">
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        <h2>Chi tiết công việc</h2>
+                        <h2>Chi tiết ứng viên</h2>
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>chi tiết</Modal.Body>
+                <Modal.Body>
+                    <AlumnusDetails data={data} />
+                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseDetail}>
                         Đóng
@@ -99,13 +103,15 @@ function AlumnusItem({ data, statusList, ...props }) {
             </Modal>
 
             {/* Modal cập nhật*/}
-            <Modal show={showModalUpdate} onHide={handleCloseUpdate} className="manage-detail-job">
+            <Modal show={showModalUpdate} onHide={handleCloseUpdate} className="manage-cadidate">
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        <h2>Chi tiết công việc</h2>
+                        <h2>Cập nhật ứng viên</h2>
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>update</Modal.Body>
+                <Modal.Body>
+                    <UpdateAlumnus />
+                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseUpdate}>
                         Đóng
@@ -114,7 +120,11 @@ function AlumnusItem({ data, statusList, ...props }) {
             </Modal>
             <div className={cx('job-apply-item')} {...props}>
                 <div className={cx('job-apply-avt')}>
-                    <Avatar src={BASE_URL + data?.avartar} alt={data?.userName} base64={false} />
+                    <Avatar
+                        src={data?.avartar ? BASE_URL + data?.avartar : '/static/imgs/profile-default-avatar.jpg'}
+                        alt={data?.userName}
+                        base64={false}
+                    />
                 </div>
                 <div className={cx('job-apply-infor')}>
                     <p>

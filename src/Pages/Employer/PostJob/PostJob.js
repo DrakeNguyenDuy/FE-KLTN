@@ -346,13 +346,7 @@ function PostJob({ data, updateCallback, update }) {
                             placeholder="Nhập số lượng tuyển dụng"
                             defaultValue={data ? data.quantity : ''}
                             onBlur={(e) =>
-                                validate(
-                                    e.target,
-                                    [RULES.IS_REQUIRE, RULES.IS_NUMBER],
-                                    e.target.value,
-                                    '.cv-error',
-                                    'Số lượng tuyển',
-                                )
+                                validate(e.target, [RULES.IS_NUMBER], e.target.value, '.cv-error', 'Số lượng tuyển')
                             }
                         />
                         <p className={cx('form-error', 'cv-error', 'my-form-hidden')}></p>
@@ -430,13 +424,7 @@ function PostJob({ data, updateCallback, update }) {
                                 id="salary"
                                 defaultValue={data ? data.salary : ''}
                                 onBlur={(e) =>
-                                    validate(
-                                        e.target,
-                                        [RULES.IS_REQUIRE, RULES.IS_NUMBER],
-                                        e.target.value,
-                                        '.cv-error',
-                                        'Mức lương',
-                                    )
+                                    validate(e.target, [RULES.IS_NUMBER], e.target.value, '.cv-error', 'Mức lương')
                                 }
                             />
                             <Form.Select

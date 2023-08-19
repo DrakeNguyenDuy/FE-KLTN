@@ -191,7 +191,7 @@ function CV() {
             },
         });
     };
-    if (!authLoading && !user && !id) return <NotLogin />;
+    if (!authLoading && !user && !id) return <NotLogin nagivateLink={'/login'} />;
     return isLoading ? (
         <Loading />
     ) : (

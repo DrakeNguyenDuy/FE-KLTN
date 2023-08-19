@@ -21,6 +21,7 @@ import {
 } from '~/store/reducers/employer/employerProfileSlice';
 import UpdateProfileEmployerModal from '~/components/employer/UploadProfileEmployerModal/UpdateProfileEmployerModal';
 import UploadBackgroundEmployer from '~/components/employer/UploadBackgroundEmployer/UploadBackgroundEmployer';
+import NotLogin from '~/components/common/NotLogin/NotLogin';
 
 const cx = className.bind(styles);
 
@@ -86,7 +87,7 @@ function Profile() {
 
     return isLoading || uploadBgIsLoading || uploadProfileLoading || uploadAvtIsLoading ? (
         <Loading />
-    ) : (
+    ) : user ? (
         <div className="container">
             <>
                 <UploadAvatarModal
@@ -191,6 +192,8 @@ function Profile() {
                 </div>
             </div>
         </div>
+    ) : (
+        <NotLogin nagivateLink={'/employer/login'} />
     );
 }
 

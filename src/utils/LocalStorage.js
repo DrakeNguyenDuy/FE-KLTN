@@ -37,7 +37,17 @@ const clear = () => {
 };
 
 export const getToken = (type = 'alumus') => {
-    return get(type === 'employer' ? 'employerToken' : 'alumusToken');
+    switch (type) {
+        case 'employer':
+            return get('employerToken');
+        case 'alumus':
+            return get('alumusToken');
+        case 'admin':
+            return get('adminToken');
+        default:
+            return null;
+    }
+    // return get(type === 'employer' ? 'employerToken' : 'alumusToken');
 };
 
 const lcStorage = {
