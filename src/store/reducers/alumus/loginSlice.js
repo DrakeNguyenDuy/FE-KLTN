@@ -11,6 +11,7 @@ export const alumusLogin = createAsyncThunk('alumusLogin/post', async (data, { r
             password: data.password,
         });
         LocalStorage.set('alumusToken', response.data.token);
+        LocalStorage.set('fast-job-id', response.data.id);
         return response.data.token;
     } catch (error) {
         return rejectWithValue(error);
@@ -19,6 +20,7 @@ export const alumusLogin = createAsyncThunk('alumusLogin/post', async (data, { r
 
 export const AlumusLogout = createAsyncThunk('alumusLogout/logout', async () => {
     LocalStorage.remove('alumusToken');
+    LocalStorage.remove('fast-job-id');
     return null;
 });
 

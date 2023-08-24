@@ -156,7 +156,7 @@ function Register() {
                             >
                                 Đăng ký
                             </CustomButton>
-                            <Form.Group className={cx('login-social')}>
+                            {/* <Form.Group className={cx('login-social')}>
                                 <p>Hoặc tiếp tục với</p>
                                 <Button>
                                     <FontAwesomeIcon icon={faFacebook} style={{ color: '#6b0be0', fontSize: '40px' }} />
@@ -164,7 +164,7 @@ function Register() {
                                 <Button>
                                     <FcGoogle style={{ fontSize: '40px' }} />
                                 </Button>
-                            </Form.Group>
+                            </Form.Group> */}
                         </Form>
                     </div>
                 </Col>

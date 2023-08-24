@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CadidateItem from '~/components/common/CadidateItem/CadidateItem';
 import { employerGetListCadidate } from '~/store/reducers/employer/employerManageCadidateSlice';
 import { getApplyStatus } from '~/store/reducers/alumus/recruitmentSlice';
+import NoResult from '~/components/common/NoResult/NoResult';
 
 const cx = className.bind(styles);
 
@@ -143,7 +144,7 @@ function ListAlumnus({ active }) {
                         <CadidateItem key={index} data={item} statusList={applyStatus} />
                     ))
                 ) : (
-                    <div className={cx('not-found')}>Chưa có ứng viên</div>
+                    <NoResult message="Chưa có ứng viên ứng tuyển" />
                 )}
             </div>
             <div className={cx('paging')}>

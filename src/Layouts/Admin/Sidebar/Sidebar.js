@@ -24,13 +24,13 @@ function SideBar({ name, ...props }) {
                             className={cx(name === 'employers' && 'active')}
                             onClick={() => navigate('/admin/employers')}
                         >
-                            quản lý nhà tuyển dụng
+                            Quản lý nhà tuyển dụng
                         </li>
                         <li
                             className={cx(name === 'cadidates' && 'active')}
                             onClick={() => navigate('/admin/cadidates')}
                         >
-                            quản lý nhà ứng viên
+                            Quản lý ứng viên
                         </li>
                     </ul>
                 </div>

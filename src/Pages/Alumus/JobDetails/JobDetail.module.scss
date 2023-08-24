@@ -8,9 +8,11 @@
     }
 }
 .job-overview {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    // display: flex;
+    // flex-direction: row;
+    // align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
     background-color: var(--form-background-color);
     margin: 36px 64px;
     padding: 16px 64px;

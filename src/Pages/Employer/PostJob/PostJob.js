@@ -28,6 +28,7 @@ import { getDistrict, getProvince, getWard, resetDistrict, resetWard } from '~/s
 import Loading from '~/components/common/Loading/Loading';
 import { RULES, validate } from '~/utils/validates/Validate';
 import { validateCreateJob } from '~/utils/validates/CreateJob';
+import { useNavigate } from 'react-router-dom';
 
 const cx = className.bind(styles);
 const modules = {
@@ -81,6 +82,7 @@ function PostJob({ data, updateCallback, update }) {
     const [enterDetailAddress, SetEnterDetailAddress] = useState(!data);
 
     const dispath = useDispatch();
+    const navigate = useNavigate();
     const user = useSelector((state) => state.employerAuth.user);
     const careers = useSelector((state) => state.career.careers);
     const skills = useSelector((state) => state.skill.skills);
@@ -110,10 +112,34 @@ function PostJob({ data, updateCallback, update }) {
     }, []);
 
     useEffect(() => {
-        createJobStatus && toast('Đã tạo công việc thành công!');
+        if (createJobStatus) {
+            toast(
+                getToast(
+                    'Đã tạo công việc thành công',
+                    'Xem ngay',
+                    `/employer/manage-job/list-job?search=${formRef.current['jobName'].value}`,
+                ),
+            );
+            resetForm();
+        }
         createJobStatusError && toast('Đã tạo công việc thất bại hãy điền đủ thông tin!');
         dispath(resetCreateStatus());
     }, [createJobStatus, createJobStatusError]);
+
+    const getToast = (message, linkName, link) => {
+        return (
+            <p>
+                {message}.
+                <br />
+                <span
+                    onClick={() => navigate(link)}
+                    style={{ marginTop: '8px', color: 'blue', textDecoration: 'underline' }}
+                >
+                    {linkName}
+                </span>
+            </p>
+        );
+    };
 
     const handleSaveJob = () => {
         setShowModal(true);
@@ -162,6 +188,24 @@ function PostJob({ data, updateCallback, update }) {
 
     const notify = (message) => toast(message);
 
+    const resetForm = () => {
+        formRef.current['jobName'].value = '';
+        formRef.current['jobCareer'].value = '';
+        setSkillSelected([]);
+        formRef.current['detailAddress'].value = '';
+        formRef.current['ward'].value = '';
+        formRef.current['district'].value = '';
+        formRef.current['province'].value = '';
+        formRef.current['salary'].value = '';
+        formRef.current['paycycle'].value = '';
+        formRef.current['JobWorkType'].value = '';
+        formRef.current['JobExpriedDate'].value = '';
+        formRef.current['JobGender'].value = '';
+        formRef.current['JobExperience'].value = '';
+        formRef.current['JobPosition'].value = '';
+        formRef.current['JobNum'].value = '';
+        setJobDescription('');
+    };
     const getFormData = () => ({
         name: formRef.current['jobName'].value,
         career: formRef.current['jobCareer'].value,

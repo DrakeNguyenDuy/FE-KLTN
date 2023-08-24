@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Profile.module.scss';
 import className from 'classnames/bind';
@@ -21,12 +21,15 @@ import {
 import UpdateProfileEmployerModal from '~/components/employer/UploadProfileEmployerModal/UpdateProfileEmployerModal';
 import UploadBackgroundEmployer from '~/components/employer/UploadBackgroundEmployer/UploadBackgroundEmployer';
 import NotLogin from '~/components/common/NotLogin/NotLogin';
+import NoResult from '~/components/common/NoResult/NoResult';
 
 const cx = className.bind(styles);
 
 function Profile() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [valIntroduce, setValIntroduce] = useState('');
+    const introduceRef = useRef(null);
 
     const [showAvatarModal, setShowAvatarModal] = useState(false);
     const [showBackgroundModal, setShowBackgroundModal] = useState(false);
@@ -41,8 +44,23 @@ function Profile() {
 
     useEffect(() => {
         user && dispatch(getEmployerDetail(user?.code));
+
         // eslint-disable-next-line
     }, []);
+
+    useEffect(() => {
+        if (employerDetails) {
+            setValIntroduce(employerDetails?.description);
+        }
+        resizeTextArea();
+        // eslint-disable-next-line
+    }, [valIntroduce, employerDetails]);
+
+    const resizeTextArea = () => {
+        if (!isLoading && !uploadBgIsLoading && !uploadProfileLoading && !uploadAvtIsLoading && valIntroduce) {
+            introduceRef.current.style.height = introduceRef.current.scrollHeight + 'px';
+        }
+    };
 
     const handleOpenAvatarModal = () => {
         setShowAvatarModal(true);
@@ -168,22 +186,30 @@ function Profile() {
                                     ) : (
                                         <span>Chưa cập nhật</span>
                                     )}
-                                    <br />
+                                    {/* <br />
                                     Liên hệ:{' '}
                                     {employerDetails?.phoneNumber ? (
                                         <span>SĐT: {employerDetails?.phoneNumber}</span>
                                     ) : (
                                         <span>Chưa cập nhật</span>
-                                    )}
+                                    )} */}
                                 </p>
-                                <p className={cx('introduce')}>
+                                <div className={cx('introduce')}>
+                                    <p>Giới thiệu về công ty:</p>
+                                    <textarea
+                                        disabled
+                                        value={valIntroduce ? valIntroduce : 'Chưa cập nhật'}
+                                        ref={introduceRef}
+                                    ></textarea>
+                                </div>
+                                {/* <p className={cx('introduce')}>
                                     Giới thiệu về công ty:{' '}
                                     {employerDetails?.description ? (
                                         <span>{employerDetails?.description}</span>
                                     ) : (
                                         <span>Chưa cập nhật</span>
                                     )}
-                                </p>
+                                </p> */}
                             </div>
                         </div>
                         <div className={cx('content-block')}>
@@ -195,11 +221,12 @@ function Profile() {
                                             key={job.id}
                                             big={true}
                                             data={job}
+                                            seeDetails={true}
                                             onClick={() => navigate(`/job/${job.sku}`)}
                                         />
                                     ))
                                 ) : (
-                                    <div className={cx('not-found')}>Chưa có công việc</div>
+                                    <NoResult message="Chưa có công việc nào" />
                                 )}
                             </div>
                         </div>

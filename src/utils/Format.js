@@ -47,3 +47,7 @@ export const formatDashName = (name) => {
     convertedName = convertedName + '-' + uuidv4();
     return convertedName;
 };
+
+export const cutLongText = (value, length) => {
+    return value.length <= length ? value : value.substring(0, length) + ' ...';
+};

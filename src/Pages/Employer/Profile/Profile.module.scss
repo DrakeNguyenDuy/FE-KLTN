@@ -13,7 +13,9 @@
         height: 300px;
         // background-size: cover !important;
         // background-repeat: no-repeat !important;
-        background-size: contain !important;
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+        // background-size: contain !important;
         position: relative;
         box-shadow: var(--box-shadow);
         border-radius: var(--boder-radius);
@@ -37,13 +39,22 @@
         .slogan {
             font-weight: normal;
             opacity: 0.8;
-            color: red;
+            color: var(--primary-color);
         }
         .infor {
             margin-top: 16px;
         }
         .introduce {
             margin-top: 8px;
+            textarea {
+                width: 100%;
+                resize: none;
+                &:disabled {
+                    background: none;
+                    border: none;
+                    color: #000;
+                }
+            }
         }
     }
     .avatar {

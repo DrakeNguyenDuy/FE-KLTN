@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Badge, Col, Row } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import { Badge, Button, Col, Modal, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelopeCircleCheck, faHeart, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelopeCircleCheck, faEye, faHeart, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 import className from 'classnames/bind';
 import styles from './JobItem.module.scss';
@@ -12,14 +12,19 @@ import { BASE_URL } from '~/constant';
 import CustomButton from '../CustomButton/CustomButton';
 import { postLikeJob } from '~/store/reducers/common/jobSlice';
 import RequireLogin from '../RequireLogin/RequireLogin';
-import { formatCurrency, formatDateString } from '~/utils/Format';
+import { cutLongText, formatCurrency, formatDateString } from '~/utils/Format';
+import JobDetailContent from '../JobDetailContent/JobDetailContent';
 
 const cx = className.bind(styles);
-export default function JobItem({ big = true, data, user, ...props }) {
+export default function JobItem({ big = true, data, seeDetails = false, user, ...props }) {
     const dispath = useDispatch();
     const [show, setShow] = useState(false);
+    const navigate = useNavigate();
+
     const { applied, sku, follow } = data;
     const [isFollow, setIsFollow] = useState(follow);
+
+    const [showModal, setShowModal] = useState(false);
 
     const followStatus = useSelector((state) => state.job.follow);
 
@@ -46,8 +51,32 @@ export default function JobItem({ big = true, data, user, ...props }) {
         return [];
     };
 
+    const handleShowDetail = (e) => {
+        e.stopPropagation();
+        setShowModal(true);
+    };
+    const handleCloseDetail = () => {
+        setShowModal(false);
+    };
+
     return (
         <>
+            {/* Modal chi tiết công việc */}
+            <Modal show={showModal} onHide={handleCloseDetail} className="manage-detail-job">
+                <Modal.Header closeButton>
+                    <Modal.Title>
+                        <h2>Chi tiết công việc</h2>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <JobDetailContent code={data.sku} hideBreadcrumb={false} hideButton={false} />
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseDetail}>
+                        Đóng
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             <RequireLogin
                 show={show}
                 message={'Vui lòng đăng nhập để theo dõi công việc!'}
@@ -67,7 +96,7 @@ export default function JobItem({ big = true, data, user, ...props }) {
                         <Row className={cx('sub_row')}>
                             <Link className={cx('fsc_2', 'ms-0', 'ps-0', 'name_job')} to={'/job/' + data.sku}>
                                 {/* name */}
-                                {data?.name}
+                                {big ? data?.name : cutLongText(data?.name, 30)}
                             </Link>
                         </Row>
                         {!big && (
@@ -83,7 +112,13 @@ export default function JobItem({ big = true, data, user, ...props }) {
                             </Row>
                         )}
                         {big ? (
-                            <Row className={cx('sub_row', 'infor_job')}>
+                            <Row
+                                className={cx('sub_row', 'infor_job', 'name-job')}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    navigate(`/company/${data?.codeCompany}`);
+                                }}
+                            >
                                 {/* nameCompany */}
                                 {data?.nameCompany}
                             </Row>
@@ -124,27 +159,40 @@ export default function JobItem({ big = true, data, user, ...props }) {
                         </Row>
                         {!big && (
                             <Row className="align-items-center">
-                                {applied ? (
-                                    <CustomButton
-                                        onClick={(e) => e.stopPropagation()}
-                                        wrapperStyle={cx('button-wrapper', 'small-btn', 'apply-btn')}
-                                    >
-                                        <FontAwesomeIcon icon={faEnvelopeCircleCheck} /> Đã ứng tuyển
-                                    </CustomButton>
-                                ) : isFollow ? (
-                                    <CustomButton
-                                        onClick={toggleLike}
-                                        wrapperStyle={cx('button-wrapper', 'small-btn', 'unfollow')}
-                                    >
-                                        <FontAwesomeIcon icon={faThumbsDown} /> {'Bỏ theo dõi'}
-                                    </CustomButton>
+                                {seeDetails ? (
+                                    <>
+                                        <CustomButton
+                                            onClick={handleShowDetail}
+                                            wrapperStyle={cx('button-wrapper', 'follow')}
+                                        >
+                                            <FontAwesomeIcon icon={faEye} /> {'Xem chi tiết'}
+                                        </CustomButton>
+                                    </>
                                 ) : (
-                                    <CustomButton
-                                        onClick={toggleLike}
-                                        wrapperStyle={cx('button-wrapper', 'small-btn', 'follow')}
-                                    >
-                                        <FontAwesomeIcon icon={faHeart} /> {'Theo dõi'}
-                                    </CustomButton>
+                                    <>
+                                        {applied ? (
+                                            <CustomButton
+                                                onClick={(e) => e.stopPropagation()}
+                                                wrapperStyle={cx('button-wrapper', 'small-btn', 'apply-btn')}
+                                            >
+                                                <FontAwesomeIcon icon={faEnvelopeCircleCheck} /> Đã ứng tuyển
+                                            </CustomButton>
+                                        ) : isFollow ? (
+                                            <CustomButton
+                                                onClick={toggleLike}
+                                                wrapperStyle={cx('button-wrapper', 'small-btn', 'unfollow')}
+                                            >
+                                                <FontAwesomeIcon icon={faThumbsDown} /> {'Bỏ theo dõi'}
+                                            </CustomButton>
+                                        ) : (
+                                            <CustomButton
+                                                onClick={toggleLike}
+                                                wrapperStyle={cx('button-wrapper', 'small-btn', 'follow')}
+                                            >
+                                                <FontAwesomeIcon icon={faHeart} /> {'Theo dõi'}
+                                            </CustomButton>
+                                        )}
+                                    </>
                                 )}
                             </Row>
                         )}
@@ -161,22 +209,44 @@ export default function JobItem({ big = true, data, user, ...props }) {
                                     </p>
                                 </div>
                             </Row>
-                            {applied ? (
-                                <CustomButton
-                                    onClick={(e) => e.stopPropagation()}
-                                    wrapperStyle={cx('button-wrapper', 'apply-btn')}
-                                >
-                                    <FontAwesomeIcon icon={faEnvelopeCircleCheck} /> Đã ứng tuyển
-                                </CustomButton>
-                            ) : isFollow ? (
-                                <CustomButton onClick={toggleLike} wrapperStyle={cx('button-wrapper', 'unfollow')}>
-                                    <FontAwesomeIcon icon={faThumbsDown} /> {'Bỏ theo dõi'}
-                                </CustomButton>
-                            ) : (
-                                <CustomButton onClick={toggleLike} wrapperStyle={cx('button-wrapper', 'follow')}>
-                                    <FontAwesomeIcon icon={faHeart} /> {'Theo dõi'}
-                                </CustomButton>
-                            )}
+                            <div className={cx('actions-group')}>
+                                {seeDetails ? (
+                                    <>
+                                        <CustomButton
+                                            onClick={handleShowDetail}
+                                            wrapperStyle={cx('button-wrapper', 'follow')}
+                                        >
+                                            <FontAwesomeIcon icon={faEye} /> {'Xem chi tiết'}
+                                        </CustomButton>
+                                    </>
+                                ) : (
+                                    <>
+                                        {applied && (
+                                            <CustomButton
+                                                onClick={(e) => e.stopPropagation()}
+                                                wrapperStyle={cx('button-wrapper', 'apply-btn')}
+                                            >
+                                                <FontAwesomeIcon icon={faEnvelopeCircleCheck} /> Đã ứng tuyển
+                                            </CustomButton>
+                                        )}
+                                        {isFollow ? (
+                                            <CustomButton
+                                                onClick={toggleLike}
+                                                wrapperStyle={cx('button-wrapper', 'unfollow')}
+                                            >
+                                                <FontAwesomeIcon icon={faThumbsDown} /> {'Bỏ theo dõi'}
+                                            </CustomButton>
+                                        ) : (
+                                            <CustomButton
+                                                onClick={toggleLike}
+                                                wrapperStyle={cx('button-wrapper', 'follow')}
+                                            >
+                                                <FontAwesomeIcon icon={faHeart} /> {'Theo dõi'}
+                                            </CustomButton>
+                                        )}
+                                    </>
+                                )}
+                            </div>
                         </Col>
                     )}
                 </Row>

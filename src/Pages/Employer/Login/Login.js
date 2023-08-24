@@ -120,7 +120,7 @@ function Login() {
                         <CustomButton isLoading={loading} className={cx('confirm-button')} onClick={submit}>
                             Đăng nhập
                         </CustomButton>
-                        <Form.Group className={cx('login-with')}>
+                        {/* <Form.Group className={cx('login-with')}>
                             <p>Hoặc đăng nhập với</p>
                         </Form.Group>
                         <Form.Group className={cx('login-social')}>
@@ -130,7 +130,7 @@ function Login() {
                             <Button>
                                 <FcGoogle style={{ fontSize: '40px' }} />
                             </Button>
-                        </Form.Group>
+                        </Form.Group> */}
                     </Form>
                 </div>
             </Col>

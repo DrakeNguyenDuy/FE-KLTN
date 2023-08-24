@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loading from '~/components/common/Loading';
 import JobLiked from '~/components/common/JobLikedItem';
 import { getJobLiked } from '~/store/reducers/common/jobSlice';
+import NoResult from '~/components/common/NoResult/NoResult';
 
 const cx = classNames.bind(styles);
 
@@ -29,7 +30,7 @@ function LikedJobTab() {
                     {jobLiked && jobLiked.length !== 0 ? (
                         jobLiked.map((item) => <JobLiked key={item.id} data={item} />)
                     ) : (
-                        <div className={cx('not-found')}>Chưa có công việc đã thích</div>
+                        <NoResult message="Chưa có công việc yêu thích" />
                     )}
                 </div>
             )}

@@ -10,6 +10,7 @@ function ButtonPopper({
     title,
     count,
     customBodyStyle,
+    customPopperStyle,
     children,
     onToggle = () => null,
     onClose = () => null,
@@ -47,7 +48,7 @@ function ButtonPopper({
             <div className={cx('notify-icon')}>
                 {icon}
                 {count && count !== 0 ? <span>{count}</span> : null}
-                <div className={cx('notify-content', notifyOpen ? 'open' : 'close')}>
+                <div className={cx('notify-content', customPopperStyle, notifyOpen ? 'open' : 'close')}>
                     <div className={cx('notify-header')}>{title}</div>
                     <div className={cx('notify-body', 'button-poper-body', customBodyStyle)}>{children}</div>
                     <div className={cx('notify-footer')}></div>

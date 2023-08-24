@@ -1,54 +1,26 @@
-.jobs {
-    width: 100%;
-    box-sizing: content-box;
-    padding: 10px;
-}
-
-.job-wrapper {
-    height: 400px;
+.overview-background {
+    height: 500px;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    position: relative;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--boder-radius);
+    background-image: url('../../../../public/static/imgs/employer-home-image.jpg');
     display: flex;
-    flex-wrap: wrap;
-}
-
-.mobile-carousel {
-    display: none;
-}
-
-// for mobile
-@media only screen and (max-width: 767px) {
-    .job-wrapper {
-        height: auto;
-        padding: 16px;
-        margin-bottom: 32px;
+    justify-content: center;
+    // align-items: center;
+    flex-direction: column;
+    .content {
+        margin-left: 30%;
     }
-    .mobile-carousel {
-        display: block;
+    h1 {
+        font-size: 64px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-
-    .desktop-carousel {
-        display: none;
-    }
-}
-// for tablet
-@media only screen and (min-width: 768px) and (max-width: 1023px) {
-    .job-wrapper {
-        height: 660px;
-        padding: 32px;
-        display: grid;
-    }
-    .desktop-carousel {
-        padding-bottom: 35px;
-    }
-}
-// for desktop
-@media only screen and (min-width: 1024px) and (max-width: 1439px) {
-    .job-wrapper {
-        height: auto;
-        padding: 32px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-    }
-    .desktop-carousel {
-        padding-bottom: 35px;
+    .button {
+        margin-top: 32px;
+        button {
+            font-size: 30px;
+        }
     }
 }

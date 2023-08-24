@@ -4,7 +4,7 @@ import className from 'classnames/bind';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form } from 'react-bootstrap';
+import { Form, Image, Modal } from 'react-bootstrap';
 import { Button, Col, Row } from 'react-bootstrap';
 import Pagination from 'react-bootstrap/Pagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,7 +16,7 @@ import JobItem from '~/components/common/JobItem';
 import UploadAvatarModal from '~/components/common/UploadAvatarModal';
 import CardProfile from '~/components/common/CardProfile';
 import Loading from '~/components/common/Loading';
-import { getJobs } from '~/store/reducers/common/jobSlice';
+import { getJobRecommned, getJobs } from '~/store/reducers/common/jobSlice';
 import { postAvatar } from '~/store/reducers/alumus/cvSlice';
 import { BASE_URL } from '~/constant';
 import { getCareer } from '~/store/reducers/common/careerSlice';
@@ -27,6 +27,8 @@ import { getPaycycle } from '~/store/reducers/common/paycycleSlice';
 import { getFilterDisplay } from '~/store/reducers/common/searchSlice';
 import { getToken } from '~/utils/LocalStorage';
 import { getProfile } from '~/store/reducers/alumus/profileSlice';
+import NoResult from '~/components/common/NoResult/NoResult';
+import LocalStorage from '~/utils/LocalStorage';
 
 const cx = className.bind(styles);
 
@@ -42,6 +44,8 @@ export default function Job() {
     const profile = useSelector((state) => state.profile.profile);
     const jobs = useSelector((state) => state.job.jobData);
     const jobLoading = useSelector((state) => state.job.jobLoading);
+    const jobRecommned = useSelector((state) => state.job.jobRecommned);
+    const jobRecommnedLoading = useSelector((state) => state.job.jobRecommnedLoading);
 
     const careers = useSelector((state) => state.career.careers);
     const experiences = useSelector((state) => state.experience.experiences);
@@ -61,6 +65,7 @@ export default function Job() {
     const experience = searchParams.get('experience');
     const order = searchParams.get('order');
 
+    const [showRecommendModal, setShowRecommendModal] = useState(false);
     const [showAvatarModal, setShowAvatarModal] = useState(false);
     const [searchValue, setSearchValue] = useState(search ? search : '');
     const [areaSelected, setAreaSelected] = useState(
@@ -98,6 +103,10 @@ export default function Job() {
         dispath(getProfile());
         // eslint-disable-next-line
     }, []);
+    useEffect(() => {
+        console.log('change');
+        profile && typeof profile !== 'string' && dispath(getJobRecommned({ id: LocalStorage.get('fast-job-id') }));
+    }, [profile]);
     useEffect(() => {
         dispath(
             getJobs({
@@ -178,6 +187,13 @@ export default function Job() {
             );
         }
         return result;
+    };
+
+    const handleOpenRecommned = () => {
+        setShowRecommendModal(true);
+    };
+    const handleCloseRecommned = () => {
+        setShowRecommendModal(false);
     };
 
     const handleOpenAvatarModal = () => {
@@ -300,14 +316,18 @@ export default function Job() {
                                         />
                                     ))
                                 ) : (
-                                    <div className={cx('not-found')}>Không tìm thấy</div>
+                                    <NoResult />
                                 )}
                             </Col>
                             <Col lg={4} className={cx('ext-job')}>
                                 <div className={cx('profile')}>
                                     <CardProfile
                                         name={user?.fullName}
-                                        avatar={user?.avatar && BASE_URL + user?.avatar}
+                                        avatar={
+                                            user?.avatar
+                                                ? BASE_URL + user?.avatar
+                                                : '/static/imgs/profile-default-avatar.jpg'
+                                        }
                                         location={user?.districts && user.districts[0].name}
                                         token={token}
                                         profile={profile}
@@ -315,29 +335,96 @@ export default function Job() {
                                         handleUpdateAvatar={handleOpenAvatarModal}
                                     />
                                 </div>
-                                <div className={cx('count-jobs')}>
-                                    <span>10</span>
-                                    <p>công việc phù hợp</p>
-                                </div>
-                                <div className={cx('my-jobs')}>
-                                    <h3 className={cx('my-job-title')}>Công việc gợi ý cho bạn</h3>
-                                    <div className={cx('my-job-content')}>
-                                        {jobs?.products.map(
-                                            (job, index) =>
-                                                index < 2 && (
-                                                    <JobItem
-                                                        key={job.id}
-                                                        data={job}
-                                                        big={false}
-                                                        onClick={(e) => {
-                                                            navigate(`/job/${job.sku}`);
-                                                        }}
-                                                    />
-                                                ),
+                                {typeof profile !== 'string' ? (
+                                    <>
+                                        {jobRecommnedLoading ? (
+                                            <Loading />
+                                        ) : (
+                                            <>
+                                                <div className={cx('count-jobs')}>
+                                                    {jobRecommned?.length === 0 ? (
+                                                        'Chưa tìm thấy công việc phù hợp'
+                                                    ) : (
+                                                        <>
+                                                            <span>{jobRecommned?.length}</span>
+                                                            <p>công việc phù hợp</p>
+                                                        </>
+                                                    )}
+                                                </div>
+                                                <div className={cx('my-jobs')}>
+                                                    <h3 className={cx('my-job-title')}>Công việc gợi ý cho bạn</h3>
+                                                    <div className={cx('my-job-content')}>
+                                                        {jobRecommned?.map(
+                                                            (job, index) =>
+                                                                index < 2 && (
+                                                                    <JobItem
+                                                                        key={job.id}
+                                                                        data={job}
+                                                                        user={user}
+                                                                        big={false}
+                                                                        onClick={(e) => {
+                                                                            navigate(`/job/${job.sku}`);
+                                                                        }}
+                                                                    />
+                                                                ),
+                                                        )}
+                                                    </div>
+                                                    {jobRecommned?.length > 2 && (
+                                                        <>
+                                                            {/* Modal chi tiết công việc */}
+                                                            <Modal
+                                                                show={showRecommendModal}
+                                                                onHide={handleCloseRecommned}
+                                                                className="manage-detail-job"
+                                                            >
+                                                                <Modal.Header closeButton>
+                                                                    <Modal.Title>
+                                                                        <h2>Đề xuất công việc</h2>
+                                                                    </Modal.Title>
+                                                                </Modal.Header>
+                                                                <Modal.Body>
+                                                                    <div>
+                                                                        <Col lg={12} className={cx('list-job')}>
+                                                                            {jobRecommned.map((job) => (
+                                                                                <JobItem
+                                                                                    key={job.id}
+                                                                                    big={true}
+                                                                                    data={job}
+                                                                                    user={user}
+                                                                                    onClick={() =>
+                                                                                        navigate(`/job/${job.sku}`)
+                                                                                    }
+                                                                                />
+                                                                            ))}
+                                                                        </Col>
+                                                                    </div>
+                                                                </Modal.Body>
+                                                                <Modal.Footer>
+                                                                    <Button
+                                                                        variant="secondary"
+                                                                        onClick={handleCloseRecommned}
+                                                                    >
+                                                                        Đóng
+                                                                    </Button>
+                                                                </Modal.Footer>
+                                                            </Modal>
+                                                            <div
+                                                                className={cx('view-all')}
+                                                                onClick={handleOpenRecommned}
+                                                            >
+                                                                Xem tất cả
+                                                            </div>
+                                                        </>
+                                                    )}
+                                                </div>
+                                            </>
                                         )}
+                                    </>
+                                ) : (
+                                    <div className={cx('count-jobs')}>
+                                        <p>Hãy cập nhật profile để được gợi ý các công việc phù hợp</p>
                                     </div>
-                                    <div className={cx('view-all')}>Xem tất cả</div>
-                                </div>
+                                )}
                             </Col>
                         </Row>
                         <Row>
