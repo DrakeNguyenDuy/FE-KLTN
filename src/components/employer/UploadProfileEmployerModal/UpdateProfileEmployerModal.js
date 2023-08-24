@@ -111,7 +111,7 @@ function UpdateProfileEmployerModal({ data, show, handleClose, handleSubmit }) {
                         <p className={cx('form-error', 'pf-error', 'my-form-hidden')}></p>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="description">
-                        <Form.Label>Mục tiêu mong muốn</Form.Label>
+                        <Form.Label>Nhập giới thiệu công ty</Form.Label>
                         <Form.Control
                             as="textarea"
                             placeholder="Nhập mô tả công ty"

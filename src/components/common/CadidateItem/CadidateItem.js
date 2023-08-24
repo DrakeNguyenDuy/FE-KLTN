@@ -35,6 +35,7 @@ const statusMap = {
 };
 function CadidateItem({ data, statusList, ...props }) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [statusSelected, setStatusSelected] = useState('');
     const changeStatusLoading = useSelector((state) => state.employerManageCadidate.changeStatusLoading);
     const changeStatus = useSelector((state) => state.employerManageCadidate.changeStatus);
@@ -69,6 +70,18 @@ function CadidateItem({ data, statusList, ...props }) {
             <div className={cx('job-apply-infor')}>
                 <p>
                     Tên ứng viên: <span>{data?.nameAlumnus}</span>
+                </p>
+                <p>
+                    Công việc ứng tuyển:{' '}
+                    <span
+                        className={cx('name-job')}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/job/${data?.codeJob}`);
+                        }}
+                    >
+                        {data?.nameJob}
+                    </span>
                 </p>
                 <p>
                     Ứng tuyển vị trí: <span>{data?.jobPosition}</span>

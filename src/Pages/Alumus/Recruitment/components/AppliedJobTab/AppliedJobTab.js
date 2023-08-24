@@ -8,6 +8,7 @@ import Loading from '~/components/common/Loading';
 import JobApplied from '~/components/common/JobAppliedItem';
 import { getApplyStatus } from '~/store/reducers/alumus/recruitmentSlice';
 import { getJobApplied } from '~/store/reducers/common/jobSlice';
+import NoResult from '~/components/common/NoResult/NoResult';
 
 const cx = classNames.bind(styles);
 
@@ -57,7 +58,7 @@ function AppliedJobTab() {
                     {jobApplyFilter && jobApplyFilter.length !== 0 ? (
                         jobApplyFilter.map((item) => <JobApplied key={item.id} data={item} />)
                     ) : (
-                        <div className={cx('not-found')}>Chưa có công việc đã ứng tuyển</div>
+                        <NoResult message="Chưa ứng tuyển công việc nào" />
                     )}
                 </div>
             )}

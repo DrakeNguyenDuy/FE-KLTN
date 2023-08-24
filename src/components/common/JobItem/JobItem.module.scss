@@ -21,6 +21,11 @@
             }
         }
     }
+    .actions-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
 }
 .job.small {
     .content_job {
@@ -74,6 +79,9 @@
         .name_job {
             font-weight: 700;
             font-size: 18px;
+            &:hover {
+                text-decoration: underline;
+            }
         }
         .infor_job {
             font-weight: 400;
@@ -81,6 +89,12 @@
             display: flex;
             align-items: center;
             opacity: 0.5;
+        }
+        .name-job {
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+            }
         }
         .salary {
             color: var(--success-color);

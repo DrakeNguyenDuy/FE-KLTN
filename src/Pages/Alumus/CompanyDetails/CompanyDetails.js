@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './CompanyDetails.module.scss';
@@ -19,6 +19,10 @@ function CompanyDetails() {
     const dispatch = useDispatch();
     const isLoading = useSelector((state) => state.employer.isLoading);
     const employerDetails = useSelector((state) => state.employer.employerDetails);
+    const user = useSelector((state) => state.alumusAuth.user);
+
+    const [valIntroduce, setValIntroduce] = useState('');
+    const introduceRef = useRef(null);
 
     const { code } = useParams();
     const breadcrumbItems = [
@@ -29,6 +33,29 @@ function CompanyDetails() {
         dispatch(getEmployerDetail(code));
         // eslint-disable-next-line
     }, []);
+
+    useEffect(() => {
+        if (employerDetails?.description) {
+            setValIntroduce(employerDetails?.description);
+        } else {
+            setValIntroduce('Chưa cập nhật');
+        }
+        clearResizeTextArea();
+        resizeTextArea();
+        // eslint-disable-next-line
+    }, [valIntroduce, employerDetails]);
+
+    const resizeTextArea = () => {
+        if (!isLoading && introduceRef && valIntroduce) {
+            introduceRef.current.style.height = introduceRef.current.scrollHeight + 'px';
+        }
+    };
+
+    const clearResizeTextArea = () => {
+        if (!isLoading && introduceRef && valIntroduce) {
+            introduceRef.current.style.height = 0 + 'px';
+        }
+    };
 
     return isLoading ? (
         <Loading />
@@ -83,14 +110,10 @@ function CompanyDetails() {
                                         <span>Chưa cập nhật</span>
                                     )}
                                 </p>
-                                <p className={cx('introduce')}>
-                                    Giới thiệu về công ty:{' '}
-                                    {employerDetails?.description ? (
-                                        <span>{employerDetails?.description}</span>
-                                    ) : (
-                                        <span>Chưa cập nhật</span>
-                                    )}
-                                </p>
+                                <div className={cx('introduce')}>
+                                    <p>Giới thiệu về công ty:</p>
+                                    <textarea disabled value={valIntroduce} ref={introduceRef}></textarea>
+                                </div>
                             </div>
                         </div>
                         <div className={cx('content-block')}>
@@ -102,6 +125,7 @@ function CompanyDetails() {
                                             key={job.id}
                                             big={true}
                                             data={job}
+                                            user={user}
                                             onClick={() => navigate(`/job/${job.sku}`)}
                                         />
                                     ))

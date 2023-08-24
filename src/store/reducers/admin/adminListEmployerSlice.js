@@ -17,7 +17,7 @@ export const getListEmployers = createAsyncThunk('adminListEmployer/get', async 
             headers: authHeader(token),
             params: {
                 page: page === 0 ? page : page - 1,
-                size: 5,
+                count: 5,
                 query: search === '' ? null : search,
                 active: active === '' ? null : active,
             },
@@ -59,7 +59,7 @@ export const adminUpdateEmployer = createAsyncThunk(
         const token = getToken('admin');
         if (token) {
             try {
-                const response = await request.post(`${API_UPDATE_EMPLOYER}/${data.id}/update`, data, {
+                const response = await request.put(`${API_UPDATE_EMPLOYER}/${data.id}/update`, data, {
                     headers: authHeader(token),
                 });
                 console.log(response);

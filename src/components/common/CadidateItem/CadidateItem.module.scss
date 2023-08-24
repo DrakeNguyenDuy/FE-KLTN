@@ -38,6 +38,12 @@
             color: green;
         }
     }
+    .name-job {
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
     .job-apply-infor,
     .job-apply-cv,
     .job-apply-state,

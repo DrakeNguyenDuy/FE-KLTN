@@ -197,18 +197,18 @@ function Profile() {
                                         <h2 className={cx('block-title')}>Thông tin cá nhân</h2>
                                         <div className={cx('block-content')}>
                                             <ul>
-                                                <li>
+                                                {/* <li>
                                                     Ngày sinh: <span>{profile?.dob}</span>
-                                                </li>
+                                                </li> */}
                                                 <li>
                                                     Giới tính: <span>{profile?.gender === 'M' ? 'Nam' : 'Nữ'}</span>
                                                 </li>
                                                 <li>
                                                     Email: <span>{profile?.email}</span>
                                                 </li>
-                                                <li>
+                                                {/* <li>
                                                     SĐT: <span>{profile?.phone}</span>
-                                                </li>
+                                                </li> */}
                                             </ul>
                                         </div>
                                     </div>

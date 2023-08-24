@@ -6,6 +6,7 @@ import { employerGetCadidates } from '~/store/reducers/employer/employerManageCa
 import CadidateItem from '../CadidateItem/CadidateItem';
 import { getApplyStatus } from '~/store/reducers/alumus/recruitmentSlice';
 import Loading from '../Loading/Loading';
+import NoResult from '../NoResult/NoResult';
 
 const cx = className.bind(styles);
 
@@ -26,7 +27,7 @@ function Cadidate({ code }) {
             {cadidates.length !== 0 ? (
                 cadidates.map((item, index) => <CadidateItem key={index} data={item} statusList={applyStatus} />)
             ) : (
-                <div className={cx('not-found')}>Chưa có ứng viên ứng tuyển</div>
+                <NoResult message={'Chưa có ứng viên'} />
             )}
         </div>
     );

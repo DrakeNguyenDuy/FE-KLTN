@@ -5,6 +5,7 @@ import { getToken } from '~/utils/LocalStorage';
 import { HttpStatusCode } from 'axios';
 
 const API_GET_JOBS = 'v2/products';
+const API_GET_JOB_RECOMMNED = 'v1/auth/recommender/job';
 const API_GET_JOB_DETAILS = 'v2/product';
 const API_POST_JOB = 'v2/private/product';
 const API_GET_JOB_LATEST = 'v2/products-lastest';
@@ -28,9 +29,21 @@ export const getJobs = createAsyncThunk(
                 order: order === '' ? null : order,
             },
         });
+        response.data.products.sort((job1, job2) => new Date(job2.dateAvailable) - new Date(job1.dateAvailable));
         return response.data;
     },
 );
+
+export const getJobRecommned = createAsyncThunk('jobRecommned/get', async ({ id }) => {
+    const token = getToken('alumus');
+    if (token) {
+        const response = await request.get(API_GET_JOB_RECOMMNED + '/' + id, {
+            headers: authHeader(token),
+        });
+        response.data.sort((job1, job2) => new Date(job2.dateAvailable) - new Date(job1.dateAvailable));
+        return response.data;
+    } else return [];
+});
 
 export const postLikeJob = createAsyncThunk('like/post', async ({ codeJob, isFollow }) => {
     const token = getToken();
@@ -208,6 +221,9 @@ const initialState = {
     updateJobStatus: null,
     updateJobStatusLoading: false,
     updateJobStatusError: null,
+    jobRecommned: [],
+    jobRecommnedLoading: false,
+    jobRecommnedError: null,
 };
 
 const slice = createSlice({
@@ -234,6 +250,21 @@ const slice = createSlice({
         });
         builder.addCase(getJobs.rejected, (state, action) => {
             state.jobLoading = false;
+        });
+        // get list job recommned
+        builder.addCase(getJobRecommned.pending, (state, action) => {
+            state.jobRecommnedLoading = true;
+            state.jobRecommnedError = null;
+        });
+        builder.addCase(getJobRecommned.fulfilled, (state, action) => {
+            state.jobRecommned = action.payload;
+            state.jobRecommnedError = null;
+            state.jobRecommnedLoading = false;
+        });
+        builder.addCase(getJobRecommned.rejected, (state, action) => {
+            state.jobRecommnedLoading = false;
+            state.jobRecommned = [];
+            state.jobRecommnedError = action.error.message;
         });
         // job lasted
         builder.addCase(getJobLastest.pending, (state, action) => {

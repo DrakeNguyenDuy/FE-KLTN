@@ -26,6 +26,7 @@ import { getJobDetail } from '~/store/reducers/common/jobSlice';
 import { useEffect } from 'react';
 import { BASE_URL } from '~/constant';
 import Loading from '../Loading/Loading';
+import { useNavigate } from 'react-router-dom';
 
 const cx = className.bind(styles);
 
@@ -39,6 +40,7 @@ function JobDetailContent({
     callJob = true,
 }) {
     const dispath = useDispatch();
+    const navigate = useNavigate();
     const jobDetails = useSelector((state) => state.job.jobDetails);
     const jobDetailIsLoading = useSelector((state) => state.job.jobDetailIsLoading);
 
@@ -74,7 +76,15 @@ function JobDetailContent({
                     </div>
                     <div className={cx('overview-description')}>
                         <h2 className={cx('job-title')}>{jobDetails?.name}</h2>
-                        <h3 className={cx('company-name')}>{jobDetails?.merchantStore.storeName}</h3>
+                        <h3
+                            className={cx('company-name', 'name-job')}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`/company/${jobDetails?.merchantStore.logo}`);
+                            }}
+                        >
+                            {jobDetails?.merchantStore.storeName}
+                        </h3>
                         <p className={cx('exprire-date')}>
                             Hạn nộp hồ sơ: {convertFormatDate(jobDetails?.dateExperience)}
                         </p>
@@ -101,22 +111,18 @@ function JobDetailContent({
                         )}
                         {hideButton && (
                             <>
-                                {!jobDetails?.applied &&
-                                    (jobDetails?.follow ? (
-                                        <CustomButton
-                                            onClick={handleUnfollow}
-                                            wrapperStyle={cx('btn-wrapper', 'btn-unfollow')}
-                                        >
-                                            <FontAwesomeIcon icon={faThumbsDown} /> {'Bỏ theo dõi'}
-                                        </CustomButton>
-                                    ) : (
-                                        <CustomButton
-                                            onClick={handleFollow}
-                                            wrapperStyle={cx('btn-wrapper', 'btn-follow')}
-                                        >
-                                            <FontAwesomeIcon icon={faHeart} /> {'Theo dõi'}
-                                        </CustomButton>
-                                    ))}
+                                {jobDetails?.follow ? (
+                                    <CustomButton
+                                        onClick={handleUnfollow}
+                                        wrapperStyle={cx('btn-wrapper', 'btn-unfollow')}
+                                    >
+                                        <FontAwesomeIcon icon={faThumbsDown} /> {'Bỏ theo dõi'}
+                                    </CustomButton>
+                                ) : (
+                                    <CustomButton onClick={handleFollow} wrapperStyle={cx('btn-wrapper', 'btn-follow')}>
+                                        <FontAwesomeIcon icon={faHeart} /> {'Theo dõi'}
+                                    </CustomButton>
+                                )}
 
                                 {!jobDetails.applied && (
                                     <CustomButton wrapperStyle={cx('btn-wrapper')} onClick={handleApply}>

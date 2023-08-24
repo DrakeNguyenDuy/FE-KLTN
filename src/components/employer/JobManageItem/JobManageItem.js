@@ -27,6 +27,7 @@ function JobManageItem({ data, userCode }) {
     const [showModal, setShowModal] = useState(false);
     const [showCandidateModal, setShowCandidateModal] = useState(false);
     const [showUpdateJob, setShowUpdateJob] = useState(false);
+    const [showRecommendModal, setShowRecommendModal] = useState(false);
     const updateStatus = useSelector((state) => state.employerManageJob.updateStatus);
 
     useEffect(() => {
@@ -56,6 +57,13 @@ function JobManageItem({ data, userCode }) {
     };
     const handleCloseUpdateJob = () => {
         setShowUpdateJob(false);
+    };
+
+    const handleOpenRecommned = () => {
+        setShowRecommendModal(true);
+    };
+    const handleCloseRecommned = () => {
+        setShowRecommendModal(false);
     };
 
     const handleChangeStatus = (status) => {
@@ -117,6 +125,33 @@ function JobManageItem({ data, userCode }) {
                     </Button>
                 </Modal.Footer>
             </Modal>
+            {/* Modal đề xuất ứng viên */}
+            <Modal show={showRecommendModal} onHide={handleCloseRecommned} className="manage-detail-job">
+                <Modal.Header closeButton>
+                    <Modal.Title>
+                        <h2>Đề xuất ứng viên</h2>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div>
+                        <Cadidate code={data.sku} />
+                        {/* {jobRecommned.map((job) => (
+                                <JobItem
+                                    key={job.id}
+                                    big={true}
+                                    data={job}
+                                    user={user}
+                                    onClick={() => navigate(`/job/${job.sku}`)}
+                                />
+                            ))} */}
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseRecommned}>
+                        Đóng
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             <div className={cx('job-like-item')}>
                 <div className={cx('job-like-avt')}>
                     <Image src={BASE_URL + data?.logo} alt={data?.name} />
@@ -169,8 +204,12 @@ function JobManageItem({ data, userCode }) {
                         name={'Thêm'}
                         icon={<FontAwesomeIcon icon={faCaretDown} />}
                         customBodyStyle={cx('more-body')}
+                        customPopperStyle={cx('more-wrapper')}
                     >
                         <div className={cx('more-options')}>
+                            <CustomButton onClick={handleShowCandidate}>
+                                <FontAwesomeIcon icon={faPeopleGroup} /> Đề xuất Ứng viên
+                            </CustomButton>
                             <CustomButton buttonClassName={cx('btn btn-secondary')} onClick={handleCopy}>
                                 <FontAwesomeIcon icon={faTrash} /> Sao chép
                             </CustomButton>

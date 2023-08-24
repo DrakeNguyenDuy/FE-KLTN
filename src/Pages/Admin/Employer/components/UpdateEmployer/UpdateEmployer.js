@@ -63,7 +63,7 @@ function UpdateEmployer({ data, toast }) {
     };
 
     const getFormData = () => ({
-        id: data.id,
+        id: data?.readableAudit?.idUser,
         firstName: formRef.current['firstName'].value,
         lastName: formRef.current['lastName'].value,
         name: formRef.current['companyName'].value,

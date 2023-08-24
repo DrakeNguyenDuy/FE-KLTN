@@ -14,6 +14,7 @@ import './Employer.scss';
 import { getListEmployers, resetAddEmployer, adminAddEmployer } from '~/store/reducers/admin/adminListEmployerSlice';
 import EmployerItem from '~/components/admin/EmployerItem/EmployerItem';
 import AddEmployer from './components/AddEmployer/AddEmployer';
+import NoResult from '~/components/common/NoResult/NoResult';
 
 const cx = className.bind(styles);
 
@@ -166,7 +167,7 @@ function Employer() {
                                 <EmployerItem key={index} data={item} toast={toast} />
                             ))
                         ) : (
-                            <div className={cx('not-found')}>Chưa có nhà tuyển dụng</div>
+                            <NoResult message="Không tìm thấy" />
                         )}
                     </div>
                     <div className={cx('paging')}>

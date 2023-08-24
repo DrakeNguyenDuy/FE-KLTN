@@ -1,107 +1,23 @@
 import React, { useEffect } from 'react';
 import styles from './Home.module.scss';
 import className from 'classnames/bind';
-
-import EmployerCarousel from './components/EmployerCarousel';
-import WelcomeCarousel from './components/WelcomeCarousel';
-import JobItem from '~/components/common/JobItem';
-import CustomCarousel from '~/components/common/CustomCarousel';
-import { useDispatch, useSelector } from 'react-redux';
-import { getJobLastest } from '~/store/reducers/common/jobSlice';
-import { getTopEmlpyer } from '~/store/reducers/common/searchSlice';
+import CustomButton from '~/components/common/CustomButton/CustomButton';
 import { useNavigate } from 'react-router-dom';
-
 const cx = className.bind(styles);
 
 function Home() {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const jobsLatest = useSelector((state) => state.job.jobLatest);
-    const topEmployers = useSelector((state) => state.search.topEmployers);
-    const jobLatestLoading = useSelector((state) => state.job.jobLatestLoading);
-    const topEmloyerIsLoading = useSelector((state) => state.search.topEmloyerIsLoading);
-    const user = useSelector((state) => state.employerAuth.user);
-
-    useEffect(() => {
-        dispatch(getJobLastest(user?.userName));
-        dispatch(getTopEmlpyer());
-        // eslint-disable-next-line
-    }, []);
-
-    const getItems = (items, numItem) => {
-        let result = [];
-        if (items) {
-            let num = Math.floor(items.length / numItem);
-            let rest = items.length % numItem;
-            let index = 0;
-            for (let i = 0; i < num; i++) {
-                const itemGet = [];
-                for (let j = 0; j < numItem; j++) {
-                    itemGet.push(items[index]);
-                    index++;
-                }
-                result.push(itemGet);
-            }
-            if (rest !== 0) {
-                const itemGet = [];
-                for (let i = index; i < items.length; i++) {
-                    itemGet.push(items[i]);
-                }
-                result.push(itemGet);
-            }
-        }
-
-        return result;
-    };
-
     return (
         <div id="home" className={cx('wrapper')}>
-            <section>
-                <WelcomeCarousel />
-            </section>
-            <section>
-                <div className="session-title">Việc làm mới nhất</div>
-                {/* desktop */}
-                <CustomCarousel
-                    items={getItems(jobsLatest, 4)}
-                    wrapperClass={cx('desktop-carousel')}
-                    render={(itemOnSlie) => (
-                        <div className={cx('job-wrapper')}>
-                            {itemOnSlie.map((item, index) => (
-                                <JobItem
-                                    key={index}
-                                    user={user}
-                                    data={item}
-                                    onClick={() => navigate(`/job/${item.sku}`)}
-                                />
-                            ))}
-                        </div>
-                    )}
-                    loading={jobLatestLoading}
-                />
-                {/* mobile */}
-                <CustomCarousel
-                    items={getItems(jobsLatest, 2)}
-                    wrapperClass={cx('mobile-carousel')}
-                    render={(itemOnSlie) => (
-                        <div className={cx('job-wrapper')}>
-                            {itemOnSlie.map((item, index) => (
-                                <JobItem
-                                    key={index}
-                                    data={item}
-                                    user={user}
-                                    onClick={() => navigate(`/job/${item.sku}`)}
-                                />
-                            ))}
-                        </div>
-                    )}
-                    loading={jobLatestLoading}
-                />
-            </section>
-            <section>
-                <div className="session-title">Nhà tuyển dụng nổi bậc</div>
-                <EmployerCarousel items={topEmployers} loading={topEmloyerIsLoading} />
-            </section>
+            <div className={cx('overview-background')}>
+                <div className={cx('content')}>
+                    <h1 className={cx('hello')}>Xin chào,</h1>
+                    <h1>nhà tuyển dụng</h1>
+                    <CustomButton wrapperStyle={cx('button')} onClick={() => navigate('/employer/manage-job/post-job')}>
+                        Đăng tin tuyển ngay
+                    </CustomButton>
+                </div>
+            </div>
         </div>
     );
 }

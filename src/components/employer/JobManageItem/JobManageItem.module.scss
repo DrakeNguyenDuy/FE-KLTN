@@ -67,7 +67,11 @@
     display: flex;
     gap: 10px;
 }
+.more-wrapper {
+    max-width: 550px !important;
+}
 .more-body {
+    width: 535px !important;
     padding: 0 16px;
     max-height: fit-content !important;
     overflow-y: auto !important;

@@ -14,6 +14,7 @@ import AddAlumnus from './components/AddAlumnus/AddAlumnus';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Alumnus.scss';
+import NoResult from '~/components/common/NoResult/NoResult';
 
 const cx = className.bind(styles);
 
@@ -166,7 +167,7 @@ function Alumnus() {
                                 <AlumnusItem key={index} data={item} toast={toast} />
                             ))
                         ) : (
-                            <div className={cx('not-found')}>Chưa có ứng viên ứng tuyển</div>
+                            <NoResult message={'Không tìm thấy'} />
                         )}
                     </div>
                     <div className={cx('paging')}>
