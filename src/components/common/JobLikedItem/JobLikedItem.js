@@ -110,7 +110,15 @@ function JobLiked({ data }) {
                     </p>
                     <p>
                         Hạn nộp hồ sơ:{' '}
-                        <span>{formatDateString('YYYY/MM/DD', '-', 'DD/MM/YYYY', '/', data?.dateRating)}</span>
+                        <span>
+                            {formatDateString(
+                                'YYYY/MM/DD',
+                                '-',
+                                'DD/MM/YYYY',
+                                '/',
+                                data?.dateRating.substring(0, data?.dateRating.indexOf('T')),
+                            )}
+                        </span>
                     </p>
                 </div>
                 <div className={cx('job-like-button')}>
