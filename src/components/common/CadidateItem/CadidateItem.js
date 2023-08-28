@@ -33,7 +33,7 @@ const statusMap = {
     PASS: 'Đã nhận',
     FAIL: 'Từ chối',
 };
-function CadidateItem({ data, statusList, ...props }) {
+function CadidateItem({ data, isRecommendItem = false, statusList, ...props }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [statusSelected, setStatusSelected] = useState('');
@@ -71,40 +71,46 @@ function CadidateItem({ data, statusList, ...props }) {
                 <p>
                     Tên ứng viên: <span>{data?.nameAlumnus}</span>
                 </p>
-                <p>
-                    Công việc ứng tuyển:{' '}
-                    <span
-                        className={cx('name-job')}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            navigate(`/job/${data?.codeJob}`);
-                        }}
-                    >
-                        {data?.nameJob}
-                    </span>
-                </p>
-                <p>
-                    Ứng tuyển vị trí: <span>{data?.jobPosition}</span>
-                </p>
-                <p>
-                    Ngày ứng tuyển: <span>{data?.applyDate}</span>
-                </p>
+                {isRecommendItem ? null : (
+                    <>
+                        <p>
+                            Công việc ứng tuyển:{' '}
+                            <span
+                                className={cx('name-job')}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    navigate(`/job/${data?.codeJob}`);
+                                }}
+                            >
+                                {data?.nameJob}
+                            </span>
+                        </p>
+                        <p>
+                            Ứng tuyển vị trí: <span>{data?.jobPosition}</span>
+                        </p>
+                        <p>
+                            Ngày ứng tuyển: <span>{data?.applyDate}</span>
+                        </p>
+                    </>
+                )}
             </div>
             <div className={cx('job-apply-state')}>
-                <p>Xét duyệt:</p>
+                {!isRecommendItem && <p>Xét duyệt:</p>}
                 <div className={cx('state-seeFull')}>
-                    <Form.Select
-                        aria-label="Trạng thái ứng tuyển"
-                        className={cx('select-state')}
-                        value={statusSelected}
-                        onChange={handleChangeStatus}
-                    >
-                        {statusList.map((status) => (
-                            <option key={status.code} value={status.code}>
-                                {statusMap[status.code]}
-                            </option>
-                        ))}
-                    </Form.Select>
+                    {!isRecommendItem && (
+                        <Form.Select
+                            aria-label="Trạng thái ứng tuyển"
+                            className={cx('select-state')}
+                            value={statusSelected}
+                            onChange={handleChangeStatus}
+                        >
+                            {statusList.map((status) => (
+                                <option key={status.code} value={status.code}>
+                                    {statusMap[status.code]}
+                                </option>
+                            ))}
+                        </Form.Select>
+                    )}
                     <div className={cx('job-apply-button')}>
                         <a href={'/full-cv/' + data?.cvId} target="_blank" rel="noreferrer">
                             <CustomButton>

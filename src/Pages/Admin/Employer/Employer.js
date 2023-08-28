@@ -161,11 +161,10 @@ function Employer() {
             ) : (
                 <>
                     <div className={cx('warapper')}>
-                        {console.log(listEmployers)}
                         {listEmployers?.data && listEmployers.data.length !== 0 ? (
-                            listEmployers.data.map((item, index) => (
-                                <EmployerItem key={index} data={item} toast={toast} />
-                            ))
+                            listEmployers.data
+                                .filter((item) => item.code !== 'DEFAULT')
+                                .map((item, index) => <EmployerItem key={index} data={item} toast={toast} />)
                         ) : (
                             <NoResult message="Không tìm thấy" />
                         )}

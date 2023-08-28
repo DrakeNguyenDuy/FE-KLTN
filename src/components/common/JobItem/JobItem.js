@@ -45,7 +45,7 @@ export default function JobItem({ big = true, data, seeDetails = false, user, ..
 
     const orderedSkill = (skills) => {
         const coppySkills = [...skills];
-        if (coppySkills && coppySkills.length > 1) {
+        if (coppySkills && coppySkills.length >= 1) {
             return coppySkills.sort((skill1, skill2) => skill1.id - skill2.id);
         }
         return [];
@@ -146,15 +146,32 @@ export default function JobItem({ big = true, data, seeDetails = false, user, ..
                         <Badge className="w-auto me-1">Marketing</Badge>
                         <Badge className="w-auto me-1">+3</Badge> */}
                             {/* skillsDecription */}
-                            {orderedSkill(data?.skillsDecription).map((skill, index) =>
-                                index < 3 ? (
-                                    <Badge key={skill.code} className={cx('w-auto me-1', 'badge-job')}>
-                                        {skill.name}
-                                    </Badge>
-                                ) : null,
-                            )}
-                            {orderedSkill(data?.skillsDecription).length > 3 && (
-                                <Badge className="w-auto me-1">+{data?.skillsDecription.length - 3}</Badge>
+                            {big ? (
+                                <>
+                                    {orderedSkill(data?.skillsDecription).map((skill, index) =>
+                                        index < 3 ? (
+                                            <Badge key={skill.code} className={cx('w-auto me-1', 'badge-job')}>
+                                                {skill.name}
+                                            </Badge>
+                                        ) : null,
+                                    )}
+                                    {orderedSkill(data?.skillsDecription).length > 3 && (
+                                        <Badge className="w-auto me-1">+{data?.skillsDecription.length - 3}</Badge>
+                                    )}
+                                </>
+                            ) : (
+                                <>
+                                    {orderedSkill(data?.skillsDecription).map((skill, index) =>
+                                        index < 2 ? (
+                                            <Badge key={skill.code} className={cx('w-auto me-1', 'badge-job')}>
+                                                {skill.name}
+                                            </Badge>
+                                        ) : null,
+                                    )}
+                                    {orderedSkill(data?.skillsDecription).length > 2 && (
+                                        <Badge className="w-auto me-1">+{data?.skillsDecription.length - 2}</Badge>
+                                    )}
+                                </>
                             )}
                         </Row>
                         {!big && (

@@ -7,6 +7,7 @@ import Avatar from '~/components/common/Avatar/Avatar';
 import CustomCarousel from '~/components/common/CustomCarousel';
 import Loading from '~/components/common/Loading';
 import { BASE_URL } from '~/constant';
+import { cutLongText } from '~/utils/Format';
 
 const cx = className.bind(styles);
 
@@ -75,8 +76,8 @@ function EmployerCarousel({ items, loading }) {
 
                             <div className={cx('content-wrapper')}>
                                 <div className={cx('overview-content')}>
-                                    <h2 className={cx('full-name')}>{item?.name}</h2>
-                                    <p className={cx('slogan')}>{item?.sologan}</p>
+                                    <h2 className={cx('full-name')}>{cutLongText(item?.name, 100)}</h2>
+                                    <p className={cx('slogan')}>{cutLongText(item?.sologan, 100)}</p>
                                     {/* <p className={cx('infor')}>
                                     Quy mô: <span>{item?.numOfEmployee} nhân viên</span>
                                     <br />
@@ -85,7 +86,7 @@ function EmployerCarousel({ items, loading }) {
                                     Liên hệ: <span>SĐT: {item?.phoneNumber}</span>
                                 </p> */}
                                     <p className={cx('introduce')}>
-                                        Giới thiệu về công ty: <span>{item?.description}</span>
+                                        Giới thiệu về công ty: <span>{cutLongText(item?.description, 300)}</span>
                                     </p>
                                 </div>
                                 <Button

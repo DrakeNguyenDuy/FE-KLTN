@@ -53,7 +53,7 @@ function Login() {
         if (token) {
             navigate('/');
         }
-        error && notify('Sai tài khoản hoặc mật khẩu.');
+        error && notify('Sai thông tin tài khoản hoặc mật khẩu.');
 
         // eslint-disable-next-line
     }, [error, token]);

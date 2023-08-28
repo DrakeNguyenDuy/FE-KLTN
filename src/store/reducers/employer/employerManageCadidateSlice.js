@@ -19,6 +19,17 @@ export const employerGetCadidates = createAsyncThunk('manageCadidate/get', async
     } else return null;
 });
 
+export const employerGetRecommendCadidates = createAsyncThunk('recommendCadidate/get', async (code) => {
+    const token = getToken('employer');
+    if (token) {
+        const response = await request.get(API_GET_LIST_CADIDATE + '/' + code, {
+            headers: authHeader(token),
+        });
+        const cadidatesList = response.data;
+        return cadidatesList;
+    } else return null;
+});
+
 export const employerGetListCadidate = createAsyncThunk(
     'manageCadidateList/get',
     async ({ code, page, search, status }) => {
@@ -54,6 +65,10 @@ const initialState = {
     loading: false,
     error: null,
 
+    recommendCadidates: [],
+    recommendCadidateLoading: false,
+    recomendCadidateError: null,
+
     listCadidate: [],
     listCadidateLoading: false,
     listCadidateError: null,
@@ -80,6 +95,18 @@ const slice = createSlice({
             .addCase(employerGetCadidates.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
+            })
+            .addCase(employerGetRecommendCadidates.pending, (state) => {
+                state.recommendCadidateLoading = true;
+                state.recomendCadidateError = null;
+            })
+            .addCase(employerGetRecommendCadidates.fulfilled, (state, action) => {
+                state.recommendCadidates = action.payload;
+                state.recommendCadidateLoading = false;
+            })
+            .addCase(employerGetRecommendCadidates.rejected, (state, action) => {
+                state.recommendCadidateLoading = false;
+                state.recomendCadidateError = action.error.message;
             })
             .addCase(postChangeStatusCadidate.pending, (state) => {
                 state.changeStatusLoading = true;

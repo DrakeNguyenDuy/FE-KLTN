@@ -32,7 +32,6 @@ export const getListEmployers = createAsyncThunk('adminListEmployer/get', async 
         //     logo: response.data.logo,
         //     username: response.data.readableAudit.user,
         // };
-        console.log(response);
         return response.data;
     } else return null;
 });

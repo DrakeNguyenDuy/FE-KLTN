@@ -17,6 +17,7 @@ import Cadidate from '~/components/common/Cadidate/Cadidate';
 import { useNavigate } from 'react-router-dom';
 import PostJob from '~/Pages/Employer/PostJob/PostJob';
 import PostJobWrapper from '~/Pages/Employer/PostJob/PostJobWrapper';
+import RecommendAlumnus from '../RecommendAlumnus/RecommnedAlumnus';
 
 const cx = className.bind(styles);
 
@@ -134,7 +135,7 @@ function JobManageItem({ data, userCode }) {
                 </Modal.Header>
                 <Modal.Body>
                     <div>
-                        <Cadidate code={data.sku} />
+                        <RecommendAlumnus code={data.sku} />
                         {/* {jobRecommned.map((job) => (
                                 <JobItem
                                     key={job.id}
@@ -207,7 +208,7 @@ function JobManageItem({ data, userCode }) {
                         customPopperStyle={cx('more-wrapper')}
                     >
                         <div className={cx('more-options')}>
-                            <CustomButton onClick={handleShowCandidate}>
+                            <CustomButton onClick={handleOpenRecommned}>
                                 <FontAwesomeIcon icon={faPeopleGroup} /> Đề xuất Ứng viên
                             </CustomButton>
                             <CustomButton buttonClassName={cx('btn btn-secondary')} onClick={handleCopy}>

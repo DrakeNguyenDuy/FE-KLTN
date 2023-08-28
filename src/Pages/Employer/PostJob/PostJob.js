@@ -93,6 +93,8 @@ function PostJob({ data, updateCallback, update }) {
     const districts = useSelector((state) => state.location.districts);
     const wards = useSelector((state) => state.location.wards);
     const paycycles = useSelector((state) => state.paycycle.paycycles);
+    const districtLoading = useSelector((state) => state.location.districtLoading);
+    const wardLoading = useSelector((state) => state.location.wardLoading);
 
     const createJobStatus = useSelector((state) => state.job.createJobStatus);
     const createJobStatusLoading = useSelector((state) => state.job.createJobStatusLoading);
@@ -411,40 +413,48 @@ function PostJob({ data, updateCallback, update }) {
                                 </option>
                             ))}
                         </Form.Select>
-                        <Form.Select
-                            aria-label="Chọn quận/huyện"
-                            id="district"
-                            disabled={selectDistrict}
-                            onChange={(e) => handleChangeDistrict(e.target.value)}
-                            defaultValue={data ? data.district : ''}
-                            onBlur={(e) =>
-                                validate(e.target, [RULES.IS_REQUIRE], e.target.value, '.cv-error', 'Quận/huyện')
-                            }
-                        >
-                            <option value={''}>Chọn quận/huyện</option>
-                            {districts.map((district) => (
-                                <option key={district.id} value={district.id}>
-                                    {district.name}
-                                </option>
-                            ))}
-                        </Form.Select>
-                        <Form.Select
-                            aria-label="Chọn phường/xã"
-                            id="ward"
-                            disabled={selectWard}
-                            onChange={(e) => handleChangeWard(e.target.value)}
-                            defaultValue={data ? data.ward : ''}
-                            onBlur={(e) =>
-                                validate(e.target, [RULES.IS_REQUIRE], e.target.value, '.cv-error', 'Phường/xã')
-                            }
-                        >
-                            <option value={''}>Chọn phường/xã</option>
-                            {wards.map((ward) => (
-                                <option key={ward.id} value={ward.id}>
-                                    {ward.name}
-                                </option>
-                            ))}
-                        </Form.Select>
+                        {districtLoading ? (
+                            <Loading styleWrapper={cx('customLoading')} />
+                        ) : (
+                            <Form.Select
+                                aria-label="Chọn quận/huyện"
+                                id="district"
+                                disabled={selectDistrict}
+                                onChange={(e) => handleChangeDistrict(e.target.value)}
+                                defaultValue={data ? data.district : ''}
+                                onBlur={(e) =>
+                                    validate(e.target, [RULES.IS_REQUIRE], e.target.value, '.cv-error', 'Quận/huyện')
+                                }
+                            >
+                                <option value={''}>Chọn quận/huyện</option>
+                                {districts.map((district) => (
+                                    <option key={district.id} value={district.id}>
+                                        {district.name}
+                                    </option>
+                                ))}
+                            </Form.Select>
+                        )}
+                        {wardLoading ? (
+                            <Loading styleWrapper={cx('customLoading')} />
+                        ) : (
+                            <Form.Select
+                                aria-label="Chọn phường/xã"
+                                id="ward"
+                                disabled={selectWard}
+                                onChange={(e) => handleChangeWard(e.target.value)}
+                                defaultValue={data ? data.ward : ''}
+                                onBlur={(e) =>
+                                    validate(e.target, [RULES.IS_REQUIRE], e.target.value, '.cv-error', 'Phường/xã')
+                                }
+                            >
+                                <option value={''}>Chọn phường/xã</option>
+                                {wards.map((ward) => (
+                                    <option key={ward.id} value={ward.id}>
+                                        {ward.name}
+                                    </option>
+                                ))}
+                            </Form.Select>
+                        )}
                     </div>
                     <Form.Control
                         type="text"
