@@ -30,8 +30,9 @@
     }
     .overview-background {
         height: 200px;
-        background-size: cover !important;
-        background-repeat: no-repeat;
+        // background-size: cover !important;
+        // background-repeat: no-repeat !important;
+        background-size: contain !important;
         position: relative;
         box-shadow: var(--box-shadow);
         border-radius: var(--boder-radius);

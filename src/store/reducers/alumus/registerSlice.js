@@ -5,6 +5,7 @@ const API_REGISTER_ALUMUS = 'v1/customer/register';
 
 export const registerAlumus = createAsyncThunk('register/post', async (data) => {
     const response = await request.post(API_REGISTER_ALUMUS, data);
+    console.log('response', response);
     return response.data;
 });
 

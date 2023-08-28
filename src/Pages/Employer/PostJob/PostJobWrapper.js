@@ -16,8 +16,6 @@ function PostJobWrapper({ id, updateCallBack, update = true, active }) {
     const jobDetailIsLoading = useSelector((state) => state.job.jobDetailIsLoading);
     const jobDetails = useSelector((state) => state.job.jobDetails);
 
-    const districtLoading = useSelector((state) => state.location.districtLoading);
-    const wardLoading = useSelector((state) => state.location.wardLoading);
     useEffect(() => {
         // eslint-disable-next-line
         update ? id && dispath(getJobDetail({ id })) : active === 'post-job' && id && dispath(getJobDetail({ id }));
@@ -55,7 +53,7 @@ function PostJobWrapper({ id, updateCallBack, update = true, active }) {
             description: jobDetails?.description,
         };
     };
-    return (update || id) && (jobDetailIsLoading || districtLoading || wardLoading) ? (
+    return (update || id) && jobDetailIsLoading ? (
         <Loading />
     ) : (
         <>

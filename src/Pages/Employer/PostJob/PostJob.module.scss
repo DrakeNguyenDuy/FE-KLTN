@@ -44,14 +44,13 @@ form {
     justify-content: center;
 }
 .location {
-    display: flex;
-    :first-child {
-        margin-right: 10px;
-    }
-    :last-child {
-        margin-left: 10px;
-    }
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     margin-bottom: 10px;
+    gap: 10px;
+}
+.customLoading {
+    height: auto !important;
 }
 .form-error {
     margin-top: 5px;
