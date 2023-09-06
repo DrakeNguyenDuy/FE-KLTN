@@ -6,8 +6,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FcGoogle } from 'react-icons/fc';
-import { faFacebook } from '@fortawesome/free-brands-svg-icons';
+// import { FcGoogle } from 'react-icons/fc';
+// import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 import styles from './Register.module.scss';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -180,7 +180,7 @@ function Register() {
                                     >
                                         Tiếp tục
                                     </CustomButton>
-                                    <Form.Group className={cx('login-social')}>
+                                    {/* <Form.Group className={cx('login-social')}>
                                         <p>Hoặc tiếp tục với</p>
                                         <Button>
                                             <FontAwesomeIcon
@@ -191,7 +191,7 @@ function Register() {
                                         <Button>
                                             <FcGoogle style={{ fontSize: '40px' }} />
                                         </Button>
-                                    </Form.Group>
+                                    </Form.Group> */}
                                 </Tab>
                                 <Tab eventKey="loginInfor" title="Thông tin đăng nhập" disabled>
                                     <div className={cx('go-back')} onClick={handleGoBack}>

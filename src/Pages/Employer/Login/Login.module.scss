@@ -28,7 +28,7 @@
         display: none;
         position: absolute;
         right: 5rem;
-        top: 10rem;
+        top: 2rem;
     }
 
     @media (min-width: 0) {
@@ -42,7 +42,7 @@
         text-align: left;
         img {
             display: block;
-            right: 0;
+            right: -6rem;
         }
     }
     @media (min-width: 1200px) {
