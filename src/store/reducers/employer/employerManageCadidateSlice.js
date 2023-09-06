@@ -3,7 +3,7 @@ import request, { authHeader } from '~/axios/request';
 import { getToken } from '~/utils/LocalStorage';
 
 const API_GET_LIST_CADIDATE = 'v1/private/recruitment';
-const API_RECOMMNED_ALUNUS = 'v1/auth/recommender/alumnus';
+const API_RECOMMNED_ALUNUS = 'v1/private/recommender/alumnus';
 const API_GET_CV_NO_AUTH = 'v1/cv';
 const API_GET_JOB_DETAILS = 'v2/product';
 const API_POST_CHANGE_STATUS_CADIDATE = 'v1/private/recruitment/change';
