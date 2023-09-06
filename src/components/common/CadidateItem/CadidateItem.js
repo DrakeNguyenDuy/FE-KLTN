@@ -71,7 +71,22 @@ function CadidateItem({ data, isRecommendItem = false, statusList, ...props }) {
                 <p>
                     Tên ứng viên: <span>{data?.nameAlumnus}</span>
                 </p>
-                {isRecommendItem ? null : (
+                {console.log(data)}
+                {isRecommendItem ? (
+                    <>
+                        <p>
+                            Vị trí: <span>{data?.locations && data?.locations[0]}</span>
+                        </p>
+                        <p>
+                            Kỹ năng:{' '}
+                            <span>
+                                {data?.skills.map((skill, index) =>
+                                    index === data?.skills.length ? skill : skill + ', ',
+                                )}
+                            </span>
+                        </p>
+                    </>
+                ) : (
                     <>
                         <p>
                             Công việc ứng tuyển:{' '}
