@@ -3,6 +3,7 @@ import request, { authHeader } from '~/axios/request';
 import { getToken } from '~/utils/LocalStorage';
 
 const API_GET_LIST_CADIDATE = 'v1/private/recruitment';
+const API_RECOMMNED_ALUNUS = 'v1/auth/recommender/alumnus';
 const API_GET_CV_NO_AUTH = 'v1/cv';
 const API_GET_JOB_DETAILS = 'v2/product';
 const API_POST_CHANGE_STATUS_CADIDATE = 'v1/private/recruitment/change';
@@ -22,7 +23,7 @@ export const employerGetCadidates = createAsyncThunk('manageCadidate/get', async
 export const employerGetRecommendCadidates = createAsyncThunk('recommendCadidate/get', async (code) => {
     const token = getToken('employer');
     if (token) {
-        const response = await request.get(API_GET_LIST_CADIDATE + '/' + code, {
+        const response = await request.get(API_RECOMMNED_ALUNUS + '/' + code, {
             headers: authHeader(token),
         });
         const cadidatesList = response.data;

@@ -49,5 +49,5 @@ export const formatDashName = (name) => {
 };
 
 export const cutLongText = (value, length) => {
-    return value.length <= length ? value : value.substring(0, length) + ' ...';
+    return value ? (value.length <= length ? value : value.substring(0, length) + ' ...') : null;
 };

@@ -135,7 +135,7 @@ function JobManageItem({ data, userCode }) {
                 </Modal.Header>
                 <Modal.Body>
                     <div>
-                        <RecommendAlumnus code={data.sku} />
+                        <RecommendAlumnus code={data.id} />
                         {/* {jobRecommned.map((job) => (
                                 <JobItem
                                     key={job.id}
